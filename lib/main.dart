@@ -29,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -37,29 +38,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    return MaterialApp(
+      home: SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.lightBlue,
+                title: Text('HqClass'),
+              ),
+              body: buildColumn(),
+          )),
+    );
+  }
+
+  Column buildColumn() {
+    return Column(
+      children: [
+        Text('Hello there'),
+        Row(
+          children: [
+            FlatButton(
+              onPressed: () {},
+              child: Text('red'),
+              color: Colors.red,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            FlatButton(onPressed: (){}, child: Text('yellow')),
+            FlatButton(onPressed: (){}, child: Text('green'))
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        )
+      ],
     );
   }
 }
