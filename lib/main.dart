@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hqclass/screens/classes.dart';
+import 'package:hqclass/screens/home.dart';
+import 'package:hqclass/screens/onboarding.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,62 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      theme: ThemeData(fontFamily: 'OpenSans'),
+      initialRoute: '/home',
+      debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder> {
+        "/onboarding": (BuildContext context) => new Onboarding(),
+        "/home": (BuildContext context) => new Home(),
+        "/classes": (BuildContext context) => new Classes(),
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SafeArea(
-          child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.lightBlue,
-                title: Text('HqClass'),
-              ),
-              body: buildColumn(),
-          )),
-    );
-  }
-
-  Column buildColumn() {
-    return Column(
-      children: [
-        Text('Hello there'),
-        Row(
-          children: [
-            FlatButton(
-              onPressed: () {},
-              child: Text('red'),
-              color: Colors.red,
-            ),
-            FlatButton(onPressed: (){}, child: Text('yellow')),
-            FlatButton(onPressed: (){}, child: Text('green'))
-          ],
-        )
-      ],
+      },
     );
   }
 }
