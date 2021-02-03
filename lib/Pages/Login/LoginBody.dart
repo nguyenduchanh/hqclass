@@ -6,6 +6,7 @@ import 'package:hqclass/Components/rounded_input_field.dart';
 import 'package:hqclass/Components/rounded_password_field.dart';
 import 'package:hqclass/Pages/Signup/signup_screen.dart';
 import 'package:hqclass/Pages/Welcome/background.dart';
+import 'package:hqclass/Util/strings.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody({
@@ -21,25 +22,21 @@ class LoginBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
+            Image.asset(
+              "assets/img/blackboard.png",
+              height: size.height * 0.25,
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-              hintText: "Your Email",
+              hintText: cYourEmail,
               onChanged: (value) {},
             ),
             RoundedPasswordField(
               onChanged: (value) {},
             ),
             RoundedButton(
-              text: "LOGINT",
+              text: cLoginTitle,
               press: () {},
             ),
             SizedBox(height: size.height * 0.03),

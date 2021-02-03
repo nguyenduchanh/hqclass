@@ -4,6 +4,7 @@ import 'package:hqclass/Components/rounded_button.dart';
 import 'package:hqclass/Pages/Login/login_screen.dart';
 import 'package:hqclass/Pages/Welcome/background.dart';
 import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Util/strings.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -16,13 +17,13 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "WELCOME TO HQ class",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              cWelcomeString,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            SizedBox(height: size.height * 0.05),
-            SvgPicture.asset(
-              "assets/icons/chat.svg",
-              height: size.height * 0.45,
+            SizedBox(height: size.height * 0.01),
+            Image.asset(
+              "assets/img/blackboard.png",
+              height: size.height * 0.25,
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
