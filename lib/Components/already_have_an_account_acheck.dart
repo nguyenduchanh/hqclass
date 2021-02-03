@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Util/strings.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;
@@ -17,13 +18,13 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(login ? "Don't have an account ? " : "Already have an account ?",
+        Text(login ? cDontHaveAnAccount : cAlreadyAnAccount,
             style: TextStyle(color:  kPrimaryColor),
         ),
         GestureDetector(
           onTap: press,
           child: Text(
-            login ? "Sign up" : "Sign in",
+            login ? cSignUpTitle :cLoginTitle,
             style: TextStyle(
               color:  kPrimaryColor,
               fontWeight: FontWeight.bold,
