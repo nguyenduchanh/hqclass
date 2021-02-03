@@ -71,8 +71,10 @@ flutter:
     - assets/icons/google-plus.svg
     - assets/icons/login.svg
     - assets/icons/signup.svg
-    - assets/icons/twitter.svg,
+    - assets/icons/twitter.svg
     - assets/img/login_bottom.png
+    - assets/img/signup_top.png
+    - assets/img/signup_top.png
   fonts:
     - family: OpenSans
       fonts:
