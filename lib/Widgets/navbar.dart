@@ -4,11 +4,8 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'input.dart';
 
-
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
-  final String categoryOne;
-  final String categoryTwo;
   final bool searchBar;
   final bool backButton;
   final bool transparent;
@@ -24,8 +21,6 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
 
   Navbar(
       {this.title = "Home",
-      this.categoryOne = "",
-      this.categoryTwo = "",
       this.tags,
       this.transparent = false,
       this.rightOptions = true,
@@ -39,7 +34,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
       this.bgColor = CommonColors.white,
       this.searchBar = false});
 
-  final double _prefferedHeight = 180.0;
+  final double _prefferedHeight = 120.0;
 
   @override
   _NavbarState createState() => _NavbarState();
@@ -62,19 +57,10 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
-    final bool categories =
-        widget.categoryOne.isNotEmpty && widget.categoryTwo.isNotEmpty;
     final bool tagsExist =
         widget.tags == null ? false : (widget.tags.length == 0 ? false : true);
 
     return Container(
-        height: widget.searchBar
-            ? (!categories
-                ? (tagsExist ? 211.0 : 178.0)
-                : (tagsExist ? 262.0 : 210.0))
-            : (!categories
-                ? (tagsExist ? 162.0 : 102.0)
-                : (tagsExist ? 200.0 : 150.0)),
         decoration: BoxDecoration(
             color: !widget.transparent ? widget.bgColor : Colors.transparent,
             boxShadow: [
@@ -125,48 +111,15 @@ class _NavbarState extends State<Navbar> {
                                 fontSize: 24.0)),
                       ],
                     ),
-                    if (widget.rightOptions)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/pro');
-                            },
-                            child: IconButton(
-                                icon: Icon(Icons.notifications_active,
-                                    color: !widget.transparent
-                                        ? (widget.bgColor == CommonColors.white
-                                            ? CommonColors.initial
-                                            : CommonColors.white)
-                                        : CommonColors.white,
-                                    size: 22.0),
-                                onPressed: null),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/pro');
-                            },
-                            child: IconButton(
-                                icon: Icon(Icons.shopping_basket,
-                                    color: !widget.transparent
-                                        ? (widget.bgColor == CommonColors.white
-                                            ? CommonColors.initial
-                                            : CommonColors.white)
-                                        : CommonColors.white,
-                                    size: 22.0),
-                                onPressed: null),
-                          ),
-                        ],
-                      )
                   ],
                 ),
                 if (widget.searchBar)
                   Padding(
                     padding: const EdgeInsets.only(
-                        top: 8, bottom: 4, left: 15, right: 15),
+                        top: 8, bottom: 10, left: 15, right: 15),
                     child: Input(
                         placeholder: "Nhập để tìm kiếm?",
+
                         controller: widget.searchController,
                         onChanged: widget.searchOnChanged,
                         autofocus: widget.searchAutofocus,
@@ -176,55 +129,7 @@ class _NavbarState extends State<Navbar> {
                           Navigator.pushNamed(context, '/pro');
                         }),
                   ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                if (categories)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/pro');
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.camera,
-                                color: CommonColors.initial, size: 22.0),
-                            SizedBox(width: 10),
-                            Text(widget.categoryOne,
-                                style: TextStyle(
-                                    color: CommonColors.initial,
-                                    fontSize: 16.0)),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 30),
-                      Container(
-                        color: CommonColors.initial,
-                        height: 25,
-                        width: 1,
-                      ),
-                      SizedBox(width: 30),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/pro');
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.shopping_cart,
-                                color: CommonColors.initial, size: 22.0),
-                            SizedBox(width: 10),
-                            Text(widget.categoryTwo,
-                                style: TextStyle(
-                                    color: CommonColors.initial,
-                                    fontSize: 16.0)),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+
                 if (tagsExist)
                   Container(
                     height: 40,

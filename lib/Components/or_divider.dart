@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Constants/Theme.dart';
 
 class OrDivider extends StatelessWidget{
   @override
@@ -17,7 +17,7 @@ class OrDivider extends StatelessWidget{
             child: Text(
               "OR",
               style: TextStyle(
-                color: kPrimaryColor,
+                color: CommonColors.kPrimaryColor,
                 fontWeight: FontWeight.w600,
               ),
             ),

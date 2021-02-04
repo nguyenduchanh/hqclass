@@ -39,8 +39,6 @@ class Home extends StatelessWidget {
         appBar: Navbar(
           title: "Home",
           searchBar: true,
-          categoryOne: "Beauty",
-          categoryTwo: "Fashion",
         ),
         backgroundColor: CommonColors.bgColorScreen,
         // key: _scaffoldKey,

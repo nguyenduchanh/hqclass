@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Constants/Theme.dart';
 
 class SocialIcon extends StatelessWidget {
   final String iconStr;
@@ -23,7 +23,7 @@ class SocialIcon extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             width: 2,
-            color: kPrimaryLightColor,
+            color: CommonColors.kPrimaryLightColor,
           ),
           shape: BoxShape.circle,
         ),

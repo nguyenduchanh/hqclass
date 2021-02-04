@@ -15,7 +15,7 @@ class CommonDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
         child: Container(
-      color: CommonColors.white,
+      color: CommonColors.kPrimaryLightColor,
       child: Column(children: [
         Container(
             height: MediaQuery.of(context).size.height * 0.2,
@@ -50,45 +50,45 @@ class CommonDrawer extends StatelessWidget {
                     if (currentPage != "Classes")
                       Navigator.pushReplacementNamed(context, '/classes');
                   },
-                  iconColor: CommonColors.primary,
+                  iconColor: CommonColors.kPrimaryColor,
                   title: "Classes",
                   isSelected: currentPage == "Classes" ? true : false),
-              DrawerTile(
-                  icon: Icons.pie_chart,
-                  onTap: () {
-                    if (currentPage != "Profile")
-                      Navigator.pushReplacementNamed(context, '/profile');
-                  },
-                  iconColor: CommonColors.warning,
-                  title: "Profile",
-                  isSelected: currentPage == "Profile" ? true : false),
-              DrawerTile(
-                  icon: Icons.account_circle,
-                  onTap: () {
-                    if (currentPage != "Account")
-                      Navigator.pushReplacementNamed(context, '/account');
-                  },
-                  iconColor: CommonColors.info,
-                  title: "Account",
-                  isSelected: currentPage == "Account" ? true : false),
-              DrawerTile(
-                  icon: Icons.settings_input_component,
-                  onTap: () {
-                    if (currentPage != "Elements")
-                      Navigator.pushReplacementNamed(context, '/elements');
-                  },
-                  iconColor: CommonColors.error,
-                  title: "Elements",
-                  isSelected: currentPage == "Elements" ? true : false),
-              DrawerTile(
-                  icon: Icons.apps,
-                  onTap: () {
-                    if (currentPage != "Articles")
-                      Navigator.pushReplacementNamed(context, '/articles');
-                  },
-                  iconColor: CommonColors.primary,
-                  title: "Articles",
-                  isSelected: currentPage == "Articles" ? true : false),
+              // DrawerTile(
+              //     icon: Icons.pie_chart,
+              //     onTap: () {
+              //       if (currentPage != "Profile")
+              //         Navigator.pushReplacementNamed(context, '/profile');
+              //     },
+              //     iconColor: CommonColors.warning,
+              //     title: "Profile",
+              //     isSelected: currentPage == "Profile" ? true : false),
+              // DrawerTile(
+              //     icon: Icons.account_circle,
+              //     onTap: () {
+              //       if (currentPage != "Account")
+              //         Navigator.pushReplacementNamed(context, '/account');
+              //     },
+              //     iconColor: CommonColors.info,
+              //     title: "Account",
+              //     isSelected: currentPage == "Account" ? true : false),
+              // DrawerTile(
+              //     icon: Icons.settings_input_component,
+              //     onTap: () {
+              //       if (currentPage != "Elements")
+              //         Navigator.pushReplacementNamed(context, '/elements');
+              //     },
+              //     iconColor: CommonColors.error,
+              //     title: "Elements",
+              //     isSelected: currentPage == "Elements" ? true : false),
+              // DrawerTile(
+              //     icon: Icons.apps,
+              //     onTap: () {
+              //       if (currentPage != "Articles")
+              //         Navigator.pushReplacementNamed(context, '/articles');
+              //     },
+              //     iconColor: CommonColors.primary,
+              //     title: "Articles",
+              //     isSelected: currentPage == "Articles" ? true : false),
             ],
           ),
         ),

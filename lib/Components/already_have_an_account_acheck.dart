@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Constants/Theme.dart';
 import 'package:hqclass/Util/strings.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
@@ -19,14 +19,14 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(login ? cDontHaveAnAccount : cAlreadyAnAccount,
-            style: TextStyle(color:  kPrimaryColor),
+            style: TextStyle(color:  CommonColors.kPrimaryColor),
         ),
         GestureDetector(
           onTap: press,
           child: Text(
             login ? cSignUpTitle :cLoginTitle,
             style: TextStyle(
-              color:  kPrimaryColor,
+              color:  CommonColors.kPrimaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),

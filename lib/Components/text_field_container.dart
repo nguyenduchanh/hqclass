@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hqclass/Util/constants.dart';
+import 'package:hqclass/Constants/Theme.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
@@ -17,7 +17,7 @@ class TextFieldContainer extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
-      decoration: BoxDecoration(color: kPrimaryLightColor,
+      decoration: BoxDecoration(color: CommonColors.kPrimaryLightColor,
       borderRadius: BorderRadius.circular(29)),
       child: child,
     );
