@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  splashscreen: ^1.2.0
+  flare_flutter: ^2.0.1
   flutter:
     sdk: flutter
   font_awesome_flutter: ^8.8.1
@@ -75,6 +77,7 @@ flutter:
     - assets/img/signup_top.png
     - assets/img/chat2.png
     - assets/img/blackboard.png
+    - assets/loading.flr
   fonts:
     - family: OpenSans
       fonts:
