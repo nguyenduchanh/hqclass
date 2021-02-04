@@ -4,6 +4,7 @@ import 'package:hqclass/Components/already_have_an_account_acheck.dart';
 import 'package:hqclass/Components/rounded_button.dart';
 import 'package:hqclass/Components/rounded_input_field.dart';
 import 'package:hqclass/Components/rounded_password_field.dart';
+import 'package:hqclass/Pages/Home/home.dart';
 import 'package:hqclass/Pages/Signup/signup_screen.dart';
 import 'package:hqclass/Pages/Welcome/background.dart';
 import 'package:hqclass/Util/strings.dart';
@@ -37,7 +38,11 @@ class LoginBody extends StatelessWidget {
             ),
             RoundedButton(
               text: cLoginTitle,
-              press: () {},
+              press: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Home();
+                }));
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

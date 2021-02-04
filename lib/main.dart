@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hqclass/Pages/Login/login_screen.dart';
 import 'Components/splash_screen.dart';
-import 'Pages/Welcome/welcome.dart';
 
 void main() {
 //  runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'HQ Class',
       theme: ThemeData(),
-      home: WelcomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
