@@ -18,7 +18,7 @@ class CommonDrawer extends StatelessWidget {
       color: CommonColors.white,
       child: Column(children: [
         Container(
-            height: MediaQuery.of(context).size.height * 0.16,
+            height: MediaQuery.of(context).size.height * 0.2,
             width: MediaQuery.of(context).size.width * 0.85,
             child: SafeArea(
               bottom: false,
@@ -26,7 +26,7 @@ class CommonDrawer extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 1),
-                  child: Image.asset("assets/img/teacher.png"),
+                  child: Image.asset("assets/img/blackboard.png"),
                 ),
               ),
             )),
