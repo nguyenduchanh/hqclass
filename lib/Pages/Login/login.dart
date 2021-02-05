@@ -27,8 +27,8 @@ class _LoginState extends State<Login> {
       // validator: validateEmail,
       validator: (value) => value.isEmpty ? "Please enter password" : null,
       onSaved: (value) => _username = value,
-      decoration:
-          buildInputDecoration("Confirm password", Icons.email, "Username or email"),
+      decoration: buildInputDecoration(
+          "Confirm password", Icons.email, "Username or email"),
       // decoration: InputDecoration(hintText: "Your email"),
     );
     final passwordField = TextFormField(
@@ -70,29 +70,34 @@ class _LoginState extends State<Login> {
     );
 
     var doLogin = () {
-      final form = formKey.currentState;
-      if (form.validate()) {
-        form.save();
-        final Future<Map<String, dynamic>> successfulMessage =
-            auth.login(_username, _password);
-        if (_username == "admin" && _password == "1234") {
-          Navigator.pushReplacementNamed(context, '/home');
-        }
-        // successfulMessage.then((response) {
-        //   if (response['status']) {
-        //     User user = response['user'];
-        //     Provider.of<UserProvider>(context, listen: false).setUser(user);
-        //     Navigator.pushReplacementNamed(context, '/home');
-        //   } else {
-        //     Flushbar(
-        //       title: "Falied login",
-        //       message: response['message']['message'].toString(),
-        //     ).show(context);
-        //   }
-        // }
-        // );
+      if (kDebugMode) {
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
-        print("form is invalid");
+        final form = formKey.currentState;
+        if (form.validate()) {
+          form.save();
+          final Future<Map<String, dynamic>> successfulMessage =
+              auth.login(_username, _password);
+          // fix
+          if (_username == "admin" && _password == "1234") {
+            Navigator.pushReplacementNamed(context, '/home');
+          }
+          // successfulMessage.then((response) {
+          //   if (response['status']) {
+          //     User user = response['user'];
+          //     Provider.of<UserProvider>(context, listen: false).setUser(user);
+          //     Navigator.pushReplacementNamed(context, '/home');
+          //   } else {
+          //     Flushbar(
+          //       title: "Falied login",
+          //       message: response['message']['message'].toString(),
+          //     ).show(context);
+          //   }
+          // }
+          // );
+        } else {
+          print("form is invalid");
+        }
       }
     };
 

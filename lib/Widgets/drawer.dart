@@ -40,9 +40,18 @@ class CommonDrawer extends StatelessWidget {
                     if (currentPage != "Home")
                       Navigator.pushReplacementNamed(context, '/home');
                   },
-                  iconColor: CommonColors.primary,
-                  title: "Home",
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: "Trang chủ",
                   isSelected: currentPage == "Home" ? true : false),
+              DrawerTile(
+                  icon: Icons.list_alt_outlined,
+                  onTap: () {
+                    if (currentPage != "RollUp")
+                      Navigator.pushReplacementNamed(context, '/rollup');
+                  },
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: "Điểm danh",
+                  isSelected: currentPage == "RollUp" ? true : false),
               DrawerTile(
                   icon: Icons.class__outlined,
                   onTap: () {
@@ -50,8 +59,17 @@ class CommonDrawer extends StatelessWidget {
                       Navigator.pushReplacementNamed(context, '/classes');
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Classes",
+                  title: "Lớp học",
                   isSelected: currentPage == "Classes" ? true : false),
+              DrawerTile(
+                  icon: Icons.account_box_outlined,
+                  onTap: () {
+                    if (currentPage != "Students")
+                      Navigator.pushReplacementNamed(context, '/students');
+                  },
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: "Học sinh",
+                  isSelected: currentPage == "Students" ? true : false),
               DrawerTile(
                   icon: Icons.logout,
                   onTap: () {
@@ -59,7 +77,7 @@ class CommonDrawer extends StatelessWidget {
                       Navigator.pushReplacementNamed(context, '/login');
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Logout",
+                  title: "Đăng xuất",
                   isSelected: currentPage == "Login" ? true : false),
               // DrawerTile(
               //     icon: Icons.account_circle,

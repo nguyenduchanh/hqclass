@@ -36,7 +36,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Navbar(
-          title: "Home",
+          title: "Trang chủ",
           searchBar: true,
         ),
         backgroundColor: CommonColors.bgColorScreen,

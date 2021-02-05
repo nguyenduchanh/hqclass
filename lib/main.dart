@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hqclass/Pages/Login/login_screen.dart';
-import 'package:hqclass/Pages/login.dart';
-import 'package:hqclass/Pages/register.dart';
+import 'package:hqclass/Pages/Login/login.dart';
+import 'package:hqclass/Pages/Register/register.dart';
 import 'package:hqclass/Providers/auth.dart';
 import 'package:hqclass/Providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'Components/splash_screen.dart';
 import 'Domains/user.dart';
+import 'Pages/Classes/classes.dart';
 import 'Pages/Home/home.dart';
+import 'Pages/RollUp/roll_up.dart';
+import 'Pages/Students/students.dart';
 import 'Util/shared_preference.dart';
 
 void main() {
@@ -52,20 +54,11 @@ class MyApp extends StatelessWidget {
             '/home': (context) => Home(),
             '/login': (context) => Login(),
             '/register': (context) => Register(),
+            '/classes': (context) => Classes(),
+            '/students': (context) => Students(),
+            '/rollup': (context) => RollUp(),
           }),
     );
   }
 }
 
-class MyApp2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'HQ Class',
-      theme: ThemeData(),
-      home: LoginScreen(),
-    );
-  }
-}
