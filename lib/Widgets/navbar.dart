@@ -63,15 +63,16 @@ class _NavbarState extends State<Navbar> {
     return Container(
         decoration: BoxDecoration(
             color: !widget.transparent ? widget.bgColor : Colors.transparent,
-            boxShadow: [
-              BoxShadow(
-                  color: !widget.transparent && !widget.noShadow
-                      ? CommonColors.initial
-                      : Colors.transparent,
-                  spreadRadius: -10,
-                  blurRadius: 12,
-                  offset: Offset(0, 5))
-            ]),
+//            boxShadow: [
+//              BoxShadow(
+//                  color: !widget.transparent && !widget.noShadow
+//                      ? CommonColors.initial
+//                      : Colors.transparent,
+//                  spreadRadius: -10,
+//                  blurRadius: 12,
+//                  offset: Offset(0, 5))
+//            ]
+        ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -152,17 +153,18 @@ class _NavbarState extends State<Navbar> {
                             }
                           },
                           child: Container(
+
                               margin: EdgeInsets.only(
                                   left: index == 0 ? 46 : 8, right: 8),
                               padding: EdgeInsets.only(
                                   top: 4, bottom: 4, left: 20, right: 20),
                               // width: 90,
-                              decoration: BoxDecoration(
-                                  color: activeTag == widget.tags[index]
-                                      ? CommonColors.primary
-                                      : CommonColors.secondary,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4.0))),
+//                              decoration: BoxDecoration(
+//                                  color: activeTag == widget.tags[index]
+//                                      ? CommonColors.primary
+//                                      : CommonColors.secondary,
+//                                  borderRadius:
+//                                      BorderRadius.all(Radius.circular(4.0))),
                               child: Center(
                                 child: Text(widget.tags[index],
                                     style: TextStyle(
@@ -170,7 +172,7 @@ class _NavbarState extends State<Navbar> {
                                             ? CommonColors.white
                                             : CommonColors.black,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 14.0)),
+                                        fontSize: 18.0)),
                               )),
                         );
                       },
