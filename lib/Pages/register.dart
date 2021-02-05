@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
       autofocus: false,
       validator: validateEmail,
       onSaved: (value) => _username = value,
-      decoration: buildInputDecoration("Confirm password", Icons.email),
+      decoration: buildInputDecoration("Confirm password", Icons.email, "Your Email"),
     );
 
     final passwordField = TextFormField(
@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
       obscureText: true,
       validator: (value) => value.isEmpty ? "Please enter password" : null,
       onSaved: (value) => _password = value,
-      decoration: buildInputDecoration("Confirm password", Icons.lock),
+      decoration: buildInputDecoration("Confirm password", Icons.lock, "Password"),
     );
 
     final confirmPassword = TextFormField(
@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
       validator: (value) => value.isEmpty ? "Your password is required" : null,
       onSaved: (value) => _confirmPassword = value,
       obscureText: true,
-      decoration: buildInputDecoration("Confirm password", Icons.lock),
+      decoration: buildInputDecoration("Confirm password", Icons.lock, "Confirm Password"),
     );
 
     var loading = Row(

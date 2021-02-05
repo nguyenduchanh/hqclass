@@ -8,34 +8,38 @@ import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatefulWidget{
+class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 }
+
 class _LoginState extends State<Login> {
-  final formKey = new GlobalKey<FormState> ();
+  final formKey = new GlobalKey<FormState>();
   String _username, _password;
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
     final usernameField = TextFormField(
       autofocus: false,
       validator: validateEmail,
       onSaved: (value) => _username = value,
-      decoration: buildInputDecoration("Confirm password", Icons.email),
+      decoration: buildInputDecoration("Confirm password", Icons.email, "Your Email"),
+      // decoration: InputDecoration(hintText: "Your email"),
     );
     final passwordField = TextFormField(
       autofocus: false,
       obscureText: true,
       validator: (value) => value.isEmpty ? "Please enter password" : null,
       onSaved: (value) => _password = value,
-      decoration: buildInputDecoration("Confirm password", Icons.lock),
+      decoration: buildInputDecoration("Confirm password", Icons.lock, "Password"),
     );
-    var loading = Row(
+    final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CircularProgressIndicator(),
-        Text(" Authenticating ... Please wait")
+        Text("Authenticating ... Please wait")
       ],
     );
     final forgotLabel = Row(
@@ -43,30 +47,30 @@ class _LoginState extends State<Login> {
       children: <Widget>[
         FlatButton(
           padding: EdgeInsets.all(0.0),
-          child: Text("Forgot password?",
-              style: TextStyle(fontWeight: FontWeight.w300)),
+          child: Text(
+            "Forgot password?",
+            style: TextStyle(fontWeight: FontWeight.w300),
+          ),
           onPressed: () {
-//            Navigator.pushReplacementNamed(context, '/reset-password');
+            // Navigator.pushReplacementNamed(context, '/reset-password');
           },
         ),
         FlatButton(
           padding: EdgeInsets.only(left: 0.0),
-          child: Text("Sign up", style: TextStyle(fontWeight: FontWeight.w300)),
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/register');
           },
-        ),
+          child: Text("Sign up", style: TextStyle(fontWeight: FontWeight.w300)),
+        )
       ],
     );
+
     var doLogin = () {
       final form = formKey.currentState;
-
       if (form.validate()) {
         form.save();
-
         final Future<Map<String, dynamic>> successfulMessage =
-        auth.login(_username, _password);
-
+            auth.login(_username, _password);
         successfulMessage.then((response) {
           if (response['status']) {
             User user = response['user'];
@@ -74,9 +78,8 @@ class _LoginState extends State<Login> {
             Navigator.pushReplacementNamed(context, '/dashboard');
           } else {
             Flushbar(
-              title: "Failed Login",
+              title: "Falied login",
               message: response['message']['message'].toString(),
-              duration: Duration(seconds: 3),
             ).show(context);
           }
         });
@@ -84,6 +87,7 @@ class _LoginState extends State<Login> {
         print("form is invalid");
       }
     };
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -91,14 +95,19 @@ class _LoginState extends State<Login> {
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: size.height * 0.03),
+                Image.asset(
+                  "assets/img/blackboard.png",
+                  height: size.height * 0.2,
+                ),
                 SizedBox(height: 15.0),
-                label("Email"),
+                // label("Email"),
                 SizedBox(height: 5.0),
                 usernameField,
                 SizedBox(height: 20.0),
-                label("Password"),
+                // label("Password"),
                 SizedBox(height: 5.0),
                 passwordField,
                 SizedBox(height: 20.0),

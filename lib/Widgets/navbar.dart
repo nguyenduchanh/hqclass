@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hqclass/Constants/Theme.dart';
+import 'package:hqclass/Constants/common_colors.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'input.dart';

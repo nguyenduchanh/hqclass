@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hqclass/Constants/Theme.dart';
+import 'package:hqclass/Constants/common_colors.dart';
 import 'package:hqclass/Util/strings.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {

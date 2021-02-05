@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Components/rounded_button.dart';
-import 'package:hqclass/Constants/Theme.dart';
+import 'package:hqclass/Constants/common_colors.dart';
 import 'package:hqclass/Pages/Login/login_screen.dart';
 import 'package:hqclass/Pages/Signup/signup_screen.dart';
 import 'package:hqclass/Pages/Welcome/background.dart';

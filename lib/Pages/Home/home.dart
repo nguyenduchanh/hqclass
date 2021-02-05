@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //widgets
-import 'package:hqclass/Constants/Theme.dart';
+import 'package:hqclass/Constants/common_colors.dart';
 import 'package:hqclass/Widgets/card-horizontal.dart';
 import 'package:hqclass/Widgets/card-small.dart';
 import 'package:hqclass/Widgets/card-square.dart';

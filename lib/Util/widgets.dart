@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hqclass/Constants/common_colors.dart';
 
 MaterialButton longButtons(String title, Function fun,
-    {Color color: const Color(0xfff063057), Color textColor: Colors.white}) {
+    {Color color: const Color(0xFF238174), Color textColor: Colors.white}) {
   return MaterialButton(
     onPressed: fun,
     textColor: textColor,
@@ -22,9 +23,10 @@ MaterialButton longButtons(String title, Function fun,
 
 label(String title) => Text(title);
 
-InputDecoration buildInputDecoration(String hintText, IconData icon) {
+InputDecoration buildInputDecoration(String hintText, IconData icon, String _hintText) {
   return InputDecoration(
-    prefixIcon: Icon(icon, color: Color.fromRGBO(50, 62, 72, 1.0)),
+    hintText: _hintText,
+    prefixIcon: Icon(icon, color: CommonColors.kPrimaryColor),
     // hintText: hintText,
     contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
