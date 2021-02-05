@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hqclass/Constants/common_colors.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 
 import 'drawer-tile.dart';
 
@@ -53,15 +52,15 @@ class CommonDrawer extends StatelessWidget {
                   iconColor: CommonColors.kPrimaryColor,
                   title: "Classes",
                   isSelected: currentPage == "Classes" ? true : false),
-              // DrawerTile(
-              //     icon: Icons.pie_chart,
-              //     onTap: () {
-              //       if (currentPage != "Profile")
-              //         Navigator.pushReplacementNamed(context, '/profile');
-              //     },
-              //     iconColor: CommonColors.warning,
-              //     title: "Profile",
-              //     isSelected: currentPage == "Profile" ? true : false),
+              DrawerTile(
+                  icon: Icons.logout,
+                  onTap: () {
+                    if (currentPage != "Logout")
+                      Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: "Logout",
+                  isSelected: currentPage == "Login" ? true : false),
               // DrawerTile(
               //     icon: Icons.account_circle,
               //     onTap: () {

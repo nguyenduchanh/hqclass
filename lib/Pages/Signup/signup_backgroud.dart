@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:hqclass/Pages/Welcome/background.dart';
+
+import 'package:flutter/material.dart';
 
 class SigupBackgroud extends StatelessWidget {
   final Widget child;

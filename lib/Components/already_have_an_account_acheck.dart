@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hqclass/Constants/common_colors.dart';
-import 'package:hqclass/Util/strings.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 
 class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final bool login;

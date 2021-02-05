@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:hqclass/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 
 
 class ProductCarousel extends StatefulWidget {

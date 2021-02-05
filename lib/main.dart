@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hqclass/Constants/common_colors.dart';
 import 'package:hqclass/Pages/Login/login_screen.dart';
 import 'package:hqclass/Pages/login.dart';
 import 'package:hqclass/Pages/register.dart';
@@ -8,6 +7,7 @@ import 'package:hqclass/Providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'Components/splash_screen.dart';
 import 'Domains/user.dart';
+import 'Pages/Home/home.dart';
 import 'Util/shared_preference.dart';
 
 void main() {
@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
                 }
               }),
           routes: {
+            '/home': (context) => Home(),
             '/login': (context) => Login(),
+            '/register': (context) => Register(),
           }),
     );
   }

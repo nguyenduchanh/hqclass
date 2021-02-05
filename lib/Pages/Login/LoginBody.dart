@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hqclass/Components/already_have_an_account_acheck.dart';
 import 'package:hqclass/Components/rounded_button.dart';
 import 'package:hqclass/Components/rounded_input_field.dart';
 import 'package:hqclass/Components/rounded_password_field.dart';
 import 'package:hqclass/Pages/Home/home.dart';
+import 'package:hqclass/Pages/Login/LoginBackground.dart';
 import 'package:hqclass/Pages/Signup/signup_screen.dart';
-import 'package:hqclass/Pages/Welcome/background.dart';
-import 'package:hqclass/Util/strings.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody({
@@ -18,7 +17,7 @@ class LoginBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     Size size = MediaQuery.of(context).size;
-    return Background(
+    return LoginBackground(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

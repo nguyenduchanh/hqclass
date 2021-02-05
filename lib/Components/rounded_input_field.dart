@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Components/text_field_container.dart';
-import 'package:hqclass/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String hintText;

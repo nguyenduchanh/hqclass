@@ -8,8 +8,7 @@ import 'package:hqclass/Components/rounded_password_field.dart';
 import 'package:hqclass/Components/social_icon.dart';
 import 'package:hqclass/Pages/Login/login_screen.dart';
 import 'package:hqclass/Pages/Signup/signup_backgroud.dart';
-import 'package:hqclass/Pages/Welcome/background.dart';
-import 'package:hqclass/Util/strings.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 
 class SignupBody extends StatelessWidget {
   @override
