@@ -54,7 +54,7 @@ class Home extends StatelessWidget {
                       title: homeCards["Ice Cream"]['title'],
                       img: homeCards["Ice Cream"]['image'],
                       tap: () {
-                        Navigator.pushNamed(context, '/pro');
+                        // Navigator.pushNamed(context, '/pro');
                       }),
                 ),
                 SizedBox(height: 8.0),
