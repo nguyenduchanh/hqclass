@@ -84,13 +84,13 @@ class RollUp extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Navbar(
-          title: "Danh sách học sinh",
-          searchBar: true,
+          title: "Điểm danh",
+          searchBar: false,
           rightOptions: false,
-          isOnSearch: true,
+          isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
-        drawer: CommonDrawer(currentPage: "Students"),
+        drawer: CommonDrawer(currentPage: "RollUp"),
         body: Container(
             padding: EdgeInsets.only(right: 24, left: 24, bottom: 36),
             child: SingleChildScrollView(

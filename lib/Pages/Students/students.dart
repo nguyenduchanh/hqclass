@@ -84,9 +84,9 @@ class Students extends StatelessWidget {
     return Scaffold(
         appBar: Navbar(
           title: "Danh sách học sinh",
-          searchBar: true,
+          searchBar: false,
           rightOptions: false,
-          isOnSearch: true,
+          isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
         drawer: CommonDrawer(currentPage: "Students"),

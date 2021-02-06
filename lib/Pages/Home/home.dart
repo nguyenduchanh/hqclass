@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
     return Scaffold(
         appBar: Navbar(
           title: "Trang chủ",
-          searchBar: true,
+          searchBar: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
         // key: _scaffoldKey,
@@ -47,44 +47,6 @@ class Home extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: CardHorizontal(
-                      cta: "View article",
-                      title: homeCards["Ice Cream"]['title'],
-                      img: homeCards["Ice Cream"]['image'],
-                      tap: () {
-                        // Navigator.pushNamed(context, '/pro');
-                      }),
-                ),
-                SizedBox(height: 8.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CardSmall(
-                        cta: "View article",
-                        title: homeCards["Makeup"]['title'],
-                        img: homeCards["Makeup"]['image'],
-                        tap: () {
-                          Navigator.pushNamed(context, '/pro');
-                        }),
-                    CardSmall(
-                        cta: "View article",
-                        title: homeCards["Coffee"]['title'],
-                        img: homeCards["Coffee"]['image'],
-                        tap: () {
-                          Navigator.pushNamed(context, '/pro');
-                        })
-                  ],
-                ),
-                SizedBox(height: 8.0),
-                CardHorizontal(
-                    cta: "View article",
-                    title: homeCards["Fashion"]['title'],
-                    img: homeCards["Fashion"]['image'],
-                    tap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
 
               ],
             ),

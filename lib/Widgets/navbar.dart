@@ -31,10 +31,10 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
       this.searchAutofocus = false,
       this.backButton = false,
       this.noShadow = false,
-      this.bgColor = CommonColors.white,
+      this.bgColor = CommonColors.kPrimaryColor,
       this.searchBar = false});
 
-  final double _prefferedHeight = 120.0;
+  final double _prefferedHeight = 60.0;
 
   @override
   _NavbarState createState() => _NavbarState();
@@ -63,15 +63,6 @@ class _NavbarState extends State<Navbar> {
     return Container(
         decoration: BoxDecoration(
             color: !widget.transparent ? widget.bgColor : Colors.transparent,
-//            boxShadow: [
-//              BoxShadow(
-//                  color: !widget.transparent && !widget.noShadow
-//                      ? CommonColors.initial
-//                      : Colors.transparent,
-//                  spreadRadius: -10,
-//                  blurRadius: 12,
-//                  offset: Offset(0, 5))
-//            ]
         ),
         child: SafeArea(
           child: Padding(
@@ -114,70 +105,6 @@ class _NavbarState extends State<Navbar> {
                     ),
                   ],
                 ),
-                if (widget.searchBar)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 8, bottom: 10, left: 15, right: 15),
-                    child: Input(
-                        placeholder: "Nhập để tìm kiếm?",
-
-                        controller: widget.searchController,
-                        onChanged: widget.searchOnChanged,
-                        autofocus: widget.searchAutofocus,
-                        suffixIcon:
-                            Icon(Icons.zoom_in, color: CommonColors.muted),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/pro');
-                        }),
-                  ),
-
-                if (tagsExist)
-                  Container(
-                    height: 40,
-                    child: ScrollablePositionedList.builder(
-                      itemScrollController: _scrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.tags.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            if (activeTag != widget.tags[index]) {
-                              setState(() => activeTag = widget.tags[index]);
-                              _scrollController.scrollTo(
-                                  index:
-                                      index == widget.tags.length - 1 ? 1 : 0,
-                                  duration: Duration(milliseconds: 420),
-                                  curve: Curves.easeIn);
-                              if (widget.getCurrentPage != null)
-                                widget.getCurrentPage(activeTag);
-                            }
-                          },
-                          child: Container(
-
-                              margin: EdgeInsets.only(
-                                  left: index == 0 ? 46 : 8, right: 8),
-                              padding: EdgeInsets.only(
-                                  top: 4, bottom: 4, left: 20, right: 20),
-                              // width: 90,
-//                              decoration: BoxDecoration(
-//                                  color: activeTag == widget.tags[index]
-//                                      ? CommonColors.primary
-//                                      : CommonColors.secondary,
-//                                  borderRadius:
-//                                      BorderRadius.all(Radius.circular(4.0))),
-                              child: Center(
-                                child: Text(widget.tags[index],
-                                    style: TextStyle(
-                                        color: activeTag == widget.tags[index]
-                                            ? CommonColors.white
-                                            : CommonColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18.0)),
-                              )),
-                        );
-                      },
-                    ),
-                  )
               ],
             ),
           ),

@@ -86,9 +86,9 @@ class Classes extends StatelessWidget {
     return Scaffold(
         appBar: Navbar(
           title: "Danh sách lớp học",
-          searchBar: true,
+          searchBar: false,
           rightOptions: false,
-          isOnSearch: true,
+          isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
         drawer: CommonDrawer(currentPage: "Classes"),
