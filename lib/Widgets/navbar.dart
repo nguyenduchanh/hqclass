@@ -34,7 +34,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
       this.bgColor = CommonColors.kPrimaryColor,
       this.searchBar = false});
 
-  final double _prefferedHeight = 60.0;
+  final double _prefferedHeight = 50.0;
 
   @override
   _NavbarState createState() => _NavbarState();
