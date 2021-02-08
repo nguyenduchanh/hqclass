@@ -21,8 +21,8 @@ class Home extends StatelessWidget {
         backgroundColor: CommonColors.bgColorScreen,
         // key: _scaffoldKey,
         drawer: CommonDrawer(currentPage: "Home"),
-        body: new ListPage(title: 'Lessons')
-        // Container(
+//        body: new ListPage(title: 'Lessons')
+        body: Container(
         // padding: EdgeInsets.only(left: 24.0, right: 24.0),
         // child: SingleChildScrollView(
         //   child: Column(
@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
         //
         //     ],
         //   ),
-        // ),
+         ),
 
         // )
         );

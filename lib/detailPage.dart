@@ -30,7 +30,7 @@ class DetailPage extends StatelessWidget {
     final topContentText = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 90.0),
+        SizedBox(height: 120.0),
         Icon(
           Icons.directions_car,
           color: Colors.white,

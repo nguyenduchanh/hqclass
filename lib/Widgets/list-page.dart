@@ -41,18 +41,20 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool selected = false;
     ListTile makeListTile(Lesson lesson) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
           leading: Container(
             padding: EdgeInsets.only(right: 12.0),
             decoration: new BoxDecoration(
                 border: new Border(
-                    right: new BorderSide(width: 1.0, color: CommonColors.kPrimaryColor))),
-            // child: Icon(Icons.autorenew, color: CommonColors.kPrimaryColor),
-            child: Text("9C", style: TextStyle(color: CommonColors.kPrimaryColor, fontWeight: FontWeight.bold),
-            ),
+                    right: new BorderSide(
+                        width: 1.0, color: CommonColors.kPrimaryColor))),
+//             child: Icon(Icons.autorenew, color: CommonColors.kPrimaryColor),
+            child: Text(lesson.code,
+                style: TextStyle(
+                    color: CommonColors.kPrimaryColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold)),
           ),
           title: Text(
             lesson.title,
@@ -170,7 +172,8 @@ class _ListPageState extends State<ListPage> {
 List getLessons() {
   return [
     Lesson(
-        title: "Introduction to Driving",
+        code: "HQ01",
+        title: "Lớp của em Quỳnh",
         level: "Beginner",
         indicatorValue: 0.33,
         price: 20,
@@ -178,6 +181,7 @@ List getLessons() {
             "Start by taking a couple of minutes to read the info in this section. "
             "Start by taking a couple of minutes to read the info in this section."),
     Lesson(
+        code: "HQ01",
         title: "Observation at Junctions",
         level: "Beginner",
         indicatorValue: 0.33,
@@ -186,6 +190,7 @@ List getLessons() {
             "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  "
             "While on the settings page, click the Save button."),
     Lesson(
+        code: "HQ01",
         title: "Reverse parallel Parking",
         level: "Intermidiate",
         indicatorValue: 0.66,
@@ -193,6 +198,7 @@ List getLessons() {
         content:
             "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu. "),
     Lesson(
+        code: "HQ01",
         title: "Reversing around the corner",
         level: "Intermidiate",
         indicatorValue: 0.66,
@@ -200,6 +206,7 @@ List getLessons() {
         content:
             "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  "),
     Lesson(
+        code: "HQ01",
         title: "Incorrect Use of Signal",
         level: "Advanced",
         indicatorValue: 1.0,
@@ -207,6 +214,7 @@ List getLessons() {
         content:
             "Start by taking a couple of minutes to read the info in this section. Launch your app and click on the Settings menu.  "),
     Lesson(
+        code: "HQ01",
         title: "Engine Challenges",
         level: "Advanced",
         indicatorValue: 1.0,
@@ -214,6 +222,7 @@ List getLessons() {
         content:
             "Start by taking a couple of minutes to read the info in this section. "),
     Lesson(
+        code: "HQ01",
         title: "Self Driving Car",
         level: "Advanced",
         indicatorValue: 1.0,
@@ -225,6 +234,7 @@ List getLessons() {
 }
 
 class Lesson {
+  String code;
   String title;
   String level;
   double indicatorValue;
@@ -232,5 +242,10 @@ class Lesson {
   String content;
 
   Lesson(
-      {this.title, this.level, this.indicatorValue, this.price, this.content});
+      {this.code,
+      this.title,
+      this.level,
+      this.indicatorValue,
+      this.price,
+      this.content});
 }
