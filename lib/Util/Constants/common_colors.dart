@@ -36,4 +36,5 @@ class CommonColors {
   static const Color muted = Color.fromRGBO(136, 152, 170, 1.0);
 
   static const Color text = Color.fromRGBO(50, 50, 93, 1.0);
+  static const Color lightGray = Color(0xD3D3D3);
 }

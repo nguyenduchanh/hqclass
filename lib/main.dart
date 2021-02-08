@@ -28,8 +28,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'HQ CLASS',
           theme: ThemeData(
+            backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
             primarySwatch: Colors.teal,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),

@@ -79,6 +79,8 @@ flutter:
     - assets/img/chat2.png
     - assets/img/blackboard.png
     - assets/loading.flr
+    - assets/line.png
+    - assets/drive-steering-wheel.jpg
   fonts:
     - family: OpenSans
       fonts:
