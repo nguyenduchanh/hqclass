@@ -66,7 +66,7 @@ class _NavbarState extends State<Navbar> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            padding: const EdgeInsets.only(left: 5.0, right: 0.0),
             child: Column(
               children: [
                 Row(
@@ -79,13 +79,13 @@ class _NavbarState extends State<Navbar> {
                             icon: Icon(
                                 !widget.backButton
                                     ? Icons.menu
-                                    : Icons.arrow_back_ios,
+                                    : Icons.arrow_back,
                                 color: !widget.transparent
                                     ? (widget.bgColor == CommonColors.white
                                         ? CommonColors.initial
                                         : CommonColors.white)
                                     : CommonColors.white,
-                                size: 24.0),
+                                size: 25.0),
                             onPressed: () {
                               if (!widget.backButton)
                                 Scaffold.of(context).openDrawer();
@@ -100,7 +100,7 @@ class _NavbarState extends State<Navbar> {
                                         : CommonColors.white)
                                     : CommonColors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 24.0)),
+                                fontSize: 20.0)),
                       ],
                     ),
                   ],

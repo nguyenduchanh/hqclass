@@ -10,6 +10,7 @@ import 'Pages/Classes/classes.dart';
 import 'Pages/Home/home.dart';
 import 'Pages/RollUp/roll_up.dart';
 import 'Pages/Students/students.dart';
+import 'Util/Constants/strings.dart';
 import 'Util/shared_preference.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'HQ CLASS',
+          title: CommonString.cMainTitle,
           theme: ThemeData(
             backgroundColor: Color.fromRGBO(58, 66, 86, 1.0),
             primarySwatch: Colors.teal,

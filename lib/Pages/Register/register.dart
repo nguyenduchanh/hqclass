@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Providers/auth.dart';
 import 'package:hqclass/Providers/user_provider.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -24,39 +25,39 @@ class _RegisterState extends State<Register> {
 
     final usernameField = TextFormField(
       autofocus: false,
-      validator: validateEmail,
-      onSaved: (value) => value.isEmpty ? "Please enter username" : null,
-      decoration: buildInputDecoration("", Icons.account_box, "Username"),
+      validator: (value) => value.isEmpty ? CommonString.cUsernameRequire : null,
+      onSaved: (value) =>_username = value,
+      decoration: buildInputDecoration("", Icons.account_box, CommonString.cUsername),
     );
     final emailField = TextFormField(
       autofocus: false,
       validator: validateEmail,
       onSaved: validateEmail,
-      decoration: buildInputDecoration("", Icons.email, "Your Email"),
+      decoration: buildInputDecoration("", Icons.email, CommonString.cEmail),
     );
     final passwordField = TextFormField(
       autofocus: false,
       obscureText: true,
-      validator: (value) => value.isEmpty ? "Please enter password" : null,
+      validator: (value) => value.isEmpty ? CommonString.cPasswordRequire : null,
       onSaved: (value) => _password = value,
       decoration: buildInputDecoration(
-          "Confirm password", Icons.lock, "Password"),
+          CommonString.cConfirmPassword, Icons.lock, CommonString.cPassword),
     );
 
     final confirmPassword = TextFormField(
       autofocus: false,
-      validator: (value) => value.isEmpty ? "Your password is required" : null,
+      validator: (value) => value.isEmpty ? CommonString.cConfirmPasswordRequire : null,
       onSaved: (value) => _confirmPassword = value,
       obscureText: true,
       decoration: buildInputDecoration(
-          "Confirm password", Icons.lock, "Confirm Password"),
+          CommonString.cConfirmPasswordRequire, Icons.lock, CommonString.cPasswordRequire),
     );
 
     var loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CircularProgressIndicator(),
-        Text(" Registering ... Please wait")
+        Text(CommonString.cRegistering)
       ],
     );
 
@@ -71,7 +72,7 @@ class _RegisterState extends State<Register> {
             Navigator.pushReplacementNamed(context, '/dashboard');
           } else {
             Flushbar(
-              title: "Registration Failed",
+              title: CommonString.cRegisterFailed,
               message: response.toString(),
               duration: Duration(seconds: 10),
             ).show(context);
@@ -79,6 +80,7 @@ class _RegisterState extends State<Register> {
         });
       } else {
         Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
           title: "Invalid form",
           message: "Please Complete the form properly",
           duration: Duration(seconds: 10),
@@ -112,7 +114,7 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 20.0),
                 auth.loggedInStatus == Status.Authenticating
                     ? loading
-                    : longButtons("Register", doRegister),
+                    : longButtons(CommonString.cSignUpButton, doRegister),
               ],
             ),
           ),

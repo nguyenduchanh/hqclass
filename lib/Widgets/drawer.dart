@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 
 import 'drawer-tile.dart';
 
@@ -35,38 +36,50 @@ class CommonDrawer extends StatelessWidget {
               DrawerTile(
                   icon: Icons.home,
                   onTap: () {
-                    if (currentPage != "Home")
+                    if (currentPage != "Home") {
                       Navigator.pushReplacementNamed(context, '/home');
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Trang chủ",
+                  title: CommonString.cHomePageNav,
                   isSelected: currentPage == "Home" ? true : false),
               DrawerTile(
                   icon: Icons.list_alt_outlined,
                   onTap: () {
-                    if (currentPage != "RollUp")
+                    if (currentPage != "RollUp") {
                       Navigator.pushReplacementNamed(context, '/rollup');
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Điểm danh",
+                  title: CommonString.cRollUpNav,
                   isSelected: currentPage == "RollUp" ? true : false),
               DrawerTile(
                   icon: Icons.class__outlined,
                   onTap: () {
-                    if (currentPage != "Classes")
+                    if (currentPage != "Classes") {
                       Navigator.pushReplacementNamed(context, '/classes');
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Lớp học",
+                  title: CommonString.cClassNav,
                   isSelected: currentPage == "Classes" ? true : false),
               DrawerTile(
                   icon: Icons.account_box_outlined,
                   onTap: () {
-                    if (currentPage != "Students")
+                    if (currentPage != "Students") {
                       Navigator.pushReplacementNamed(context, '/students');
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Học sinh",
+                  title: CommonString.cStudentNav,
                   isSelected: currentPage == "Students" ? true : false),
               DrawerTile(
                   icon: Icons.logout,
@@ -75,7 +88,7 @@ class CommonDrawer extends StatelessWidget {
                       Navigator.pushReplacementNamed(context, '/login');
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: "Đăng xuất",
+                  title: CommonString.cSignOutNav,
                   isSelected: currentPage == "Login" ? true : false),
             ],
           ),

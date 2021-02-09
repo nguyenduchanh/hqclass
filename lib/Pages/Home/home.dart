@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //widgets
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Widgets/card-horizontal.dart';
 import 'package:hqclass/Widgets/card-small.dart';
 import 'package:hqclass/Widgets/drawer.dart';
@@ -15,7 +16,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Navbar(
-          title: "Trang chủ",
+          title:CommonString.cHomePageNav,
           searchBar: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,

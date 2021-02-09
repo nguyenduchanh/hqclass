@@ -1,11 +1,8 @@
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Providers/auth.dart';
-import 'package:hqclass/Providers/user_provider.dart';
-import 'package:hqclass/Util/validators.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -25,25 +22,25 @@ class _LoginState extends State<Login> {
     final usernameField = TextFormField(
       autofocus: false,
       // validator: validateEmail,
-      validator: (value) => value.isEmpty ? "Please enter password" : null,
+      validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _username = value,
       decoration: buildInputDecoration(
-          "Confirm password", Icons.email, "Username or email"),
+          CommonString.cConfirmPassword, Icons.email, CommonString.cEmailOrUser),
       // decoration: InputDecoration(hintText: "Your email"),
     );
     final passwordField = TextFormField(
       autofocus: false,
       obscureText: true,
-      validator: (value) => value.isEmpty ? "Please enter password" : null,
+      validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _password = value,
       decoration:
-          buildInputDecoration("Confirm password", Icons.lock, "Password"),
+          buildInputDecoration(CommonString.cConfirmPassword, Icons.lock, CommonString.cPasswordPlaceHolder),
     );
     final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CircularProgressIndicator(),
-        Text("Authenticating ... Please wait")
+        Text(CommonString.cAuthenticating)
       ],
     );
     final forgotLabel = Row(
@@ -52,7 +49,7 @@ class _LoginState extends State<Login> {
         FlatButton(
           padding: EdgeInsets.all(0.0),
           child: Text(
-            "Forgot password?",
+            CommonString.cForgotPassword,
             style: TextStyle(fontWeight: FontWeight.w300),
           ),
           onPressed: () {
@@ -64,7 +61,7 @@ class _LoginState extends State<Login> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/register');
           },
-          child: Text("Sign up", style: TextStyle(fontWeight: FontWeight.w300)),
+          child: Text(CommonString.cSignUpButton, style: TextStyle(fontWeight: FontWeight.w300)),
         )
       ],
     );
@@ -96,7 +93,7 @@ class _LoginState extends State<Login> {
           // }
           // );
         } else {
-          print("form is invalid");
+          print(CommonString.cDataInvalid);
         }
       }
     };
@@ -126,7 +123,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 20.0),
                 auth.loggedInStatus == Status.Authenticating
                     ? loading
-                    : longButtons("Login", doLogin),
+                    : longButtons(CommonString.cLoginButton, doLogin),
                 SizedBox(height: 5.0),
                 forgotLabel
               ],

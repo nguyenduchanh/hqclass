@@ -18,13 +18,13 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(login ? cDontHaveAnAccount : cAlreadyAnAccount,
+        Text(login ? CommonString.cDontHaveAnAccount : CommonString.cAlreadyAnAccount,
             style: TextStyle(color:  CommonColors.kPrimaryColor),
         ),
         GestureDetector(
           onTap: press,
           child: Text(
-            login ? cSignUpTitle :cLoginTitle,
+            login ? CommonString.cSignUpTitle :CommonString.cLoginTitle,
             style: TextStyle(
               color:  CommonColors.kPrimaryColor,
               fontWeight: FontWeight.bold,
