@@ -2,7 +2,7 @@ class Classes {
   String classCode;
   String className;
   String contactName;
-  int classSize;
+  int numberOfStudents;
   DateTime createDate;
   String createBy;
   DateTime updatedDate;
@@ -12,12 +12,11 @@ class Classes {
       {this.classCode,
       this.className,
       this.contactName,
-      this.classSize,
+      this.numberOfStudents,
       this.createDate,
       this.createBy,
       this.updatedDate,
-      this.updatedBy}
-      );
+      this.updatedBy});
 }
 
 List getClasses() {
@@ -26,12 +25,10 @@ List getClasses() {
         classCode: "CL01",
         className: "Lớp của em Quỳnh",
         contactName: "Beginner",
-        classSize: 20,
+        numberOfStudents: 20,
         createDate: DateTime.now(),
         createBy: "Hanhnd",
         updatedDate: DateTime.now(),
-        updatedBy: "Hanhnd"
-    ),
-
+        updatedBy: "Hanhnd"),
   ];
 }

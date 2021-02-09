@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-
-//widgets
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
-import 'package:hqclass/Widgets/card-horizontal.dart';
-import 'package:hqclass/Widgets/card-small.dart';
 import 'package:hqclass/Widgets/drawer.dart';
 import 'package:hqclass/Widgets/navbar.dart';
 

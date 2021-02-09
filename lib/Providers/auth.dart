@@ -69,10 +69,11 @@ class AuthProvider with ChangeNotifier {
     return result;
   }
 
-  Future<Map<String, dynamic>> register(String email, String password,
+  Future<Map<String, dynamic>> register(String userName,String email, String password,
       String passwordConfirmation) async {
     final Map<String, dynamic> registrationData = {
       'user': {
+        'userName': userName,
         'email': email,
         'password': password,
         'password_confirmation': passwordConfirmation

@@ -32,7 +32,7 @@ class _RegisterState extends State<Register> {
     final emailField = TextFormField(
       autofocus: false,
       validator: validateEmail,
-      onSaved: validateEmail,
+      onSaved: (value) =>_email = value,
       decoration: buildInputDecoration("", Icons.email, CommonString.cEmail),
     );
     final passwordField = TextFormField(
@@ -65,7 +65,7 @@ class _RegisterState extends State<Register> {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        auth.register(_username, _password, _confirmPassword).then((response) {
+        auth.register(_username,_email, _password, _confirmPassword).then((response) {
           if (response['status']) {
             User user = response['data'];
             Provider.of<UserProvider>(context, listen: false).setUser(user);
@@ -81,8 +81,8 @@ class _RegisterState extends State<Register> {
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
-          title: "Invalid form",
-          message: "Please Complete the form properly",
+          title: CommonString.cDataInvalid,
+          message: CommonString.cReEnterLoginForm,
           duration: Duration(seconds: 10),
         ).show(context);
       }

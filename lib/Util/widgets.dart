@@ -23,7 +23,8 @@ MaterialButton longButtons(String title, Function fun,
 
 label(String title) => Text(title);
 
-InputDecoration buildInputDecoration(String hintText, IconData icon, String _hintText) {
+InputDecoration buildInputDecoration(
+    String hintText, IconData icon, String _hintText) {
   return InputDecoration(
     hintText: _hintText,
     prefixIcon: Icon(icon, color: CommonColors.kPrimaryColor),

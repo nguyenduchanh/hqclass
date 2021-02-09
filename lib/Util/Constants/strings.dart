@@ -7,6 +7,7 @@ class CommonString {
 
 //Title
   static const cMainTitle = "HQ CLASS";
+  static const cClassTitle = "Danh sách lớp học";
 
 // Nav
   static const cSignOutNav = "Đăng xuất";
@@ -34,6 +35,7 @@ class CommonString {
   static const cValidEmailMessage = "Vui lòng cung cấp một địa chỉ email hợp lệ";
   static const cRegistering = "Đang đăng ký tài khoản";
   static const cRegisterFailed = "Đang đăng ký tài khoản không thành công";
+  static const cReEnterLoginForm = "Nhập lại dữ liệu tài khoản";
 
   // button
   static const cLoginButton = "Đăng nhập";
