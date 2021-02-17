@@ -15,13 +15,14 @@ class ClassesDetailPage extends StatelessWidget {
         appBar: Navbar(
           title: "Chi tiết lớp học",
           searchBar: false,
-          rightOptions: false,
           isOnSearch: false,
           backButton: true,
         ),
         backgroundColor: CommonColors.bgColorScreen,
 //        drawer: CommonDrawer(currentPage: "Classes"),
-        body:Text("anh hanh")
+        body:
+          Text(classes!=null?classes.className:"add new", textAlign: TextAlign.center)
+    ,
     );
   }
 }

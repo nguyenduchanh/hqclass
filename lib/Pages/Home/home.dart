@@ -11,25 +11,14 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Navbar(
-          title:CommonString.cHomePageNav,
-          searchBar: false,
-        ),
-        backgroundColor: CommonColors.bgColorScreen,
-        // key: _scaffoldKey,
-        drawer: CommonDrawer(currentPage: "Home"),
-//        body: new ListPage(title: 'Lessons')
-        body: Container(
-        // padding: EdgeInsets.only(left: 24.0, right: 24.0),
-        // child: SingleChildScrollView(
-        //   child: Column(
-        //     children: [
-        //
-        //     ],
-        //   ),
-         ),
-
-        // )
-        );
+      appBar: Navbar(
+        title: CommonString.cHomePageNav,
+        searchBar: false,
+        rightOptions: false,
+      ),
+      backgroundColor: CommonColors.bgColorScreen,
+      drawer: CommonDrawer(currentPage: "Home"),
+      body: Container(),
+    );
   }
 }

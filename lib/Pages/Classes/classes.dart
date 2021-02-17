@@ -15,7 +15,6 @@ class Classes extends StatelessWidget {
         appBar: Navbar(
           title: CommonString.cClassTitle,
           searchBar: false,
-          rightOptions: false,
           isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,

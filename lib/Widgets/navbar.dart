@@ -6,10 +6,13 @@ import 'input.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
+  final String categoryOne;
+  final String categoryTwo;
   final bool searchBar;
   final bool backButton;
   final bool transparent;
   final bool rightOptions;
+  final bool deleteOption;
   final List<String> tags;
   final Function getCurrentPage;
   final bool isOnSearch;
@@ -21,9 +24,12 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
 
   Navbar(
       {this.title = "Home",
+      this.categoryOne = "",
+      this.categoryTwo = "",
       this.tags,
       this.transparent = false,
       this.rightOptions = true,
+      this.deleteOption = false,
       this.getCurrentPage,
       this.searchController,
       this.isOnSearch = false,
@@ -57,12 +63,14 @@ class _NavbarState extends State<Navbar> {
 
   @override
   Widget build(BuildContext context) {
+    final bool categories =
+        widget.categoryOne.isNotEmpty && widget.categoryTwo.isNotEmpty;
     final bool tagsExist =
         widget.tags == null ? false : (widget.tags.length == 0 ? false : true);
 
     return Container(
         decoration: BoxDecoration(
-            color: !widget.transparent ? widget.bgColor : Colors.transparent,
+          color: !widget.transparent ? widget.bgColor : Colors.transparent,
         ),
         child: SafeArea(
           child: Padding(
@@ -100,9 +108,26 @@ class _NavbarState extends State<Navbar> {
                                         : CommonColors.white)
                                     : CommonColors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 20.0)),
+                                fontSize: 18.0)),
                       ],
                     ),
+//                    if (widget.deleteOption)
+//                      Row(
+//                        mainAxisAlignment: MainAxisAlignment.start,
+//                        children: [
+//                          GestureDetector(
+//                            onTap: () {
+////                              Navigator.pushNamed(context, '/pro');
+//                            },
+//                            child: IconButton(
+//                                icon: Icon(Icons.delete,
+//                                    color: CommonColors.error, size: 26),
+//                                onPressed: () {
+//
+//                                }),
+//                          ),
+//                        ],
+//                      )
                   ],
                 ),
               ],
