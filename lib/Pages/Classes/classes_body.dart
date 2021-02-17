@@ -1,8 +1,13 @@
+import 'dart:core';
+
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:hqclass/Util/cdialog.dart';
 
 import 'classes_detail.dart';
 
@@ -82,18 +87,41 @@ class _ClassesListState extends State<ClassesBody> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ClassesDetailPage(classes: classes)))
+                          builder: (context) =>
+                              ClassesDetailPage(classes: classes)))
                 },
               ),
               IconSlideAction(
                 caption: 'Delete',
                 color: Colors.red,
                 icon: Icons.delete,
-                onTap: () => {},
+                onTap: () async {
+                  final ConfirmAction action =
+                      await CDialog._asyncConfirmDialog(context, '123', '333');
+                  // String action = "";
+                  // Dialogs.ShowConfirmDialog(context, "Warning", "Warning message", actions: ["OK", "Cancel"],
+                  //     onChanged: (value) {
+                  //       action = value;
+                  //     });
+                  if (action == ConfirmAction.ACCEPT) {
+                    Flushbar(
+                      title: CommonString.cRegisterFailed,
+                      message: "ACCEPT",
+                      duration: Duration(seconds: 10),
+                    ).show(context);
+                  } else {
+                    Flushbar(
+                      title: CommonString.cRegisterFailed,
+                      message: "CANCEL",
+                      duration: Duration(seconds: 10),
+                    ).show(context);
+                  }
+                },
               ),
             ],
           ),
         );
+
     final makeBody = Container(
       child: ListView.builder(
           scrollDirection: Axis.vertical,
@@ -103,36 +131,7 @@ class _ClassesListState extends State<ClassesBody> {
             return makeClassesCard(classes[index]);
           }),
     );
-    //body with slide edit/delete
-//    final makeBody = Slidable(
-//      actionPane: SlidableDrawerActionPane(),
-//      actionExtentRatio: 0.25,
-//      child: Container(
-//        color: Colors.white,
-//        child: ListView.builder(
-//            scrollDirection: Axis.vertical,
-//            shrinkWrap: true,
-//            itemCount: classes.length,
-//            itemBuilder: (BuildContext context, int index) {
-//              return makeClassesCard(classes[index]);
-//            }),
-//      ),
-//      secondaryActions: <Widget>[
-//        IconSlideAction(
-//          caption: 'More',
-//          color: Colors.black45,
-//          icon: Icons.more_horiz,
-//          onTap: () => {},
-//        ),
-//        IconSlideAction(
-//          caption: 'Delete',
-//          color: Colors.red,
-//          icon: Icons.delete,
-//          onTap: () => {},
-//        ),
-//      ],
-//    );
-
+    // final confirmDialog =
     return Scaffold(
       backgroundColor: CommonColors.lightGray,
       body: makeBody,
@@ -146,6 +145,36 @@ class _ClassesListState extends State<ClassesBody> {
         tooltip: 'Increment Counter',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+}
+enum ConfirmAction { CANCEL, ACCEPT }
+class CDialog {
+  static Future _asyncConfirmDialog(
+      BuildContext context, String Title, String Content) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(Title),
+          content: Text(Content),
+          actions: [
+            FlatButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmAction.CANCEL);
+              },
+            ),
+            FlatButton(
+              child: const Text('ACCEPT'),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmAction.ACCEPT);
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }
