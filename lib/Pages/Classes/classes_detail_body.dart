@@ -1,4 +1,5 @@
 
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
@@ -55,7 +56,15 @@ class ClassDetailBody extends StatelessWidget {
       onSaved: (value) => _numberOfStudents = value,
       decoration: buildInputDecorationWithoutIcon(CommonString.cNumberOfStudent,  CommonString.cEnterNumberOfStudent),
     );
-
+    //create date field
+    final createDateField= DateTimePicker(
+      type: DateTimePickerType.dateTimeSeparate,
+      dateMask: 'dd/MM/yyyy HH:mm',
+      initialValue: DateTime.now().toString(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      icon: Icon(Icons.event,),
+    );
     return SafeArea(
       child: Scaffold(
         body: Container(
