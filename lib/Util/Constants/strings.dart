@@ -16,7 +16,7 @@ class CommonString {
   static const cRollUpNav = "Điểm danh";
   static const cHomePageNav = "Trang chủ";
 
-//Log in page
+//Login page
   static const cEnterPassword = "Nhập mật khẩu";
   static const cPasswordPlaceHolder = "Nhập mật khẩu";
   static const cConfirmPassword = "Xác nhận mật khẩu";
@@ -36,6 +36,16 @@ class CommonString {
   static const cRegistering = "Đang đăng ký tài khoản";
   static const cRegisterFailed = "Đang đăng ký tài khoản không thành công";
   static const cReEnterLoginForm = "Nhập lại dữ liệu tài khoản";
+
+  // class detail page
+  static const cEnterClassCode = "Nhập mã lớp";
+  static const cEnterClassName = "Nhập tên lớp";
+  static const cEnterContactName = "Nhập tên người liên ";
+  static const cEnterNumberOfStudent = "Nhập sỹ số lớp";
+  static const cClassName = "Tên lớp học";
+  static const cClassCode = "Mã lớp học";
+  static const cContactName = "Người liên lạc";
+  static const cNumberOfStudent = "Sỹ số lớp";
 
   // button
   static const cLoginButton = "Đăng nhập";

@@ -22,13 +22,24 @@ MaterialButton longButtons(String title, Function fun,
 }
 
 label(String title) => Text(title);
-
+//text form filed with icon and without hint text
 InputDecoration buildInputDecoration(
-    String hintText, IconData icon, String _hintText) {
+    String placeHolder, IconData icon, String _hintText) {
   return InputDecoration(
     hintText: _hintText,
+    labelText: placeHolder,
     prefixIcon: Icon(icon, color: CommonColors.kPrimaryColor),
     // hintText: hintText,
+    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+  );
+}
+//text form filed with only hint text
+InputDecoration buildInputDecorationWithoutIcon(
+    String placeHolder, String _hintText) {
+  return InputDecoration(
+    hintText: _hintText,
+    labelText: placeHolder,
     contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
   );

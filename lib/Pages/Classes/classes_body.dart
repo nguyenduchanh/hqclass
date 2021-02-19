@@ -52,22 +52,11 @@ class _ClassesListState extends State<ClassesBody> {
               color: CommonColors.kPrimaryColor, size: 30.0),
           onTap: () {
             // mở ra trang chi tiết
-//        Navigator.push(
-//            context,
-//            MaterialPageRoute(
-//                builder: (context) => ClassesDetailPage(classes: classes)));
           },
         );
     Card makeClassesCard(Classes classes) => Card(
           elevation: 0,
-//          shape: RoundedRectangleBorder(
-//              borderRadius: BorderRadius.all(Radius.circular(10)),
-//              side: BorderSide(width: 2, color: Colors.white)),
 
-//          child: Container(
-//            decoration: BoxDecoration(color: Colors.white),
-//            child: makeListClassesTile(classes),
-//          ),
           child: Slidable(
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
