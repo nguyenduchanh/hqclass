@@ -1,9 +1,9 @@
-
-import 'package:date_time_picker/date_time_picker.dart';
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
+import 'package:intl/intl.dart';
 
 class ClassDetailBody extends StatelessWidget {
   final Classes classes;
@@ -57,13 +57,19 @@ class ClassDetailBody extends StatelessWidget {
       decoration: buildInputDecorationWithoutIcon(CommonString.cNumberOfStudent,  CommonString.cEnterNumberOfStudent),
     );
     //create date field
-    final createDateField= DateTimePicker(
-      type: DateTimePickerType.dateTimeSeparate,
-      dateMask: 'dd/MM/yyyy HH:mm',
-      initialValue: DateTime.now().toString(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      icon: Icon(Icons.event,),
+    DateTime selectedData;
+    final startDate = DateField(
+      onDateSelected: (DateTime value) {
+        // setState(() {
+          selectedData = value;
+        // });
+      },
+      decoration: InputDecoration(
+          border: OutlineInputBorder()
+      ),
+      label: DateTime.now().toUtc().toString(),
+      dateFormat: DateFormat.yMd(),
+      selectedDate: selectedData,
     );
     return SafeArea(
       child: Scaffold(
@@ -82,6 +88,8 @@ class ClassDetailBody extends StatelessWidget {
                 contactNameField,
                 SizedBox(height: 15.0),
                 numberOfStudentField,
+                SizedBox(height: 15.0),
+                startDate,
               ],
             ),
           ),
