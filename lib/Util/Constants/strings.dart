@@ -46,6 +46,7 @@ class CommonString {
   static const cClassCode = "Mã lớp học";
   static const cContactName = "Người liên lạc";
   static const cNumberOfStudent = "Sỹ số lớp";
+  static const cStartDate = "Ngày bắt đầu";
 
   // button
   static const cLoginButton = "Đăng nhập";

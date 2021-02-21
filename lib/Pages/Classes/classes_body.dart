@@ -7,7 +7,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
-import 'package:hqclass/Util/cdialog.dart';
 
 import 'classes_detail.dart';
 

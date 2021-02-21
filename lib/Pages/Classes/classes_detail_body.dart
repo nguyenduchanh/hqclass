@@ -1,9 +1,8 @@
-import 'package:date_field/date_field.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
-import 'package:intl/intl.dart';
 
 class ClassDetailBody extends StatelessWidget {
   final Classes classes;
@@ -25,51 +24,73 @@ class ClassDetailBody extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     // class code field
     final classCodeField = TextFormField(
-      initialValue: (classes != null && classes.classCode != null)? classes.classCode: "",
+      initialValue: (classes != null && classes.classCode != null)
+          ? classes.classCode
+          : "",
       autofocus: (classes != null && classes.classCode != null) ? false : true,
       validator: (value) => value.isEmpty ? CommonString.cEnterClassCode : null,
       onSaved: (value) => _classCode = value,
-      decoration: buildInputDecorationWithoutIcon(CommonString.cClassCode, CommonString.cEnterClassCode),
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cClassCode, CommonString.cEnterClassCode),
     );
     // class name field
-    final classNameField  = TextFormField(
-      initialValue: (classes != null && classes.className != null)? classes.className: "",
+    final classNameField = TextFormField(
+      initialValue: (classes != null && classes.className != null)
+          ? classes.className
+          : "",
       autofocus: false,
       validator: (value) => value.isEmpty ? CommonString.cEnterClassName : null,
       onSaved: (value) => _className = value,
-      decoration: buildInputDecorationWithoutIcon(CommonString.cClassName,  CommonString.cEnterClassName),
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cClassName, CommonString.cEnterClassName),
     );
     // contact name field
     final contactNameField = TextFormField(
-      initialValue: (classes != null && classes.contactName != null)? classes.contactName: "",
+      initialValue: (classes != null && classes.contactName != null)
+          ? classes.contactName
+          : "",
       autofocus: false,
       validator: (value) => value.isEmpty ? CommonString.cEnterClassName : null,
       onSaved: (value) => _contactName = value,
-      decoration: buildInputDecorationWithoutIcon(CommonString.cContactName,  CommonString.cEnterContactName),
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cContactName, CommonString.cEnterContactName),
     );
     //number of student
     final numberOfStudentField = TextFormField(
-      initialValue: (classes != null && classes.numberOfStudents != null)? classes.numberOfStudents.toString(): "",
+      initialValue: (classes != null && classes.numberOfStudents != null)
+          ? classes.numberOfStudents.toString()
+          : "",
       keyboardType: TextInputType.number,
       autofocus: false,
-      validator: (value) => value.isEmpty ? CommonString.cEnterNumberOfStudent : null,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterNumberOfStudent : null,
       onSaved: (value) => _numberOfStudents = value,
-      decoration: buildInputDecorationWithoutIcon(CommonString.cNumberOfStudent,  CommonString.cEnterNumberOfStudent),
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cNumberOfStudent, CommonString.cEnterNumberOfStudent),
     );
     //create date field
-    DateTime selectedData;
-    final startDate = DateField(
-      onDateSelected: (DateTime value) {
-        // setState(() {
-          selectedData = value;
-        // });
+    final startDate = DateTimePicker(
+      type: DateTimePickerType.dateTime,
+      dateMask: 'dd/MM/yyyy',
+      initialValue: DateTime.now().toString(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      icon: Icon(Icons.event),
+      dateLabelText: 'Date',
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cStartDate, CommonString.cStartDate),
+      selectableDayPredicate: (date) {
+        // Disable weekend days to select from the calendar
+        if (date.weekday == 6 || date.weekday == 7) {
+          return false;
+        }
+        return true;
       },
-      decoration: InputDecoration(
-          border: OutlineInputBorder()
-      ),
-      label: DateTime.now().toUtc().toString(),
-      dateFormat: DateFormat.yMd(),
-      selectedDate: selectedData,
+      onChanged: (val) => print(val),
+      validator: (val) {
+        return null;
+      },
+      onSaved: (val) => print(val),
     );
     return SafeArea(
       child: Scaffold(
