@@ -32,7 +32,8 @@ class CommonString {
   static const cPasswordRequire = "Mật khẩu là bắt buộc";
   static const cConfirmPasswordRequire = "Xác nhận mật khẩu là bắt buộc";
   static const cEmail = "Email";
-  static const cValidEmailMessage = "Vui lòng cung cấp một địa chỉ email hợp lệ";
+  static const cValidEmailMessage =
+      "Vui lòng cung cấp một địa chỉ email hợp lệ";
   static const cRegistering = "Đang đăng ký tài khoản";
   static const cRegisterFailed = "Đang đăng ký tài khoản không thành công";
   static const cReEnterLoginForm = "Nhập lại dữ liệu tài khoản";
@@ -51,6 +52,8 @@ class CommonString {
   // button
   static const cLoginButton = "Đăng nhập";
   static const cSignUpButton = "Đăng ký";
+  static const cCancelButton = "Huỷ bỏ";
+  static const cSaveButton = "Lưu";
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";

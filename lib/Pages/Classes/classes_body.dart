@@ -49,9 +49,6 @@ class _ClassesListState extends State<ClassesBody> {
           ),
           trailing: Icon(Icons.keyboard_arrow_right,
               color: CommonColors.kPrimaryColor, size: 30.0),
-          onTap: () {
-            // mở ra trang chi tiết
-          },
         );
     Card makeClassesCard(Classes classes) => Card(
           elevation: 0,

@@ -1,5 +1,7 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'input.dart';
@@ -20,6 +22,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final Function searchOnChanged;
   final bool searchAutofocus;
   final bool noShadow;
+  final bool checkButtonOption;
   final Color bgColor;
 
   Navbar(
@@ -37,6 +40,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
       this.searchAutofocus = false,
       this.backButton = false,
       this.noShadow = false,
+      this.checkButtonOption = false,
       this.bgColor = CommonColors.kPrimaryColor,
       this.searchBar = false});
 
@@ -111,19 +115,23 @@ class _NavbarState extends State<Navbar> {
                                 fontSize: 18.0)),
                       ],
                     ),
-//                    if (widget.deleteOption)
+//                    if (widget.checkButtonOption)
 //                      Row(
 //                        mainAxisAlignment: MainAxisAlignment.start,
 //                        children: [
 //                          GestureDetector(
 //                            onTap: () {
-////                              Navigator.pushNamed(context, '/pro');
+// //                              Navigator.pushNamed(context, '/pro');
 //                            },
 //                            child: IconButton(
-//                                icon: Icon(Icons.delete,
-//                                    color: CommonColors.error, size: 26),
+//                                icon: Icon(Icons.send,
+//                                    color: CommonColors.kPrimaryLightColor, size: 30),
 //                                onPressed: () {
-//
+//                                  Flushbar(
+//                                    title: CommonString.cDataInvalid,
+//                                    message: "ok con de",
+//                                    duration: Duration(seconds: 5),
+//                                  ).show(context);
 //                                }),
 //                          ),
 //                        ],

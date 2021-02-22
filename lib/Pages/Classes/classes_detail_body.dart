@@ -1,6 +1,8 @@
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
@@ -92,6 +94,15 @@ class ClassDetailBody extends StatelessWidget {
       },
       onSaved: (val) => print(val),
     );
+    // Save button
+
+    var doSave = () {
+          Flushbar(
+            title: "Falied login",
+            message: "Fucking",
+          ).show(context);
+    };
+
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -111,6 +122,9 @@ class ClassDetailBody extends StatelessWidget {
                 numberOfStudentField,
                 SizedBox(height: 15.0),
                 startDate,
+                SizedBox(height: 20.0),
+                longButtons(
+                CommonString.cSaveButton, doSave),
               ],
             ),
           ),

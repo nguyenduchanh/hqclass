@@ -17,12 +17,10 @@ class ClassesDetailPage extends StatelessWidget {
           searchBar: false,
           isOnSearch: false,
           backButton: true,
+          // checkButtonOption: true,
         ),
         backgroundColor: CommonColors.bgColorScreen,
-//        drawer: CommonDrawer(currentPage: "Classes"),
-        body: new ClassDetailBody(classes: classes)
-          // Text(classes!=null?classes.className:"add new", textAlign: TextAlign.center)
-    ,
+        body: new ClassDetailBody(classes: classes),
     );
   }
 }
