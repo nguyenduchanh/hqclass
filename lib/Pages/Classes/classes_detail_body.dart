@@ -95,39 +95,32 @@ class ClassDetailBody extends StatelessWidget {
       onSaved: (val) => print(val),
     );
     // Save button
-
     var doSave = () {
-          Flushbar(
-            title: "Falied login",
-            message: "Fucking",
-          ).show(context);
+      Flushbar(
+        title: "Falied login",
+        message: "Fucking",
+      ).show(context);
     };
 
     return SafeArea(
-      child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 15.0),
-                classCodeField,
-                SizedBox(height: 15.0),
-                classNameField,
-                SizedBox(height: 15.0),
-                contactNameField,
-                SizedBox(height: 15.0),
-                numberOfStudentField,
-                SizedBox(height: 15.0),
-                startDate,
-                SizedBox(height: 20.0),
-                longButtons(
-                CommonString.cSaveButton, doSave),
-              ],
-            ),
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 15.0),
+            classCodeField,
+            const SizedBox(height: 15.0),
+            classNameField,
+            const SizedBox(height: 15.0),
+            contactNameField,
+            const SizedBox(height: 15.0),
+            numberOfStudentField,
+            const SizedBox(height: 15.0),
+            startDate,
+            Spacer(),
+            longButtons(CommonString.cSaveButton, doSave)
+          ],
         ),
       ),
     );
