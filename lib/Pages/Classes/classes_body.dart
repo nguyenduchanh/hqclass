@@ -52,7 +52,6 @@ class _ClassesListState extends State<ClassesBody> {
         );
     Card makeClassesCard(Classes classes) => Card(
           elevation: 0,
-
           child: Slidable(
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,

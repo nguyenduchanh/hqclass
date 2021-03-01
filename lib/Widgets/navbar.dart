@@ -20,6 +20,8 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
   final bool isOnSearch;
   final TextEditingController searchController;
   final Function searchOnChanged;
+  final Function checkButtonClick;
+
   final bool searchAutofocus;
   final bool noShadow;
   final bool checkButtonOption;
@@ -37,6 +39,7 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
       this.searchController,
       this.isOnSearch = false,
       this.searchOnChanged,
+      this.checkButtonClick,
       this.searchAutofocus = false,
       this.backButton = false,
       this.noShadow = false,
@@ -121,18 +124,20 @@ class _NavbarState extends State<Navbar> {
 //                        children: [
 //                          GestureDetector(
 //                            onTap: () {
-// //                              Navigator.pushNamed(context, '/pro');
+////                              Navigator.pushNamed(context, '/pro');
 //                            },
 //                            child: IconButton(
-//                                icon: Icon(Icons.send,
-//                                    color: CommonColors.kPrimaryLightColor, size: 30),
+//                                icon: Icon(Icons.check,
+//                                    color: CommonColors.kPrimaryLightColor,
+//                                    size: 28),
 //                                onPressed: () {
-//                                  Flushbar(
-//                                    title: CommonString.cDataInvalid,
-//                                    message: "ok con de",
-//                                    duration: Duration(seconds: 5),
-//                                  ).show(context);
-//                                }),
+////                                  Flushbar(
+////                                    title: CommonString.cDataInvalid,
+////                                    message: "ok con de",
+////                                    duration: Duration(seconds: 5),
+////                                  ).show(context);
+//                                }
+//                                ),
 //                          ),
 //                        ],
 //                      )

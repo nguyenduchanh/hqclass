@@ -2,6 +2,8 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
+import 'package:hqclass/Domains/http-service.dart';
+import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -88,39 +90,62 @@ class ClassDetailBody extends StatelessWidget {
         }
         return true;
       },
-      onChanged: (val) => print(val),
       validator: (val) {
         return null;
       },
-      onSaved: (val) => print(val),
     );
     // Save button
     var doSave = () {
-      Flushbar(
-        title: "Falied login",
-        message: "Fucking",
-      ).show(context);
+      final form = formKey.currentState;
+      final HttpService httpService = HttpService();
+      if (!form.validate()) {
+        form.save();
+        Flushbar(
+          duration: Duration(seconds: 3),
+          title: "Falied login",
+          message: _classCode,
+        ).show(context);
+      } else {
+//        Flushbar(
+//          flushbarPosition: FlushbarPosition.TOP,
+//          title: CommonString.cDataInvalid,
+//          message: CommonString.cReEnterLoginForm,
+//          duration: Duration(seconds: 10),
+//        ).show(context);
+        Future<String> token = httpService.getPosts();
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: "test",
+          message: token.toString(),
+          duration: Duration(seconds: 10),
+        ).show(context);
+      }
     };
-
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 15.0),
-            classCodeField,
-            const SizedBox(height: 15.0),
-            classNameField,
-            const SizedBox(height: 15.0),
-            contactNameField,
-            const SizedBox(height: 15.0),
-            numberOfStudentField,
-            const SizedBox(height: 15.0),
-            startDate,
-            Spacer(),
-            longButtons(CommonString.cSaveButton, doSave)
-          ],
+      child: Scaffold(
+        body: Container(
+          padding: EdgeInsets.all(15.0),
+          child: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 15.0),
+                    classCodeField,
+                    SizedBox(height: 15.0),
+                    classNameField,
+                    SizedBox(height: 15.0),
+                    contactNameField,
+                    SizedBox(height: 15.0),
+                    numberOfStudentField,
+                    SizedBox(height: 15.0),
+                    startDate,
+                    SizedBox(height: 20.0),
+                    longButtons(CommonString.cSaveButton, doSave),
+                  ],
+                ),
+              )),
         ),
       ),
     );
