@@ -1,7 +1,12 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Providers/auth.dart';
+import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/classes.dart';
+import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:hqclass/Domains/user.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -13,19 +18,21 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
-  String _username, _password;
+  String _username = GetUserName();
+  String _password = GetPassword();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
+
     final usernameField = TextFormField(
       autofocus: false,
       // validator: validateEmail,
       validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _username = value,
-      decoration: buildInputDecoration(
-          CommonString.cConfirmPassword, Icons.email, CommonString.cEmailOrUser),
+      decoration: buildInputDecoration(CommonString.cConfirmPassword,
+          Icons.email, CommonString.cEmailOrUser),
       // decoration: InputDecoration(hintText: "Your email"),
     );
     final passwordField = TextFormField(
@@ -33,8 +40,8 @@ class _LoginState extends State<Login> {
       obscureText: true,
       validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _password = value,
-      decoration:
-          buildInputDecoration(CommonString.cConfirmPassword, Icons.lock, CommonString.cPasswordPlaceHolder),
+      decoration: buildInputDecoration(CommonString.cConfirmPassword,
+          Icons.lock, CommonString.cPasswordPlaceHolder),
     );
     final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -61,14 +68,33 @@ class _LoginState extends State<Login> {
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/register');
           },
-          child: Text(CommonString.cSignUpButton, style: TextStyle(fontWeight: FontWeight.w300)),
+          child: Text(CommonString.cSignUpButton,
+              style: TextStyle(fontWeight: FontWeight.w300)),
         )
       ],
     );
 
     var doLogin = () {
       if (kDebugMode) {
-        Navigator.pushReplacementNamed(context, '/home');
+//        Navigator.pushReplacementNamed(context, '/home');
+        final Future<Map<String, dynamic>> successfulMessage =
+            auth.login('hanhnd6', '123457');
+        successfulMessage.then((response) {
+          if (response['status']) {
+            String token = response['token'];
+            Global.Token = token;
+            UserPreferences().saveLoginConfig("hanhnd6", "123457", token);
+            Navigator.pushReplacementNamed(context, '/home');
+//          Provider.of<UserProvider>(context, listen: false).setUser(user);
+//          Navigator.pushReplacementNamed(context, '/dashboard');
+          } else {
+            Flushbar(
+              title: "Failed Login",
+              message: response['message'].toString(),
+              duration: Duration(seconds: 3),
+            ).show(context);
+          }
+        });
       } else {
         final form = formKey.currentState;
         if (form.validate()) {

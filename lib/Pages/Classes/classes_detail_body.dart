@@ -2,7 +2,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
-import 'package:hqclass/Domains/http-service.dart';
+import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
@@ -97,7 +97,6 @@ class ClassDetailBody extends StatelessWidget {
     // Save button
     var doSave = () {
       final form = formKey.currentState;
-      final HttpService httpService = HttpService();
       if (!form.validate()) {
         form.save();
         Flushbar(
@@ -106,19 +105,13 @@ class ClassDetailBody extends StatelessWidget {
           message: _classCode,
         ).show(context);
       } else {
-//        Flushbar(
-//          flushbarPosition: FlushbarPosition.TOP,
-//          title: CommonString.cDataInvalid,
-//          message: CommonString.cReEnterLoginForm,
-//          duration: Duration(seconds: 10),
-//        ).show(context);
-        Future<String> token = httpService.getPosts();
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
-          title: "test",
-          message: token.toString(),
+          title: CommonString.cDataInvalid,
+          message: CommonString.cReEnterLoginForm,
           duration: Duration(seconds: 10),
         ).show(context);
+
       }
     };
     return SafeArea(

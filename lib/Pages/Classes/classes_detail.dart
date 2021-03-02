@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
-import 'package:hqclass/Domains/dtb_helper.dart';
+import 'file:///D:/Study/Github/hqclass/lib/Util/Constants/dtb_helper.dart';
 import 'package:hqclass/Pages/Classes/classes_detail_body.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Widgets/navbar.dart';

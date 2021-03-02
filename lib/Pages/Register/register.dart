@@ -1,8 +1,6 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Domains/user.dart';
-import 'package:hqclass/Providers/auth.dart';
-import 'package:hqclass/Providers/user_provider.dart';
+import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -65,19 +63,19 @@ class _RegisterState extends State<Register> {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        auth.register(_username,_email, _password, _confirmPassword).then((response) {
-          if (response['status']) {
-            User user = response['data'];
-            Provider.of<UserProvider>(context, listen: false).setUser(user);
-            Navigator.pushReplacementNamed(context, '/dashboard');
-          } else {
-            Flushbar(
-              title: CommonString.cRegisterFailed,
-              message: response.toString(),
-              duration: Duration(seconds: 10),
-            ).show(context);
-          }
-        });
+//        auth.register(_username,_email, _password, _confirmPassword).then((response) {
+//          if (response['status']) {
+//            User user = response['data'];
+//            Provider.of<UserProvider>(context, listen: false).setUser(user);
+//            Navigator.pushReplacementNamed(context, '/dashboard');
+//          } else {
+//            Flushbar(
+//              title: CommonString.cRegisterFailed,
+//              message: response.toString(),
+//              duration: Duration(seconds: 10),
+//            ).show(context);
+//          }
+//        });
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,

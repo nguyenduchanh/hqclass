@@ -19,7 +19,6 @@ class Classes {
     this.updatedDate,
     this.updatedBy});
 }
-
 List getClasses() {
   return [
     Classes(

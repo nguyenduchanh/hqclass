@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 
 import 'classes_detail.dart';
@@ -28,6 +29,7 @@ class _ClassesListState extends State<ClassesBody> {
 
   @override
   Widget build(BuildContext context) {
+
     ListTile makeListClassesTile(Classes classes) => ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
           leading: Container(
@@ -132,7 +134,9 @@ class _ClassesListState extends State<ClassesBody> {
     );
   }
 }
+
 enum ConfirmAction { CANCEL, ACCEPT }
+
 class CDialog {
   static Future _asyncConfirmDialog(
       BuildContext context, String Title, String Content) async {
