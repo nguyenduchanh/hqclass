@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/user.dart';
@@ -28,11 +30,31 @@ class AuthProvider with ChangeNotifier {
     };
     _loggedInStatus = Status.Authenticating;
     notifyListeners();
-    Response response = await post(
-      DBHelper.login_url,
-      body: json.encode(loginData),
-      headers: {'Content-Type': 'application/json'},
-    );
+    Response response ;
+    try{
+      response  = await post(
+        DBHelper.login_url,
+        body: json.encode(loginData),
+        headers: {'Content-Type': 'application/json'},
+      ).timeout(const Duration(seconds: 5));
+    } on TimeoutException catch(e){
+      _loggedInStatus = Status.NotLoggedIn;
+      result = {
+        'status': false,
+        'data': null,
+        'message': json.decode(response.body)['error']
+      };
+      log("login timeout");
+    } on Error catch (e) {
+      result = {
+        'status': false,
+        'data': null,
+        'message': json.decode(response.body)['error']
+      };
+      _loggedInStatus = Status.NotLoggedIn;
+      log('Error: $e');
+    }
+
     if(response.statusCode == 200){
       final Map<String, dynamic> responseData = json.decode(response.body);
       var userData = responseData['data'];
