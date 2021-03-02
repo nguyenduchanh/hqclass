@@ -1,12 +1,12 @@
-import 'package:hqclass/Domains/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences{
-  Future<bool> saveLoginConfig(String userName, String password, String token) async{
+
+  CreateUserConfig(String userName, String password, String token) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("userName", userName);
-    prefs.setString("password", password);
-    prefs.setString("token", token);
+    await prefs.setString("userName", userName);
+    await prefs.setString("password", password);
+    await prefs.setString("token", token);
   }
   Future<String> GetTokenConfig()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();

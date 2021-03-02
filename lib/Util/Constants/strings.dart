@@ -52,6 +52,7 @@ class CommonString {
   // button
   static const cLoginButton = "Đăng nhập";
   static const cSignUpButton = "Đăng ký";
+  static const cBackToLogin = "Quay lại trang đăng nhập";
   static const cCancelButton = "Huỷ bỏ";
   static const cSaveButton = "Lưu";
 

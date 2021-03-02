@@ -3,10 +3,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/classes.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassDetailBody extends StatelessWidget {
   final Classes classes;
@@ -95,14 +97,17 @@ class ClassDetailBody extends StatelessWidget {
       },
     );
     // Save button
-    var doSave = () {
+    var doSave = () async{
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // String _userName  = prefs.getString("userName");
+
       final form = formKey.currentState;
-      if (!form.validate()) {
+      if (form.validate()) {
         form.save();
         Flushbar(
           duration: Duration(seconds: 3),
           title: "Falied login",
-          message: _classCode,
+          message: "",
         ).show(context);
       } else {
         Flushbar(

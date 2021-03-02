@@ -1,6 +1,8 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -25,13 +27,13 @@ class _RegisterState extends State<Register> {
       autofocus: false,
       validator: (value) => value.isEmpty ? CommonString.cUsernameRequire : null,
       onSaved: (value) =>_username = value,
-      decoration: buildInputDecoration("", Icons.account_box, CommonString.cUsername),
+      decoration: buildInputDecoration(CommonString.cUsername, Icons.account_box, CommonString.cUsername),
     );
     final emailField = TextFormField(
       autofocus: false,
       validator: validateEmail,
       onSaved: (value) =>_email = value,
-      decoration: buildInputDecoration("", Icons.email, CommonString.cEmail),
+      decoration: buildInputDecoration(CommonString.cEmail, Icons.email, CommonString.cEmail),
     );
     final passwordField = TextFormField(
       autofocus: false,
@@ -44,7 +46,7 @@ class _RegisterState extends State<Register> {
 
     final confirmPassword = TextFormField(
       autofocus: false,
-      validator: (value) => value.isEmpty ? CommonString.cConfirmPasswordRequire : null,
+      validator: (value) => value.isEmpty || _confirmPassword != _password ? CommonString.cConfirmPasswordRequire : null,
       onSaved: (value) => _confirmPassword = value,
       obscureText: true,
       decoration: buildInputDecoration(
@@ -59,23 +61,12 @@ class _RegisterState extends State<Register> {
       ],
     );
 
-    var doRegister = () {
+    var doRegister = () async{
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-//        auth.register(_username,_email, _password, _confirmPassword).then((response) {
-//          if (response['status']) {
-//            User user = response['data'];
-//            Provider.of<UserProvider>(context, listen: false).setUser(user);
-//            Navigator.pushReplacementNamed(context, '/dashboard');
-//          } else {
-//            Flushbar(
-//              title: CommonString.cRegisterFailed,
-//              message: response.toString(),
-//              duration: Duration(seconds: 10),
-//            ).show(context);
-//          }
-//        });
+        await UserPreferences().CreateUserConfig(_username, _password, _email);
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
@@ -85,7 +76,38 @@ class _RegisterState extends State<Register> {
         ).show(context);
       }
     };
+    final loginLabel = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
 
+        FlatButton(
+          padding: EdgeInsets.only(left: 0),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/login');
+          },
+          child:
+          Row(
+            children: [
+              IconButton(
+                  icon: Icon(
+                      Icons.arrow_back,
+                      color: CommonColors.kPrimaryColor,
+                      size: 25.0,
+                  ),
+                  // onPressed: () {
+                  //   Scaffold.of(context).openDrawer();
+                  // }
+                  ),
+              Text(CommonString.cBackToLogin,
+                  style: TextStyle(fontWeight: FontWeight.w300)),
+            ],
+          )
+          // Text(CommonString.cLoginButton,
+          //     style: TextStyle(fontWeight: FontWeight.w300))
+          ,
+        )
+      ],
+    );
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -107,16 +129,16 @@ class _RegisterState extends State<Register> {
                 SizedBox(height: 15.0),
                 passwordField,
                 SizedBox(height: 15.0),
-                SizedBox(height: 10.0),
                 confirmPassword,
                 SizedBox(height: 20.0),
                 auth.loggedInStatus == Status.Authenticating
                     ? loading
                     : longButtons(CommonString.cSignUpButton, doRegister),
+                SizedBox(height: 5.0),
+                loginLabel
               ],
             ),
           ),
-
         ),
       ),
     );

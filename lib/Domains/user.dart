@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+
 class User {
   String name;
   String password;
@@ -33,8 +30,9 @@ class User {
     );
   }
 }
-String GetUserName(){
-  return UserPreferences().GetUserNameConfig().toString();
+Future<String> GetUserName() async {
+  String _userName = await UserPreferences().GetPasswordConfig();
+return _userName;
 }
 String GetPassword(){
   return UserPreferences().GetPasswordConfig().toString();
