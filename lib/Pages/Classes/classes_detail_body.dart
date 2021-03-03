@@ -98,8 +98,8 @@ class ClassDetailBody extends StatelessWidget {
     );
     // Save button
     var doSave = () async{
-      // SharedPreferences prefs = await SharedPreferences.getInstance();
-      // String _userName  = prefs.getString("userName");
+       SharedPreferences prefs = await SharedPreferences.getInstance();
+       String _userName  = prefs.getString("userName");
 
       final form = formKey.currentState;
       if (form.validate()) {
@@ -107,7 +107,7 @@ class ClassDetailBody extends StatelessWidget {
         Flushbar(
           duration: Duration(seconds: 3),
           title: "Falied login",
-          message: "",
+          message: _userName,
         ).show(context);
       } else {
         Flushbar(
