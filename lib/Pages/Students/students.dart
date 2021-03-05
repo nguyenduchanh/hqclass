@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/models/student.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/sql_helper.dart';
 
 class Student2Page extends StatefulWidget {
@@ -47,33 +48,32 @@ class _StudentPageState extends State<Student2Page> {
                 Padding(
                   padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
                   child: TextFormField(
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please Enter Student Name';
-                      }
-                      if (value.trim() == "")
-                        return "Only Space is Not Valid!!!";
-                      return null;
-                    },
+//                    validator: (value) {
+//                      if (value.isEmpty) {
+//                        return 'Please Enter Student Name';
+//                      }
+//                      if (value.trim() == "")
+//                        return "Only Space is Not Valid!!!";
+//                      return null;
+//                    },
                     onSaved: (value) {
                       _studentName = value;
                     },
                     controller: _studentNameController,
                     decoration: InputDecoration(
-                        focusedBorder: new UnderlineInputBorder(
-                            borderSide: new BorderSide(
-                                color: Colors.purple,
-                                width: 2,
-                                style: BorderStyle.solid)),
+//                        focusedBorder: new UnderlineInputBorder(
+//                            borderSide: new BorderSide(
+//                                color: CommonColors.kPrimaryColor,
+//                                width: 2,
+//                                style: BorderStyle.solid)),
                         // hintText: "Student Name",
                         labelText: "Student Name",
-                        icon: Icon(
-                          Icons.business_center,
-                          color: Colors.purple,
-                        ),
+                        prefixIcon: Icon(Icons.person, color: CommonColors.kPrimaryColor),
+                        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
                         fillColor: Colors.white,
                         labelStyle: TextStyle(
-                          color: Colors.purple,
+                          color: CommonColors.kPrimaryColor,
                         )),
                   ),
                 ),

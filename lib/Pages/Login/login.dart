@@ -1,10 +1,8 @@
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -17,26 +15,58 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
+  TextEditingController _userNameController;
+  TextEditingController _passwordController;
+
   SharedPreferences prefs;
   String _username;
   String _password;
+
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
+
+  //Loading counter value on start
+  Future<Null> _loadCounter() async {
+    prefs = await SharedPreferences.getInstance();
+    String userName = prefs.getString("userName");
+    String password = prefs.getString("password");
+    setState(() {
+      _userNameController = new TextEditingController(text: userName);
+      _passwordController = new TextEditingController(text: password);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
-    Future<String> getUserName() => UserPreferences().GetUserNameConfig();
     final userNameField = TextFormField(
-        autofocus: true,
-        initialValue: getUserName().toString(),
+        autofocus: false,
+        initialValue: _username,
         validator: (value) => value.isEmpty ? CommonString.cEnterPassword : "",
         onSaved: (value) => value.isEmpty ? _username : "",
+        controller: _userNameController,
+        onChanged: (String str) {
+          setState(() {
+            _username = str;
+          });
+        },
         decoration: buildInputDecoration(
             CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
     final passwordField = TextFormField(
       autofocus: false,
+      initialValue: _password,
       obscureText: true,
       validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _password = value,
+      controller: _passwordController,
+      onChanged: (String str) {
+        setState(() {
+          _password = str;
+        });
+      },
       decoration: buildInputDecoration(CommonString.cPassword, Icons.lock,
           CommonString.cPasswordPlaceHolder),
     );
@@ -73,16 +103,12 @@ class _LoginState extends State<Login> {
 
     var doLogin = () async {
       if (kDebugMode) {
-        UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
+//        UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         final form = formKey.currentState;
         if (form.validate()) {
           form.save();
-//          final Future<Map<String, dynamic>> successfulMessage =
-//              auth.login(_username, _password);
-
-          // fix
           if (_username == "admin" && _password == "1234") {
             Navigator.pushReplacementNamed(context, '/home');
           }
@@ -125,10 +151,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-}
-
-Future<String> getStringFromLocalMemory(String key) async {
-  var pref = await SharedPreferences.getInstance();
-  var value = pref.getString(key) ?? "";
-  return value;
 }
