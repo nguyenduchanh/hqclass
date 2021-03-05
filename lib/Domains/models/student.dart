@@ -1,16 +1,19 @@
 class Student{
   int id;
   String name;
-  Student(this.id,this.name);
+  int age;
+  Student(this.id,this.name, this.age);
   Map<String,dynamic> toMap(){
     var map = <String, dynamic>{
       'id':id,
       'name': name,
+      'age': age
     };
     return map;
   }
   Student.fromMap(Map<String, dynamic> map){
     id = map['id'];
     name = map['name'];
+    age = map['age'];
   }
 }

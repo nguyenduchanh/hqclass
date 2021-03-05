@@ -23,7 +23,7 @@ class DBHelper {
 
   _onCreate(Database db, int version) async {
     await db
-        .execute('CREATE TABLE student (id INTEGER PRIMARY KEY, name TEXT)');
+        .execute('CREATE TABLE student (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)');
   }
 
   Future<Student> add(Student student) async {
@@ -34,7 +34,7 @@ class DBHelper {
 
   Future<List<Student>> getStudents() async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query('student', columns: ['id', 'name']);
+    List<Map> maps = await dbClient.query('student', columns: ['id', 'name','age']);
     List<Student> students = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

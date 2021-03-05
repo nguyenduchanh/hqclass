@@ -11,10 +11,12 @@ class _StudentPageState extends State<Student2Page> {
   final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
   Future<List<Student>> students;
   String _studentName;
+  int _studentAge;
   bool isUpdate = false;
   int studentIdForUpdate;
   DBHelper dbHelper;
   final _studentNameController = TextEditingController();
+  final _studentAgeController = TextEditingController();
 
   @override
   void initState() {
@@ -75,6 +77,39 @@ class _StudentPageState extends State<Student2Page> {
                         )),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please Enter Student age';
+                      }
+                      if (value.trim() == "")
+                        return "Only Space is Not Valid!!!";
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _studentAge = int.parse(value);
+                    },
+                    controller: _studentAgeController,
+                    decoration: InputDecoration(
+                        focusedBorder: new UnderlineInputBorder(
+                            borderSide: new BorderSide(
+                                color: Colors.purple,
+                                width: 2,
+                                style: BorderStyle.solid)),
+                        // hintText: "Student Name",
+                        labelText: "Student Age",
+                        icon: Icon(
+                          Icons.business_center,
+                          color: Colors.purple,
+                        ),
+                        fillColor: Colors.white,
+                        labelStyle: TextStyle(
+                          color: Colors.purple,
+                        )),
+                  ),
+                ),
               ],
             ),
           ),
@@ -92,7 +127,7 @@ class _StudentPageState extends State<Student2Page> {
                     if (_formStateKey.currentState.validate()) {
                       _formStateKey.currentState.save();
                       dbHelper
-                          .update(Student(studentIdForUpdate, _studentName))
+                          .update(Student(studentIdForUpdate, _studentName,_studentAge))
                           .then((data) {
                         setState(() {
                           isUpdate = false;
@@ -102,10 +137,11 @@ class _StudentPageState extends State<Student2Page> {
                   } else {
                     if (_formStateKey.currentState.validate()) {
                       _formStateKey.currentState.save();
-                      dbHelper.add(Student(null, _studentName));
+                      dbHelper.add(Student(null, _studentName, _studentAge));
                     }
                   }
                   _studentNameController.text = '';
+                  _studentAgeController.text = '';
                   refreshStudentList();
                 },
               ),
@@ -120,6 +156,7 @@ class _StudentPageState extends State<Student2Page> {
                 ),
                 onPressed: () {
                   _studentNameController.text = '';
+                  _studentAgeController.text = '';
                   setState(() {
                     isUpdate = false;
                     studentIdForUpdate = null;
@@ -161,6 +198,9 @@ class _StudentPageState extends State<Student2Page> {
               label: Text('NAME'),
             ),
             DataColumn(
+              label: Text('AGE'),
+            ),
+            DataColumn(
               label: Text('DELETE'),
             )
           ],
@@ -176,6 +216,16 @@ class _StudentPageState extends State<Student2Page> {
                       studentIdForUpdate = student.id;
                     });
                     _studentNameController.text = student.name;
+                  },
+                ),
+                DataCell(
+                  Text(student.age.toString()),
+                  onTap: () {
+                    setState(() {
+                      isUpdate = true;
+                      studentIdForUpdate = student.id;
+                    });
+                    _studentAgeController.text = student.age.toString();
                   },
                 ),
                 DataCell(
