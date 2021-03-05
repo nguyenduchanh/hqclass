@@ -15,44 +15,30 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login>{
+class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
-  TextFormField _userNameTextFormField;
-  TextFormField _passwordTextFormField;
   SharedPreferences prefs;
-  String _username ;
-  String _password ;
+  String _username;
+  String _password;
   @override
-  void initState() {
-    super.initState();
-    _loadCounter();
-  }
-
-  //Loading counter value on start
-  Future<Null> _loadCounter() async {
-    prefs = await SharedPreferences.getInstance();
-    String userName  = prefs.getString("userName");
-    setState(() {
-      _userNameTextFormField = new TextFormField(
-        autofocus: true,
-        initialValue: userName,
-        validator: (value) => value.isEmpty ? CommonString.cEnterPassword : "",
-        onSaved: (value) =>  value.isEmpty?_username:"",
-        decoration: buildInputDecoration(CommonString.cUsername,
-            Icons.email, CommonString.cEmailOrUser),);
-    });
-  }
-  @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
+    Future<String> getUserName() => UserPreferences().GetUserNameConfig();
+    final userNameField = TextFormField(
+        autofocus: true,
+        initialValue: getUserName().toString(),
+        validator: (value) => value.isEmpty ? CommonString.cEnterPassword : "",
+        onSaved: (value) => value.isEmpty ? _username : "",
+        decoration: buildInputDecoration(
+            CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
     final passwordField = TextFormField(
       autofocus: false,
       obscureText: true,
       validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       onSaved: (value) => _password = value,
-      decoration: buildInputDecoration(CommonString.cPassword,
-          Icons.lock, CommonString.cPasswordPlaceHolder),
+      decoration: buildInputDecoration(CommonString.cPassword, Icons.lock,
+          CommonString.cPasswordPlaceHolder),
     );
     final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,15 +71,17 @@ class _LoginState extends State<Login>{
       ],
     );
 
-    var doLogin = () async{
+    var doLogin = () async {
       if (kDebugMode) {
+        UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         final form = formKey.currentState;
         if (form.validate()) {
           form.save();
-          final Future<Map<String, dynamic>> successfulMessage =
-              auth.login(_username, _password);
+//          final Future<Map<String, dynamic>> successfulMessage =
+//              auth.login(_username, _password);
+
           // fix
           if (_username == "admin" && _password == "1234") {
             Navigator.pushReplacementNamed(context, '/home');
@@ -108,7 +96,7 @@ class _LoginState extends State<Login>{
       child: Scaffold(
         body: Container(
 //          padding: EdgeInsets.all(10.0),
-          padding: EdgeInsets.only(top: 10,bottom: 10, left: 30,right: 30),
+          padding: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
           child: Form(
             key: formKey,
             child: Column(
@@ -120,7 +108,8 @@ class _LoginState extends State<Login>{
                   height: size.height * 0.2,
                 ),
                 SizedBox(height: 15.0),
-                _userNameTextFormField,
+//                _userNameTextFormField,
+                userNameField,
                 SizedBox(height: 15.0),
                 passwordField,
                 SizedBox(height: 15.0),
@@ -136,4 +125,10 @@ class _LoginState extends State<Login>{
       ),
     );
   }
+}
+
+Future<String> getStringFromLocalMemory(String key) async {
+  var pref = await SharedPreferences.getInstance();
+  var value = pref.getString(key) ?? "";
+  return value;
 }

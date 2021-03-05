@@ -15,8 +15,8 @@ class UserPreferences{
   }
   Future<String> GetUserNameConfig()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('userName') ?? "";
-    return token;
+    final userName = prefs.getString('userName') ?? "";
+    return userName;
   }
   Future<String> GetPasswordConfig()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
