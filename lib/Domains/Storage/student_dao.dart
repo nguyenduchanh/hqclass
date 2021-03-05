@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
-class DBHelper {
+class StudentDao {
   static Database _db;
   Future<Database> get db async {
     if (_db != null) {
@@ -16,7 +16,7 @@ class DBHelper {
 
   initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, 'student.db');
+    String path = join(documentDirectory.path, 'class_mng.db');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }

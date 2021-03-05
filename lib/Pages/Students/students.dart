@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hqclass/Domains/Storage/student_dao.dart';
 import 'package:hqclass/Domains/models/student.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
-import 'package:hqclass/Util/sql_helper.dart';
 
 class Student2Page extends StatefulWidget {
   @override
@@ -15,20 +15,20 @@ class _StudentPageState extends State<Student2Page> {
   int _studentAge;
   bool isUpdate = false;
   int studentIdForUpdate;
-  DBHelper dbHelper;
+  StudentDao studentDao;
   final _studentNameController = TextEditingController();
   final _studentAgeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    dbHelper = DBHelper();
+    studentDao = StudentDao();
     refreshStudentList();
   }
 
   refreshStudentList() {
     setState(() {
-      students = dbHelper.getStudents();
+      students = studentDao.getStudents();
     });
   }
 
@@ -126,7 +126,7 @@ class _StudentPageState extends State<Student2Page> {
                   if (isUpdate) {
                     if (_formStateKey.currentState.validate()) {
                       _formStateKey.currentState.save();
-                      dbHelper
+                      studentDao
                           .update(Student(studentIdForUpdate, _studentName,_studentAge))
                           .then((data) {
                         setState(() {
@@ -137,7 +137,7 @@ class _StudentPageState extends State<Student2Page> {
                   } else {
                     if (_formStateKey.currentState.validate()) {
                       _formStateKey.currentState.save();
-                      dbHelper.add(Student(null, _studentName, _studentAge));
+                      studentDao.add(Student(null, _studentName, _studentAge));
                     }
                   }
                   _studentNameController.text = '';
@@ -232,7 +232,7 @@ class _StudentPageState extends State<Student2Page> {
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      dbHelper.delete(student.id);
+                      studentDao.delete(student.id);
                       refreshStudentList();
                     },
                   ),

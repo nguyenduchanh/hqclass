@@ -30,10 +30,3 @@ class User {
     );
   }
 }
-Future<String> GetUserName() async {
-  String _userName = await UserPreferences().GetPasswordConfig();
-return _userName;
-}
-String GetPassword(){
-  return UserPreferences().GetPasswordConfig().toString();
-}
