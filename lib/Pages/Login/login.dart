@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,8 @@ class _LoginState extends State<Login> {
   TextEditingController _passwordController;
 
   SharedPreferences prefs;
-  String _username;
-  String _password;
-
+  String _userNameLocal;
+  String _passwordLocal;
   void initState() {
     super.initState();
     _loadCounter();
@@ -32,6 +32,8 @@ class _LoginState extends State<Login> {
     prefs = await SharedPreferences.getInstance();
     String userName = prefs.getString("userName");
     String password = prefs.getString("password");
+    _userNameLocal = userName;
+    _passwordLocal = password;
     setState(() {
       _userNameController = new TextEditingController(text: userName);
       _passwordController = new TextEditingController(text: password);
@@ -44,29 +46,45 @@ class _LoginState extends State<Login> {
     AuthProvider auth = Provider.of<AuthProvider>(context);
     final userNameField = TextFormField(
         autofocus: false,
-        initialValue: _username,
-        validator: (value) => value.isEmpty ? CommonString.cEnterPassword : "",
-        onSaved: (value) => value.isEmpty ? _username : "",
-        controller: _userNameController,
-        onChanged: (String str) {
-          setState(() {
-            _username = str;
-          });
+//        initialValue: _username,
+//        validator: (value) => value!="" ? CommonString.cEnterPassword : "",
+        validator: (value) {
+          if (_userNameController.text.isEmpty) {
+            return 'Please Enter User Name';
+          }
+          if (_userNameController.text.trim() == "")
+            return "Only Space is Not Valid!!!";
+          return null;
         },
+        onSaved: (value) => value.isEmpty ? _userNameController.text : "",
+        controller: _userNameController,
+//        onChanged: (String str) {
+//          setState(() {
+//            _username = str;
+//          });
+//        },
         decoration: buildInputDecoration(
             CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
     final passwordField = TextFormField(
       autofocus: false,
-      initialValue: _password,
+//      initialValue: _password,
       obscureText: true,
-      validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
-      onSaved: (value) => _password = value,
-      controller: _passwordController,
-      onChanged: (String str) {
-        setState(() {
-          _password = str;
-        });
+//      validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
+      validator: (value) {
+        if (_passwordController.text.isEmpty) {
+          return 'Please Enter Password!';
+        }
+        if (_passwordController.text.trim() == "")
+          return "Only Space is Not Valid!!!";
+        return null;
       },
+      onSaved: (value) => _passwordController.text = value,
+      controller: _passwordController,
+//      onChanged: (String str) {
+//        setState(() {
+//          _passwordController.text = str;
+//        });
+//      },
       decoration: buildInputDecoration(CommonString.cPassword, Icons.lock,
           CommonString.cPasswordPlaceHolder),
     );
@@ -102,18 +120,32 @@ class _LoginState extends State<Login> {
     );
 
     var doLogin = () async {
-      if (kDebugMode) {
+      if (!kDebugMode) {
        // UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         final form = formKey.currentState;
         if (form.validate()) {
           form.save();
-          if (_username == "admin" && _password == "1234") {
+          if (_userNameController.text == _userNameLocal &&
+              _passwordController.text == _passwordLocal) {
             Navigator.pushReplacementNamed(context, '/home');
+          }else{
+            Flushbar(
+              flushbarPosition: FlushbarPosition.TOP,
+              title: CommonString.cDataInvalid,
+              message: CommonString.cReEnterLoginForm,
+              duration: Duration(seconds: 10),
+            ).show(context);
           }
         } else {
-          print(CommonString.cDataInvalid);
+//          print(CommonString.cDataInvalid);
+          Flushbar(
+            flushbarPosition: FlushbarPosition.TOP,
+            title: CommonString.cDataInvalid,
+            message: CommonString.cReEnterLoginForm,
+            duration: Duration(seconds: 10),
+          ).show(context);
         }
       }
     };
