@@ -13,13 +13,13 @@ class StudentDao {
     _db = await initDatabase();
     return _db;
   }
-
   initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, 'class_mng.db');
     var db = await openDatabase(path, version: 1, onCreate: _onCreate);
     return db;
   }
+
 
   _onCreate(Database db, int version) async {
     await db

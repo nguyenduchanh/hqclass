@@ -1,7 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Domains/classes.dart';
+import 'file:///D:/Study/Github/hqclass/lib/Domains/models/classes.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Domains/user.dart';
@@ -121,6 +121,7 @@ class ClassDetailBody extends StatelessWidget {
     };
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Container(
           padding: EdgeInsets.all(15.0),
           child: Form(

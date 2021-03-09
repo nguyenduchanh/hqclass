@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   SharedPreferences prefs;
   String _userNameLocal;
   String _passwordLocal;
+
   void initState() {
     super.initState();
     _loadCounter();
@@ -121,7 +122,7 @@ class _LoginState extends State<Login> {
 
     var doLogin = () async {
       if (!kDebugMode) {
-       // UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
+        // UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         final form = formKey.currentState;
@@ -130,7 +131,7 @@ class _LoginState extends State<Login> {
           if (_userNameController.text == _userNameLocal &&
               _passwordController.text == _passwordLocal) {
             Navigator.pushReplacementNamed(context, '/home');
-          }else{
+          } else {
             Flushbar(
               flushbarPosition: FlushbarPosition.TOP,
               title: CommonString.cDataInvalid,
@@ -152,8 +153,8 @@ class _LoginState extends State<Login> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Container(
-//          padding: EdgeInsets.all(10.0),
           padding: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
           child: Form(
             key: formKey,
@@ -163,7 +164,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: size.height * 0.02),
                 Image.asset(
                   "assets/img/blackboard.png",
-                  height: size.height * 0.2,
+                  height: size.height * 0.25,
                 ),
                 SizedBox(height: 15.0),
 //                _userNameTextFormField,

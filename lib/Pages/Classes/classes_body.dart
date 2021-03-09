@@ -4,7 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hqclass/Domains/classes.dart';
+import 'file:///D:/Study/Github/hqclass/lib/Domains/models/classes.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';

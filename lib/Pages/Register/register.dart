@@ -110,6 +110,7 @@ class _RegisterState extends State<Register> {
     );
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: Container(
           padding: EdgeInsets.all(40.0),
           child: Form(
