@@ -41,14 +41,24 @@ class CommonString {
   // class detail page
   static const cEnterClassCode = "Nhập mã lớp";
   static const cEnterClassName = "Nhập tên lớp";
-  static const cEnterContactName = "Nhập tên người liên ";
+  static const cEnterContactName = "Nhập tên người liên lạc";
+  static const cEnterContactPhone = "Nhập sdt người liên lạc";
   static const cEnterNumberOfStudent = "Nhập sỹ số lớp";
   static const cClassName = "Tên lớp học";
   static const cClassCode = "Mã lớp học";
   static const cContactName = "Người liên lạc";
+  static const cContactPhone = "Sdt liên lạc";
   static const cNumberOfStudent = "Sỹ số lớp";
   static const cStartDate = "Ngày bắt đầu";
-
+  //student detail page
+  static const cEnterStudentCode = "Nhập mã học sinh";
+  static const cEnterStudentName = "Nhập tên học sinh";
+  static const cEnterParentName = "Nhập tên cha mẹ";
+  static const cEnterParentPhone = "Nhập sdt cha mẹ";
+  static const cStudentName = "Tên học sinh";
+  static const cStudentCode = "Mã học sinh";
+  static const cParentName = "Tên cha mẹ";
+  static const cParentPhone = "Sdt cha mẹ";
   // button
   static const cLoginButton = "Đăng nhập";
   static const cSignUpButton = "Đăng ký";
@@ -58,4 +68,10 @@ class CommonString {
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";
+
+  // Add data
+  static const cSaveDataSuccess = "Lưu mới dữ liệu thành công!";
+  static const cSaveDataSuccessMessage = "Thành công rồi vợ yêu ơi!";
+  static const cSaveDataFail = "Lưu dữ liệu thất bại!";
+  static const cSaveDataFailMessage = "Vợ yêu lưu dữ liệu lỗi rồi";
 }

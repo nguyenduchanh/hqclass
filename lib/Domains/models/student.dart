@@ -1,19 +1,41 @@
-class Student{
+class StudentModel{
   int id;
-  String name;
-  int age;
-  Student(this.id,this.name, this.age);
+  String studentCode;
+  String studentName;
+  int studentAge;
+  String parentName;
+  String parentPhone;
+  String createDate;
+  String createBy;
+  String updatedDate;
+  String updatedBy;
+
+  StudentModel(this.id,this.studentName, this.studentAge);
   Map<String,dynamic> toMap(){
     var map = <String, dynamic>{
-      'id':id,
-      'name': name,
-      'age': age
+      'studentCode': studentCode,
+      'studentName': studentName,
+      'studentAge': studentAge,
+      'parentName': parentName,
+      'parentPhone': parentPhone,
+      'createDate': createDate,
+      'createBy': createBy,
+      'updatedDate': updatedDate,
+      'updatedBy': updatedBy,
+
     };
     return map;
   }
-  Student.fromMap(Map<String, dynamic> map){
+  StudentModel.fromMap(Map<String, dynamic> map){
     id = map['id'];
-    name = map['name'];
-    age = map['age'];
+    studentCode = map['studentCode'];
+    studentName = map['studentName'];
+    studentAge = map['studentAge'];
+    parentName = map['parentName'];
+    parentPhone = map['parentPhone'];
+    createDate = map['createDate'];
+    createBy = map['createBy'];
+    updatedDate = map['updatedDate'];
+    updatedBy = map['updatedBy'];
   }
 }

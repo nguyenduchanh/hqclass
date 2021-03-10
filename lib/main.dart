@@ -7,7 +7,7 @@ import 'Domains/auth.dart';
 import 'Pages/Classes/classes_page.dart';
 import 'Pages/Home/home.dart';
 import 'Pages/RollUp/roll_up.dart';
-import 'Pages/Students/students.dart';
+import 'Pages/Students/students_page.dart';
 import 'Util/Constants/strings.dart';
 
 void main() {
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
             '/login': (context) => Login(),
             '/register': (context) => Register(),
             '/classes': (context) => ClassesPage(),
-            '/students': (context) => Student2Page(),
+            '/students': (context) => StudentPage(),
             '/rollup': (context) => RollUp(),
           }),
     );

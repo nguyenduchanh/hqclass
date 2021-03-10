@@ -1,29 +1,29 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'file:///D:/Study/Github/hqclass/lib/Domains/models/classes.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
+import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassDetailBody extends StatelessWidget {
   final ClassesModel classes;
   final formKey = new GlobalKey<FormState>();
+  BaseDao baseDao = BaseDao();
 
   ClassDetailBody({Key key, @required this.classes}) : super(key: key);
   String _classCode,
       _className,
       _contactName,
-      _numberOfStudents,
+      _contactPhone,
       _createDate,
       _createBy,
       _updatedDate,
-      _updatedBy,
-      _confirmPassword;
+      _updatedBy;
+  int _numberOfStudents;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     // class code field
     final classCodeField = TextFormField(
       initialValue: (classes != null && classes.classCode != null)
@@ -52,10 +52,21 @@ class ClassDetailBody extends StatelessWidget {
           ? classes.contactName
           : "",
       autofocus: false,
-      validator: (value) => value.isEmpty ? CommonString.cEnterClassName : null,
+      validator: (value) => value.isEmpty ? CommonString.cEnterContactName : null,
       onSaved: (value) => _contactName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cContactName, CommonString.cEnterContactName),
+    );
+    final contactPhoneField = TextFormField(
+      initialValue: (classes != null && classes.contactPhone != null)
+          ? classes.contactPhone
+          : "",
+      autofocus: false,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterContactPhone : null,
+      onSaved: (value) => _contactPhone = value,
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cContactPhone, CommonString.cEnterContactPhone),
     );
     //number of student
     final numberOfStudentField = TextFormField(
@@ -66,7 +77,7 @@ class ClassDetailBody extends StatelessWidget {
       autofocus: false,
       validator: (value) =>
           value.isEmpty ? CommonString.cEnterNumberOfStudent : null,
-      onSaved: (value) => _numberOfStudents = value,
+      onSaved: (value) => _numberOfStudents = int.parse(value),
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cNumberOfStudent, CommonString.cEnterNumberOfStudent),
     );
@@ -92,19 +103,67 @@ class ClassDetailBody extends StatelessWidget {
         return null;
       },
     );
-    // Save button
-    var doSave = () async{
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-       String _userName  = prefs.getString("userName");
+    var afterSuccess = () async{
+      Navigator.pop(context);
 
+//      Flushbar(
+//        duration: Duration(seconds: 3),
+//        title: CommonString.cSaveDataSuccess,
+//        message: CommonString.cSaveDataSuccessMessage,
+//      ).show(context);
+    };
+    // Save button
+    var doSave = () async {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        Flushbar(
-          duration: Duration(seconds: 3),
-          title: "Falied login",
-          message: _userName,
-        ).show(context);
+        // thêm mới
+        if (classes == null) {
+          final newClass = new ClassesModel(
+              0,
+              _classCode,
+              _className,
+              _contactName,
+              _contactPhone,
+              _numberOfStudents,
+              DateTime.now().toString(),
+              'admin',
+              DateTime.now().toString(),
+              'admin');
+          var idClass = await baseDao.addClass(newClass);
+          if (idClass > 0) {
+            Navigator.pushReplacementNamed(context, '/classes');
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 3),
+              title: CommonString.cSaveDataFail,
+              message: CommonString.cSaveDataFailMessage,
+            ).show(context);
+          }
+        } else {
+          // cập nhật
+          final updateClass = new ClassesModel(
+              classes.id,
+              _classCode,
+              _className,
+              _contactName,
+              _contactPhone,
+              _numberOfStudents,
+              classes.createDate,
+              classes.createBy,
+              classes.updatedDate,
+              classes.updatedBy);
+          int updateClassId = await baseDao.updateClass(updateClass);
+          if (updateClassId > 0) {
+            Navigator.pushReplacementNamed(context, '/classes');
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 3),
+              title: CommonString.cSaveDataFail,
+              message: CommonString.cSaveDataFailMessage,
+            ).show(context);
+          }
+        }
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
@@ -112,7 +171,6 @@ class ClassDetailBody extends StatelessWidget {
           message: CommonString.cReEnterLoginForm,
           duration: Duration(seconds: 10),
         ).show(context);
-
       }
     };
     return SafeArea(
@@ -133,9 +191,11 @@ class ClassDetailBody extends StatelessWidget {
                     SizedBox(height: 15.0),
                     contactNameField,
                     SizedBox(height: 15.0),
-                    numberOfStudentField,
+                    contactPhoneField,
                     SizedBox(height: 15.0),
-                    startDate,
+                    numberOfStudentField,
+//                    SizedBox(height: 15.0),
+//                    startDate,
                     SizedBox(height: 20.0),
                     longButtons(CommonString.cSaveButton, doSave),
                   ],
