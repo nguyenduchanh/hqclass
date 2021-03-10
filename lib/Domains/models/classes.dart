@@ -1,16 +1,16 @@
-class Classes {
+class ClassesModel {
   int id;
   String classCode;
   String className;
   String contactName;
   String contactPhone;
   int numberOfStudents;
-  DateTime createDate;
+  String createDate;
   String createBy;
-  DateTime updatedDate;
+  String updatedDate;
   String updatedBy;
 
-  Classes(
+  ClassesModel(
       this.id,
       this.classCode,
       this.className,
@@ -38,7 +38,7 @@ class Classes {
     return map;
   }
 
-  Classes.fromMap(Map<String, dynamic> map) {
+  ClassesModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     classCode = map['classcode'];
     className = map['classname'];
@@ -52,11 +52,11 @@ class Classes {
   }
 }
 
-List getClasses() {
-  return [
-    Classes(1, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
-        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd"),
-    Classes(2, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
-        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd")
-  ];
-}
+//List getClasses() {
+//  return [
+//    Classes(1, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
+//        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd"),
+//    Classes(2, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
+//        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd")
+//  ];
+//}

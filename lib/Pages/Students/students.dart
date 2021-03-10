@@ -42,7 +42,6 @@ class _StudentPageState extends State<Student2Page> {
         children: <Widget>[
           Form(
             key: _formStateKey,
-            autovalidate: true,
             child: Column(
               children: <Widget>[
                 Padding(
@@ -68,9 +67,12 @@ class _StudentPageState extends State<Student2Page> {
 //                                style: BorderStyle.solid)),
                         // hintText: "Student Name",
                         labelText: "Student Name",
-                        prefixIcon: Icon(Icons.person, color: CommonColors.kPrimaryColor),
-                        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                        prefixIcon: Icon(Icons.person,
+                            color: CommonColors.kPrimaryColor),
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0)),
                         fillColor: Colors.white,
                         labelStyle: TextStyle(
                           color: CommonColors.kPrimaryColor,
@@ -127,7 +129,8 @@ class _StudentPageState extends State<Student2Page> {
                     if (_formStateKey.currentState.validate()) {
                       _formStateKey.currentState.save();
                       studentDao
-                          .update(Student(studentIdForUpdate, _studentName,_studentAge))
+                          .update(Student(
+                              studentIdForUpdate, _studentName, _studentAge))
                           .then((data) {
                         setState(() {
                           isUpdate = false;
@@ -207,39 +210,39 @@ class _StudentPageState extends State<Student2Page> {
           rows: students
               .map(
                 (student) => DataRow(
-              cells: [
-                DataCell(
-                  Text(student.name),
-                  onTap: () {
-                    setState(() {
-                      isUpdate = true;
-                      studentIdForUpdate = student.id;
-                    });
-                    _studentNameController.text = student.name;
-                  },
+                  cells: [
+                    DataCell(
+                      Text(student.name),
+                      onTap: () {
+                        setState(() {
+                          isUpdate = true;
+                          studentIdForUpdate = student.id;
+                        });
+                        _studentNameController.text = student.name;
+                      },
+                    ),
+                    DataCell(
+                      Text(student.age.toString()),
+                      onTap: () {
+                        setState(() {
+                          isUpdate = true;
+                          studentIdForUpdate = student.id;
+                        });
+                        _studentAgeController.text = student.age.toString();
+                      },
+                    ),
+                    DataCell(
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          studentDao.delete(student.id);
+                          refreshStudentList();
+                        },
+                      ),
+                    )
+                  ],
                 ),
-                DataCell(
-                  Text(student.age.toString()),
-                  onTap: () {
-                    setState(() {
-                      isUpdate = true;
-                      studentIdForUpdate = student.id;
-                    });
-                    _studentAgeController.text = student.age.toString();
-                  },
-                ),
-                DataCell(
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      studentDao.delete(student.id);
-                      refreshStudentList();
-                    },
-                  ),
-                )
-              ],
-            ),
-          )
+              )
               .toList(),
         ),
       ),

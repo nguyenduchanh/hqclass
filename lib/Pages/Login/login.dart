@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
-import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +24,11 @@ class _LoginState extends State<Login> {
 
   void initState() {
     super.initState();
-    _loadCounter();
+    _loadData();
   }
 
   //Loading counter value on start
-  Future<Null> _loadCounter() async {
+  Future<Null> _loadData() async {
     prefs = await SharedPreferences.getInstance();
     String userName = prefs.getString("userName");
     String password = prefs.getString("password");

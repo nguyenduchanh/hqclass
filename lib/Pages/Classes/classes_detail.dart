@@ -1,17 +1,12 @@
-import 'dart:developer';
-
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'file:///D:/Study/Github/hqclass/lib/Domains/models/classes.dart';
 import 'package:hqclass/Pages/Classes/classes_detail_body.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Widgets/navbar.dart';
-import 'package:sqflite/sqflite.dart';
 
 class ClassesDetailPage extends StatelessWidget {
-  final Classes classes;
-//  final dbHelper = DTBHelper.instance;
-  ClassesDetailPage({Key key, this.classes}) : super(key: key);
+  final ClassesModel currentClass;
+  ClassesDetailPage({Key key,this.currentClass}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     _query();
@@ -24,7 +19,7 @@ class ClassesDetailPage extends StatelessWidget {
         backButton: true,
       ),
       backgroundColor: CommonColors.bgColorScreen,
-      body: new ClassDetailBody(classes: classes),
+      body: new ClassDetailBody(classes: currentClass),
     );
   }
   void _query() async {

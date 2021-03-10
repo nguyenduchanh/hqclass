@@ -2,16 +2,12 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'file:///D:/Study/Github/hqclass/lib/Domains/models/classes.dart';
-import 'package:hqclass/Domains/auth.dart';
-import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:hqclass/Domains/user.dart';
-import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ClassDetailBody extends StatelessWidget {
-  final Classes classes;
+  final ClassesModel classes;
   final formKey = new GlobalKey<FormState>();
 
   ClassDetailBody({Key key, @required this.classes}) : super(key: key);

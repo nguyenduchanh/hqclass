@@ -7,17 +7,17 @@ import 'package:hqclass/Widgets/navbar.dart';
 
 import 'classes_body.dart';
 
-class Classes extends StatelessWidget {
+class ClassesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: Navbar(
+      return Scaffold(
+          appBar: Navbar(
             title: CommonString.cClassTitle,
             searchBar: false,
             isOnSearch: false,
-        ),
-        backgroundColor: CommonColors.bgColorScreen,
-        drawer: CommonDrawer(currentPage: "Classes"),
-        body: new ClassesBody());
+          ),
+          backgroundColor: CommonColors.bgColorScreen,
+          drawer: CommonDrawer(currentPage: "Classes"),
+          body: new ClassesBody());
   }
 }

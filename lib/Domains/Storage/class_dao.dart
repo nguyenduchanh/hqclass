@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hqclass/Domains/models/classes.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,24 +26,47 @@ class ClassesDao {
 
   _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate DATETIME, createby TEXT, updateddate DATETIME, updatedby TEXT)');
+        'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT)');
   }
-  Future<Classes> add(Classes classes) async {
+  Future<void> InitSample() async{
+    Random random = new Random();
+    int randomNumber = random.nextInt(100);
+    var cls = new ClassesModel(randomNumber, "CL01", "Hanhnd", "Dai ca Hanh", "0981831653", 20, DateTime.now().toString(), "hanhnd", DateTime.now().toString(), "hanhnd");
+    add(cls);
+  }
+
+  Future<ClassesModel> add(ClassesModel classes) async {
     var dbClient = await db;
     classes.id = await dbClient.insert('classes', classes.toMap());
     return classes;
   }
-  Future<List<Classes>> getClasses() async {
+
+  Future<List<ClassesModel>> getClasses() async {
     var dbClient = await db;
-    List<Map> maps = await dbClient.query('classes', columns: ['id', 'classcode','classname','contactname','contactphone','numberofstudents','createdate','createby','updateddate','updatedby']);
-    List<Classes> classes = [];
+
+    List<Map> maps = await dbClient.query('classes', columns: [
+      'id',
+      'classcode',
+      'classname',
+      'contactname',
+      'contactphone',
+      'numberofstudents',
+      'createdate',
+      'createby',
+      'updateddate',
+      'updatedby'
+    ]);
+    List<ClassesModel> classes = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        classes.add(Classes.fromMap(maps[i]));
+        classes.add(ClassesModel.fromMap(maps[i]));
       }
+      return classes;
+    } else {
+      return null;
     }
-    return classes;
   }
+
   Future<int> delete(int id) async {
     var dbClient = await db;
     return await dbClient.delete(
@@ -51,7 +76,7 @@ class ClassesDao {
     );
   }
 
-  Future<int> update(Classes classes) async {
+  Future<int> update(ClassesModel classes) async {
     var dbClient = await db;
     return await dbClient.update(
       'classes',
