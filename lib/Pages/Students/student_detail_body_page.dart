@@ -87,7 +87,7 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.address
           : "",
       autofocus: false,
-      onSaved: (value) => _schoolName = value,
+      onSaved: (value) => _address = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cAddress, CommonString.cEnterAddress),
     );
