@@ -27,7 +27,7 @@ class BaseDao {
     await db.execute(
         'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT)');
     await db.execute(
-        'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, parentname TEXT, parentphone TEXT, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
+        'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
   }
 
   /// student
@@ -44,6 +44,8 @@ class BaseDao {
       'studentcode',
       'studentname',
       'studentage',
+      'schoolname',
+      'address',
       'parentname',
       'parentphone',
       'createdate',

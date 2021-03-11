@@ -6,7 +6,7 @@ import 'Components/splash_screen.dart';
 import 'Domains/auth.dart';
 import 'Pages/Classes/classes_page.dart';
 import 'Pages/Home/home.dart';
-import 'Pages/RollUp/roll_up.dart';
+import 'Pages/RollUp/roll_up_page.dart';
 import 'Pages/Students/students_page.dart';
 import 'Util/Constants/strings.dart';
 

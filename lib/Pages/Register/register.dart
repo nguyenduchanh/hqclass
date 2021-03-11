@@ -32,6 +32,7 @@ class _RegisterState extends State<Register> {
     );
     final emailField = TextFormField(
       autofocus: false,
+      keyboardType: TextInputType.emailAddress,
       validator: validateEmail,
       onSaved: (value) =>_email = value,
       decoration: buildInputDecoration(CommonString.cEmail, Icons.email, CommonString.cEmail),

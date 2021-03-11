@@ -54,10 +54,16 @@ class CommonString {
   //student detail page
   static const cEnterStudentCode = "Nhập mã học sinh";
   static const cEnterStudentName = "Nhập tên học sinh";
+  static const cEnterStudentAge = "Nhập tuổi học sinh";
+  static const cEnterAddress = "Nhập địa chỉ học sinh";
+  static const cEnterSchoolName = "Nhập tên trường học";
   static const cEnterParentName = "Nhập tên cha mẹ";
   static const cEnterParentPhone = "Nhập sdt cha mẹ";
   static const cStudentName = "Tên học sinh";
+  static const cStudentAge = "Tuổi học sinh";
   static const cStudentCode = "Mã học sinh";
+  static const cSchoolName = "Tên trường học";
+  static const cAddress = "Địa chỉ học sinh";
   static const cParentName = "Tên cha mẹ";
   static const cParentPhone = "Sdt cha mẹ";
   // button

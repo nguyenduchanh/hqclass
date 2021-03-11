@@ -18,6 +18,8 @@ class StudentDetailBodyPage extends StatelessWidget {
       _studentName,
       _parentName,
       _parentPhone,
+      _schoolName,
+      _address,
       _createDate,
       _createBy,
       _updatedDate,
@@ -26,6 +28,7 @@ class StudentDetailBodyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // student code
     final studentCodeField = TextFormField(
       initialValue: (studentModel != null && studentModel.studentCode != null)
           ? studentModel.studentCode
@@ -39,17 +42,57 @@ class StudentDetailBodyPage extends StatelessWidget {
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentCode, CommonString.cEnterStudentCode),
     );
-    // class name field
+    // student name field
     final studentNameField = TextFormField(
       initialValue: (studentModel != null && studentModel.studentName != null)
           ? studentModel.studentName
           : "",
       autofocus: false,
+      keyboardType: TextInputType.name,
       validator: (value) =>
           value.isEmpty ? CommonString.cEnterStudentName : null,
       onSaved: (value) => _studentName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentName, CommonString.cEnterStudentName),
+    );
+    // student age
+    final studentAgeField = TextFormField(
+      initialValue: (studentModel != null && studentModel.studentAge != null)
+          ? studentModel.studentAge
+          : "",
+      autofocus: false,
+      keyboardType: TextInputType.number,
+      validator: (value) =>
+      value.isEmpty ? CommonString.cEnterStudentAge : null,
+      onSaved: (value) => _studentAge = int.parse(value),
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cStudentAge, CommonString.cEnterStudentAge),
+    );
+    // school name
+    final schoolNameField = TextFormField(
+      initialValue: (studentModel != null && studentModel.schoolName != null)
+          ? studentModel.schoolName
+          : "",
+      autofocus: false,
+      keyboardType: TextInputType.name,
+      validator: (value) =>
+      value.isEmpty ? CommonString.cEnterSchoolName : null,
+      onSaved: (value) => _schoolName = value,
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cSchoolName, CommonString.cEnterSchoolName),
+    );
+    // address
+    final addressField = TextFormField(
+      initialValue: (studentModel != null && studentModel.address != null)
+          ? studentModel.address
+          : "",
+      autofocus: false,
+      keyboardType: TextInputType.streetAddress,
+      validator: (value) =>
+      value.isEmpty ? CommonString.cEnterAddress : null,
+      onSaved: (value) => _schoolName = value,
+      decoration: buildInputDecorationWithoutIcon(
+          CommonString.cAddress, CommonString.cEnterAddress),
     );
     // contact name field
     final parentNameField = TextFormField(
@@ -68,6 +111,7 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.parentPhone
           : "",
       autofocus: false,
+      keyboardType: TextInputType.phone,
       validator: (value) =>
           value.isEmpty ? CommonString.cEnterParentPhone : null,
       onSaved: (value) => _parentPhone = value,
@@ -89,6 +133,8 @@ class StudentDetailBodyPage extends StatelessWidget {
               _studentAge,
               _parentName,
               _parentPhone,
+              _schoolName,
+              _address,
               'admin',
               DateTime.now().toString(),
               'admin',
@@ -111,11 +157,12 @@ class StudentDetailBodyPage extends StatelessWidget {
               _studentAge,
               _parentName,
               _parentPhone,
+              _schoolName,
+              _address,
               studentModel.createBy,
               studentModel.createDate,
               studentModel.updatedBy,
-              studentModel.updatedDate
-          );
+              studentModel.updatedDate);
           var isStudentUpdate = await baseDao.updateStudent(updateStudent);
           if (isStudentUpdate > 0) {
             NavigatorHelper().toStudentPage(context);
@@ -151,6 +198,12 @@ class StudentDetailBodyPage extends StatelessWidget {
                     studentCodeField,
                     SizedBox(height: 15.0),
                     studentNameField,
+                    SizedBox(height: 15.0),
+                    studentAgeField,
+                    SizedBox(height: 15.0),
+                    schoolNameField,
+                    SizedBox(height: 15.0),
+                    addressField,
                     SizedBox(height: 15.0),
                     parentNameField,
                     SizedBox(height: 15.0),

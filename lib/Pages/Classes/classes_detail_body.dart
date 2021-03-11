@@ -54,6 +54,7 @@ class ClassDetailBody extends StatelessWidget {
           ? classes.contactName
           : "",
       autofocus: false,
+      keyboardType: TextInputType.name,
       validator: (value) => value.isEmpty ? CommonString.cEnterContactName : null,
       onSaved: (value) => _contactName = value,
       decoration: buildInputDecorationWithoutIcon(
@@ -64,6 +65,7 @@ class ClassDetailBody extends StatelessWidget {
           ? classes.contactPhone
           : "",
       autofocus: false,
+      keyboardType: TextInputType.phone,
       validator: (value) =>
           value.isEmpty ? CommonString.cEnterContactPhone : null,
       onSaved: (value) => _contactPhone = value,

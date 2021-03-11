@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:hqclass/Pages/RollUp/roll_up_page_body.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Widgets/card-category.dart';
@@ -22,7 +23,7 @@ class RollUp extends StatelessWidget{
         ),
         backgroundColor: CommonColors.bgColorScreen,
         drawer: CommonDrawer(currentPage: "RollUp"),
-        body: new ListPage(title: '')
+        body: new RollUpPageBody()
     );
   }
 }
