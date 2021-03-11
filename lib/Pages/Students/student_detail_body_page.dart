@@ -37,6 +37,7 @@ class StudentDetailBodyPage extends StatelessWidget {
       autofocus: (studentModel != null && studentModel.studentCode != null)
           ? false
           : true,
+      enabled: studentModel != null ? false : true,
       validator: (value) =>
       value.isEmpty ? CommonString.cEnterStudentCode : null,
       onSaved: (value) => _studentCode = value,
@@ -63,8 +64,8 @@ class StudentDetailBodyPage extends StatelessWidget {
           : "",
       autofocus: false,
       keyboardType: TextInputType.number,
-      validator: (value) =>
-      value.isEmpty ? CommonString.cEnterStudentAge : null,
+//      validator: (value) =>
+//      value.isEmpty ? CommonString.cEnterStudentAge : null,
       onSaved: (value) => (value != null) ? _studentAge = int.parse(value) : 0,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentAge, CommonString.cEnterStudentAge),
@@ -75,8 +76,8 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.schoolName
           : "",
       autofocus: false,
-      validator: (value) =>
-      value.isEmpty ? CommonString.cEnterSchoolName : null,
+//      validator: (value) =>
+//      value.isEmpty ? CommonString.cEnterSchoolName : null,
       onSaved: (value) => _schoolName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cSchoolName, CommonString.cEnterSchoolName),
