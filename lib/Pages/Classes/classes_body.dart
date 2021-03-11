@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/classes.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 
@@ -112,6 +113,14 @@ class _ClassesListState extends State<ClassesBody> {
               child: makeListClassesTileV2(cls),
             ),
           ),
+          actions: <Widget>[
+            IconSlideAction(
+              caption: 'Gán học sinh',
+              color: Colors.black45,
+              icon: Icons.add_to_photos,
+              onTap: () => {},
+            ),
+          ],
           secondaryActions: <Widget>[
             IconSlideAction(
               caption: 'Edit',
@@ -159,9 +168,7 @@ class _ClassesListState extends State<ClassesBody> {
   }
 }
 
-// confirm dialog
 
-enum ConfirmAction { CANCEL, ACCEPT }
 
 class CDialog {
   static Future _asyncConfirmDialog(

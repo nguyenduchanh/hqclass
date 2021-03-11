@@ -59,6 +59,7 @@ class CommonString {
   static const cEnterSchoolName = "Nhập tên trường học";
   static const cEnterParentName = "Nhập tên cha mẹ";
   static const cEnterParentPhone = "Nhập sdt cha mẹ";
+  static const cEnterState = "Nhập sdt cha mẹ";
   static const cStudentName = "Tên học sinh";
   static const cStudentAge = "Tuổi học sinh";
   static const cStudentCode = "Mã học sinh";
@@ -66,6 +67,7 @@ class CommonString {
   static const cAddress = "Địa chỉ học sinh";
   static const cParentName = "Tên cha mẹ";
   static const cParentPhone = "Sdt cha mẹ";
+  static const cState = "Trạng thái";
   // button
   static const cLoginButton = "Đăng nhập";
   static const cSignUpButton = "Đăng ký";

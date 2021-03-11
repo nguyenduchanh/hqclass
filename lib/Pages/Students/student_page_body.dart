@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/student.dart';
 import 'package:hqclass/Pages/Students/student_detail_page.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 
 class StudentPageBody extends StatefulWidget {
@@ -102,9 +103,26 @@ class _StudentListState extends State<StudentPageBody> {
           child: makeListStudentTileV2(std),
         ),
       ),
+      actions: <Widget>[
+        IconSlideAction(
+          caption: 'Đã nghỉ',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () async {
+            final StudentConfirmAction action = await CDialog._asyncConfirmDialog(
+                context,
+                'Xác nhận!',
+                'Bạn có chắc chắn muốn ghi lại dữ liệu này!');
+            if (action == StudentConfirmAction.ACCEPT) {
+              await baseDao.SetStudentToQuit(std);
+              refreshStudentList();
+            } else {}
+          },
+        ),
+      ],
       secondaryActions: <Widget>[
         IconSlideAction(
-          caption: 'Edit',
+          caption: 'Sửa',
           color: Colors.black45,
           icon: Icons.edit,
           onTap: () => {
@@ -116,7 +134,7 @@ class _StudentListState extends State<StudentPageBody> {
           },
         ),
         IconSlideAction(
-          caption: 'Delete',
+          caption: 'Xóa',
           color: Colors.red,
           icon: Icons.delete,
           onTap: () async {
@@ -149,8 +167,6 @@ class _StudentListState extends State<StudentPageBody> {
   }
 }
 
-
-enum StudentConfirmAction { CANCEL, ACCEPT }
 
 class CDialog {
   static Future _asyncConfirmDialog(

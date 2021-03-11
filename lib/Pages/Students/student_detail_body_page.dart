@@ -24,7 +24,8 @@ class StudentDetailBodyPage extends StatelessWidget {
       _createBy,
       _updatedDate,
       _updatedBy;
-  int _studentAge;
+  int _studentAge, _currentState;
+  bool _stateChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? false
           : true,
       validator: (value) =>
-          value.isEmpty ? CommonString.cEnterStudentCode : null,
+      value.isEmpty ? CommonString.cEnterStudentCode : null,
       onSaved: (value) => _studentCode = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentCode, CommonString.cEnterStudentCode),
@@ -50,7 +51,7 @@ class StudentDetailBodyPage extends StatelessWidget {
       autofocus: false,
       keyboardType: TextInputType.name,
       validator: (value) =>
-          value.isEmpty ? CommonString.cEnterStudentName : null,
+      value.isEmpty ? CommonString.cEnterStudentName : null,
       onSaved: (value) => _studentName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentName, CommonString.cEnterStudentName),
@@ -58,13 +59,13 @@ class StudentDetailBodyPage extends StatelessWidget {
     // student age
     final studentAgeField = TextFormField(
       initialValue: (studentModel != null && studentModel.studentAge != null)
-          ? studentModel.studentAge
+          ? studentModel.studentAge.toString()
           : "",
       autofocus: false,
       keyboardType: TextInputType.number,
       validator: (value) =>
       value.isEmpty ? CommonString.cEnterStudentAge : null,
-      onSaved: (value) => _studentAge = int.parse(value),
+      onSaved: (value) => (value != null) ? _studentAge = int.parse(value) : 0,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentAge, CommonString.cEnterStudentAge),
     );
@@ -74,7 +75,6 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.schoolName
           : "",
       autofocus: false,
-      keyboardType: TextInputType.name,
       validator: (value) =>
       value.isEmpty ? CommonString.cEnterSchoolName : null,
       onSaved: (value) => _schoolName = value,
@@ -87,9 +87,6 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.address
           : "",
       autofocus: false,
-      keyboardType: TextInputType.streetAddress,
-      validator: (value) =>
-      value.isEmpty ? CommonString.cEnterAddress : null,
       onSaved: (value) => _schoolName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cAddress, CommonString.cEnterAddress),
@@ -100,8 +97,6 @@ class StudentDetailBodyPage extends StatelessWidget {
           ? studentModel.parentName
           : "",
       autofocus: false,
-      validator: (value) =>
-          value.isEmpty ? CommonString.cEnterParentName : null,
       onSaved: (value) => _parentName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cParentName, CommonString.cEnterParentName),
@@ -112,12 +107,20 @@ class StudentDetailBodyPage extends StatelessWidget {
           : "",
       autofocus: false,
       keyboardType: TextInputType.phone,
-      validator: (value) =>
-          value.isEmpty ? CommonString.cEnterParentPhone : null,
-      onSaved: (value) => _parentPhone = value,
+      onChanged: (text) {
+        _parentPhone = text;
+      },
+//      onSaved: (value) => _parentPhone = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cParentPhone, CommonString.cEnterParentPhone),
     );
+//    final currentStateField = TextFormField(
+//      enabled: false,
+//      initialValue: (studentModel != null && studentModel.parentName != null)?"Đã nghỉ":"Đang hoạt động",
+//      autofocus: false,
+//      decoration: buildInputDecorationWithoutIcon(
+//          CommonString.cState, CommonString.cEnterState),
+//    );
 
     // Save button
     var doSave = () async {
@@ -131,10 +134,11 @@ class StudentDetailBodyPage extends StatelessWidget {
               _studentCode,
               _studentName,
               _studentAge,
-              _parentName,
-              _parentPhone,
               _schoolName,
               _address,
+              _parentName,
+              _parentPhone,
+              1,
               'admin',
               DateTime.now().toString(),
               'admin',
@@ -155,10 +159,11 @@ class StudentDetailBodyPage extends StatelessWidget {
               _studentCode,
               _studentName,
               _studentAge,
-              _parentName,
-              _parentPhone,
               _schoolName,
               _address,
+              _parentName,
+              _parentPhone,
+              studentModel.currentState,
               studentModel.createBy,
               studentModel.createDate,
               studentModel.updatedBy,
@@ -208,6 +213,8 @@ class StudentDetailBodyPage extends StatelessWidget {
                     parentNameField,
                     SizedBox(height: 15.0),
                     parentPhoneField,
+                    SizedBox(height: 15.0),
+//                    currentStateField,
                     SizedBox(height: 20.0),
                     longButtons(CommonString.cSaveButton, doSave),
                   ],

@@ -31,7 +31,7 @@ class ClassDetailBody extends StatelessWidget {
           ? classes.classCode
           : "",
       autofocus: (classes != null && classes.classCode != null) ? false : true,
-      enabled: classes!=null?false:true,
+      enabled: classes != null ? false : true,
       validator: (value) => value.isEmpty ? CommonString.cEnterClassCode : null,
       onSaved: (value) => _classCode = value,
       decoration: buildInputDecorationWithoutIcon(
@@ -55,7 +55,8 @@ class ClassDetailBody extends StatelessWidget {
           : "",
       autofocus: false,
       keyboardType: TextInputType.name,
-      validator: (value) => value.isEmpty ? CommonString.cEnterContactName : null,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterContactName : null,
       onSaved: (value) => _contactName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cContactName, CommonString.cEnterContactName),
@@ -107,7 +108,7 @@ class ClassDetailBody extends StatelessWidget {
         return null;
       },
     );
-    var afterSuccess = () async{
+    var afterSuccess = () async {
       Navigator.pop(context);
 
 //      Flushbar(
@@ -133,7 +134,8 @@ class ClassDetailBody extends StatelessWidget {
               DateTime.now().toString(),
               'admin',
               DateTime.now().toString(),
-              'admin');
+              'admin',
+              null);
           var idClass = await baseDao.addClass(newClass);
           if (idClass > 0) {
             NavigatorHelper().toClassesPage(context);
@@ -156,7 +158,8 @@ class ClassDetailBody extends StatelessWidget {
               classes.createDate,
               classes.createBy,
               classes.updatedDate,
-              classes.updatedBy);
+              classes.updatedBy,
+              classes.studentCodeList);
           int updateClassId = await baseDao.updateClass(updateClass);
           if (updateClassId > 0) {
             NavigatorHelper().toClassesPage(context);

@@ -9,6 +9,7 @@ class ClassesModel {
   String createBy;
   String updatedDate;
   String updatedBy;
+  String studentCodeList;
 
   ClassesModel(
       this.id,
@@ -20,7 +21,8 @@ class ClassesModel {
       this.createDate,
       this.createBy,
       this.updatedDate,
-      this.updatedBy);
+      this.updatedBy,
+      this.studentCodeList);
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -33,7 +35,9 @@ class ClassesModel {
       'createdate': createDate,
       'createby': createBy,
       'updateddate': updatedDate,
-      'updatedby': updatedBy
+      'updatedby': updatedBy,
+      'studentcodelist': studentCodeList,
+
     };
     return map;
   }
@@ -49,6 +53,7 @@ class ClassesModel {
     createBy = map['createby'];
     updatedDate = map['updateddate'];
     updatedBy = map['updatedby'];
+    studentCodeList = map['studentcodelist'];
   }
 }
 

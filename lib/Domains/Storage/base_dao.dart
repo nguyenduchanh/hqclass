@@ -25,9 +25,9 @@ class BaseDao {
 
   _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT)');
+        'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT, studentcodelist TEXT)');
     await db.execute(
-        'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
+        'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT,currentstate INTEGER, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
   }
 
   /// student
@@ -48,6 +48,7 @@ class BaseDao {
       'address',
       'parentname',
       'parentphone',
+      'currentstate',
       'createdate',
       'createby',
       'updateddate',
@@ -70,7 +71,16 @@ class BaseDao {
       whereArgs: [id],
     );
   }
-
+  Future<void> SetStudentToQuit(StudentModel student) async{
+    var dbClient = await db;
+    student.currentState = 0;
+    return await dbClient.update(
+      'student',
+      student.toMap(),
+      where: 'id = ?',
+      whereArgs: [student.id],
+    );
+  }
   Future<int> updateStudent(StudentModel student) async {
     var dbClient = await db;
     return await dbClient.update(
@@ -102,7 +112,8 @@ class BaseDao {
       'createdate',
       'createby',
       'updateddate',
-      'updatedby'
+      'updatedby',
+      'studentcodelist'
     ]);
     List<ClassesModel> classes = [];
     if (maps.length > 0) {
