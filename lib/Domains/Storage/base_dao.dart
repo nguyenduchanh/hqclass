@@ -27,20 +27,30 @@ class BaseDao {
     await db.execute(
         'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT)');
     await db.execute(
-        'CREATE TABLE student (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)');
+        'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, parentname TEXT, parentphone TEXT, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
   }
 
   /// student
-  Future<StudentModel> addStudent(StudentModel student) async {
+  Future<int> addStudent(StudentModel student) async {
     var dbClient = await db;
     student.id = await dbClient.insert('student', student.toMap());
-    return student;
+    return student.id;
   }
 
   Future<List<StudentModel>> getStudents() async {
     var dbClient = await db;
-    List<Map> maps =
-        await dbClient.query('student', columns: ['id', 'name', 'age']);
+    List<Map> maps = await dbClient.query('student', columns: [
+      'id',
+      'studentcode',
+      'studentname',
+      'studentage',
+      'parentname',
+      'parentphone',
+      'createdate',
+      'createby',
+      'updateddate',
+      'updatedby'
+    ]);
     List<StudentModel> students = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

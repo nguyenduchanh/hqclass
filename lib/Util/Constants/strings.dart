@@ -8,6 +8,7 @@ class CommonString {
 //Title
   static const cMainTitle = "HQ CLASS";
   static const cClassTitle = "Danh sách lớp học";
+  static const cStudentTitle = "Danh sách học sinh";
 
 // Nav
   static const cSignOutNav = "Đăng xuất";

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -66,7 +67,7 @@ class _RegisterState extends State<Register> {
       if (form.validate()) {
         form.save();
         await UserPreferences().CreateUserConfig(_username, _password, _email);
-        Navigator.pushReplacementNamed(context, '/home');
+        NavigatorHelper().toHomePage(context);
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
@@ -83,7 +84,7 @@ class _RegisterState extends State<Register> {
         FlatButton(
           padding: EdgeInsets.only(left: 0),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/login');
+            NavigatorHelper().toLoginPage(context);
           },
           child:
           Row(
@@ -112,13 +113,13 @@ class _RegisterState extends State<Register> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
-          padding: EdgeInsets.all(40.0),
+          padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
           child: Form(
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: size.height * 0.03),
+                SizedBox(height: size.height * 0.02),
                 Image.asset(
                   "assets/img/blackboard.png",
                   height: size.height * 0.2,

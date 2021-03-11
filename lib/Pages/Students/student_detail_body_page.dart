@@ -3,15 +3,17 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/student.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
-class StudentDetailBodyPage extends StatelessWidget{
+class StudentDetailBodyPage extends StatelessWidget {
   final StudentModel studentModel;
   final formKey = new GlobalKey<FormState>();
   BaseDao baseDao = BaseDao();
 
-  StudentDetailBodyPage({Key key, @required this.studentModel}) : super(key: key);
+  StudentDetailBodyPage({Key key, @required this.studentModel})
+      : super(key: key);
   String _studentCode,
       _studentName,
       _parentName,
@@ -20,14 +22,19 @@ class StudentDetailBodyPage extends StatelessWidget{
       _createBy,
       _updatedDate,
       _updatedBy;
+  int _studentAge;
+
   @override
   Widget build(BuildContext context) {
     final studentCodeField = TextFormField(
       initialValue: (studentModel != null && studentModel.studentCode != null)
           ? studentModel.studentCode
           : "",
-      autofocus: (studentModel != null && studentModel.studentCode != null) ? false : true,
-      validator: (value) => value.isEmpty ? CommonString.cEnterStudentCode : null,
+      autofocus: (studentModel != null && studentModel.studentCode != null)
+          ? false
+          : true,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterStudentCode : null,
       onSaved: (value) => _studentCode = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentCode, CommonString.cEnterStudentCode),
@@ -38,7 +45,8 @@ class StudentDetailBodyPage extends StatelessWidget{
           ? studentModel.studentName
           : "",
       autofocus: false,
-      validator: (value) => value.isEmpty ? CommonString.cEnterStudentName : null,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterStudentName : null,
       onSaved: (value) => _studentName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cStudentName, CommonString.cEnterStudentName),
@@ -49,7 +57,8 @@ class StudentDetailBodyPage extends StatelessWidget{
           ? studentModel.parentName
           : "",
       autofocus: false,
-      validator: (value) => value.isEmpty ? CommonString.cEnterParentName : null,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cEnterParentName : null,
       onSaved: (value) => _parentName = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cParentName, CommonString.cEnterParentName),
@@ -60,7 +69,7 @@ class StudentDetailBodyPage extends StatelessWidget{
           : "",
       autofocus: false,
       validator: (value) =>
-      value.isEmpty ? CommonString.cEnterParentPhone : null,
+          value.isEmpty ? CommonString.cEnterParentPhone : null,
       onSaved: (value) => _parentPhone = value,
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cParentPhone, CommonString.cEnterParentPhone),
@@ -72,7 +81,52 @@ class StudentDetailBodyPage extends StatelessWidget{
       if (form.validate()) {
         form.save();
         // thêm mới
-
+        if (studentModel == null) {
+          var newStudent = new StudentModel(
+              0,
+              _studentCode,
+              _studentName,
+              _studentAge,
+              _parentName,
+              _parentPhone,
+              'admin',
+              DateTime.now().toString(),
+              'admin',
+              DateTime.now().toString());
+          var idStudent = await baseDao.addStudent(newStudent);
+          if (idStudent > 0) {
+            NavigatorHelper().toStudentPage(context);
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 3),
+              title: CommonString.cSaveDataFail,
+              message: CommonString.cSaveDataFailMessage,
+            ).show(context);
+          }
+        } else {
+          var updateStudent = new StudentModel(
+              studentModel.id,
+              _studentCode,
+              _studentName,
+              _studentAge,
+              _parentName,
+              _parentPhone,
+              studentModel.createBy,
+              studentModel.createDate,
+              studentModel.updatedBy,
+              studentModel.updatedDate
+          );
+          var isStudentUpdate = await baseDao.updateStudent(updateStudent);
+          if (isStudentUpdate > 0) {
+            NavigatorHelper().toStudentPage(context);
+          } else {
+            Flushbar(
+              duration: Duration(seconds: 3),
+              title: CommonString.cSaveDataFail,
+              message: CommonString.cSaveDataFailMessage,
+            ).show(context);
+          }
+        }
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,

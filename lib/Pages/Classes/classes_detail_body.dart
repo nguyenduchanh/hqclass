@@ -3,6 +3,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/classes.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
@@ -30,6 +31,7 @@ class ClassDetailBody extends StatelessWidget {
           ? classes.classCode
           : "",
       autofocus: (classes != null && classes.classCode != null) ? false : true,
+      enabled: classes!=null?false:true,
       validator: (value) => value.isEmpty ? CommonString.cEnterClassCode : null,
       onSaved: (value) => _classCode = value,
       decoration: buildInputDecorationWithoutIcon(
@@ -132,7 +134,7 @@ class ClassDetailBody extends StatelessWidget {
               'admin');
           var idClass = await baseDao.addClass(newClass);
           if (idClass > 0) {
-            Navigator.pushReplacementNamed(context, '/classes');
+            NavigatorHelper().toClassesPage(context);
           } else {
             Flushbar(
               duration: Duration(seconds: 3),
@@ -155,7 +157,7 @@ class ClassDetailBody extends StatelessWidget {
               classes.updatedBy);
           int updateClassId = await baseDao.updateClass(updateClass);
           if (updateClassId > 0) {
-            Navigator.pushReplacementNamed(context, '/classes');
+            NavigatorHelper().toClassesPage(context);
           } else {
             Flushbar(
               duration: Duration(seconds: 3),

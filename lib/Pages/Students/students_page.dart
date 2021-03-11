@@ -10,12 +10,12 @@ class StudentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Navbar(
-          title: CommonString.cClassTitle,
+          title: CommonString.cStudentTitle,
           searchBar: false,
           isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
-        drawer: CommonDrawer(currentPage: "Classes"),
+        drawer: CommonDrawer(currentPage: "Students"),
         body: new StudentPageBody());
   }
 }

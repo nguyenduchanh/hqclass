@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -111,7 +112,7 @@ class _LoginState extends State<Login> {
         FlatButton(
           padding: EdgeInsets.only(left: 0.0),
           onPressed: () {
-            Navigator.pushReplacementNamed(context, '/register');
+            NavigatorHelper().toRegisterPage(context);
           },
           child: Text(CommonString.cSignUpButton,
               style: TextStyle(fontWeight: FontWeight.w300)),
@@ -120,26 +121,13 @@ class _LoginState extends State<Login> {
     );
 
     var doLogin = () async {
-      if (!kDebugMode) {
-        // UserPreferences().CreateUserConfig("hanhnd222", "2332", "");
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        final form = formKey.currentState;
-        if (form.validate()) {
-          form.save();
-          if (_userNameController.text == _userNameLocal &&
-              _passwordController.text == _passwordLocal) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else {
-            Flushbar(
-              flushbarPosition: FlushbarPosition.TOP,
-              title: CommonString.cDataInvalid,
-              message: CommonString.cReEnterLoginForm,
-              duration: Duration(seconds: 10),
-            ).show(context);
-          }
+      final form = formKey.currentState;
+      if (form.validate()) {
+        form.save();
+        if (_userNameController.text == _userNameLocal &&
+            _passwordController.text == _passwordLocal) {
+          NavigatorHelper().toHomePage(context);
         } else {
-//          print(CommonString.cDataInvalid);
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,
             title: CommonString.cDataInvalid,
@@ -147,6 +135,14 @@ class _LoginState extends State<Login> {
             duration: Duration(seconds: 10),
           ).show(context);
         }
+      } else {
+//          print(CommonString.cDataInvalid);
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: CommonString.cDataInvalid,
+          message: CommonString.cReEnterLoginForm,
+          duration: Duration(seconds: 10),
+        ).show(context);
       }
     };
 
@@ -154,7 +150,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+          padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
           child: Form(
             key: formKey,
             child: Column(
@@ -163,7 +159,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: size.height * 0.02),
                 Image.asset(
                   "assets/img/blackboard.png",
-                  height: size.height * 0.25,
+                  height: size.height * 0.2,
                 ),
                 SizedBox(height: 15.0),
 //                _userNameTextFormField,

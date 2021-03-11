@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 
 import 'drawer-tile.dart';
@@ -37,7 +38,7 @@ class CommonDrawer extends StatelessWidget {
                   icon: Icons.home,
                   onTap: () {
                     if (currentPage != "Home") {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      NavigatorHelper().toHomePage(context);
                     } else {
                       Navigator.pop(context);
                     }
@@ -49,7 +50,7 @@ class CommonDrawer extends StatelessWidget {
                   icon: Icons.list_alt_outlined,
                   onTap: () {
                     if (currentPage != "RollUp") {
-                      Navigator.pushReplacementNamed(context, '/rollup');
+                      NavigatorHelper().toRollUpPage(context);
                     } else {
                       Navigator.pop(context);
                     }
@@ -61,7 +62,7 @@ class CommonDrawer extends StatelessWidget {
                   icon: Icons.class__outlined,
                   onTap: () {
                     if (currentPage != "Classes") {
-                      Navigator.pushReplacementNamed(context, '/classes');
+                      NavigatorHelper().toClassesPage(context);
                     } else {
                       Navigator.pop(context);
                     }
@@ -73,7 +74,7 @@ class CommonDrawer extends StatelessWidget {
                   icon: Icons.account_box_outlined,
                   onTap: () {
                     if (currentPage != "Students") {
-                      Navigator.pushReplacementNamed(context, '/students');
+                      NavigatorHelper().toStudentPage(context);
                     } else {
                       Navigator.pop(context);
                     }
@@ -85,7 +86,7 @@ class CommonDrawer extends StatelessWidget {
                   icon: Icons.logout,
                   onTap: () {
                     if (currentPage != "Logout")
-                      Navigator.pushReplacementNamed(context, '/login');
+                      NavigatorHelper().toLoginPage(context);
                   },
                   iconColor: CommonColors.kPrimaryColor,
                   title: CommonString.cSignOutNav,
