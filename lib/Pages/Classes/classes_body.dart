@@ -10,6 +10,7 @@ import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:hqclass/Util/widgets.dart';
 
 import 'classes_detail.dart';
 
@@ -22,8 +23,9 @@ class ClassesBody extends StatefulWidget {
 
 class _ClassesListState extends State<ClassesBody> {
   Future<List<ClassesModel>> classesList;
+  Future<List<ClassesModel>> classesListOnSearch;
   BaseDao baseDao;
-
+  String _searchText;
   @override
   void initState() {
     super.initState();
@@ -34,18 +36,32 @@ class _ClassesListState extends State<ClassesBody> {
   refreshClassesList() async {
     setState(() {
       classesList = baseDao.getClasses();
+      classesListOnSearch = baseDao.searchClasses(classesList, _searchText);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final searchBox = TextFormField(
+      autofocus: false,
+      validator: (value) => value.isEmpty ? CommonString.cEnterClassName : null,
+      onChanged: (text) {
+        _searchText = text;
+        refreshClassesList();
+      },
+      decoration: buildSearchInputDecoration("Tìm kiếm lớp học","Nhập mã hoặc tên lớp học "),
+    );
     return Scaffold(
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[
+          Padding( padding: const EdgeInsets.only(
+              top: 8, bottom: 10, left: 15, right: 15),
+            child: searchBox,
+          ),
           Expanded(
             child: FutureBuilder(
-              future: classesList,
+              future: classesListOnSearch,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return generateListV2(snapshot.data);
@@ -153,18 +169,14 @@ class _ClassesListState extends State<ClassesBody> {
         ),
       );
 
-  SingleChildScrollView generateListV2(List<ClassesModel> classesModel) {
-    return SingleChildScrollView(
+  ListView generateListV2(List<ClassesModel> classesModel) {
+    return ListView.builder(
         scrollDirection: Axis.vertical,
-        child: Container(
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: classesModel.length,
-              itemBuilder: (BuildContext context, int index) {
-                return makeClassesCardV2(classesModel[index]);
-              }),
-        ));
+        shrinkWrap: true,
+        itemCount: classesModel.length,
+        itemBuilder: (BuildContext context, int index) {
+          return makeClassesCardV2(classesModel[index]);
+        });
   }
 }
 

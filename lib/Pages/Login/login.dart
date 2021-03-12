@@ -47,8 +47,6 @@ class _LoginState extends State<Login> {
     AuthProvider auth = Provider.of<AuthProvider>(context);
     final userNameField = TextFormField(
         autofocus: false,
-//        initialValue: _username,
-//        validator: (value) => value!="" ? CommonString.cEnterPassword : "",
         validator: (value) {
           if (_userNameController.text.isEmpty) {
             return 'Please Enter User Name';
@@ -59,18 +57,11 @@ class _LoginState extends State<Login> {
         },
         onSaved: (value) => value.isEmpty ? _userNameController.text : "",
         controller: _userNameController,
-//        onChanged: (String str) {
-//          setState(() {
-//            _username = str;
-//          });
-//        },
         decoration: buildInputDecoration(
             CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
     final passwordField = TextFormField(
       autofocus: false,
-//      initialValue: _password,
       obscureText: true,
-//      validator: (value) => value.isEmpty ? CommonString.cEnterPassword : null,
       validator: (value) {
         if (_passwordController.text.isEmpty) {
           return 'Please Enter Password!';
@@ -81,11 +72,6 @@ class _LoginState extends State<Login> {
       },
       onSaved: (value) => _passwordController.text = value,
       controller: _passwordController,
-//      onChanged: (String str) {
-//        setState(() {
-//          _passwordController.text = str;
-//        });
-//      },
       decoration: buildInputDecoration(CommonString.cPassword, Icons.lock,
           CommonString.cPasswordPlaceHolder),
     );

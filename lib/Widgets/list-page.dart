@@ -207,7 +207,160 @@ List getLessons() {
         price: 50,
         content:
             "Start by taking a couple of minutes to read the info in this section. "
-            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  ")
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
+    Lesson(
+        code: "HQ01",
+        title: "Self Driving Car",
+        level: "Advanced",
+        indicatorValue: 1.0,
+        price: 50,
+        content:
+        "Start by taking a couple of minutes to read the info in this section. "
+            "Launch your app and click on the Settings menu.  While on the settings page, click the Save button.  "),
   ];
 }
 
