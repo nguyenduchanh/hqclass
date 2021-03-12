@@ -20,4 +20,7 @@ class NavigatorHelper {
   toRegisterPage(BuildContext context){
     Navigator.pushReplacementNamed(context, '/register');
   }
+  toBackupPage(BuildContext context){
+    Navigator.pushReplacementNamed(context, '/backup');
+  }
 }

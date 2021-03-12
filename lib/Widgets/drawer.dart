@@ -35,18 +35,6 @@ class CommonDrawer extends StatelessWidget {
             padding: EdgeInsets.only(top: 24, left: 16, right: 16),
             children: [
               DrawerTile(
-                  icon: Icons.home,
-                  onTap: () {
-                    if (currentPage != "Home") {
-                      NavigatorHelper().toHomePage(context);
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
-                  iconColor: CommonColors.kPrimaryColor,
-                  title: CommonString.cHomePageNav,
-                  isSelected: currentPage == "Home" ? true : false),
-              DrawerTile(
                   icon: Icons.list_alt_outlined,
                   onTap: () {
                     if (currentPage != "RollUp") {
@@ -82,6 +70,27 @@ class CommonDrawer extends StatelessWidget {
                   iconColor: CommonColors.kPrimaryColor,
                   title: CommonString.cStudentNav,
                   isSelected: currentPage == "Students" ? true : false),
+              DrawerTile(
+                  icon: Icons.insert_chart,
+                  onTap: () {
+                    if (currentPage != "Home") {
+                      NavigatorHelper().toHomePage(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
+                  },
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: CommonString.cHomePageNav,
+                  isSelected: currentPage == "Home" ? true : false),
+              DrawerTile(
+                  icon: Icons.backup,
+                  onTap: () {
+                    if (currentPage != "Backup")
+                      NavigatorHelper().toBackupPage(context);
+                  },
+                  iconColor: CommonColors.kPrimaryColor,
+                  title: CommonString.cBackupPageNav,
+                  isSelected: currentPage == "Backup" ? true : false),
               DrawerTile(
                   icon: Icons.logout,
                   onTap: () {

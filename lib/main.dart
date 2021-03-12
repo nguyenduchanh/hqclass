@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hqclass/Pages/Backup/backup_page.dart';
 import 'package:hqclass/Pages/Login/login.dart';
 import 'package:hqclass/Pages/Register/register.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
             '/classes': (context) => ClassesPage(),
             '/students': (context) => StudentPage(),
             '/rollup': (context) => RollUp(),
+            '/backup': (context) => BackupPage(),
           }),
     );
   }

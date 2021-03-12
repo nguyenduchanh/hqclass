@@ -118,29 +118,6 @@ class _NavbarState extends State<Navbar> {
                                 fontSize: 18.0)),
                       ],
                     ),
-//                    if (widget.checkButtonOption)
-//                      Row(
-//                        mainAxisAlignment: MainAxisAlignment.start,
-//                        children: [
-//                          GestureDetector(
-//                            onTap: () {
-////                              Navigator.pushNamed(context, '/pro');
-//                            },
-//                            child: IconButton(
-//                                icon: Icon(Icons.check,
-//                                    color: CommonColors.kPrimaryLightColor,
-//                                    size: 28),
-//                                onPressed: () {
-////                                  Flushbar(
-////                                    title: CommonString.cDataInvalid,
-////                                    message: "ok con de",
-////                                    duration: Duration(seconds: 5),
-////                                  ).show(context);
-//                                }
-//                                ),
-//                          ),
-//                        ],
-//                      )
                   ],
                 ),
               ],

@@ -125,26 +125,7 @@ class BaseDao {
     classes.id = await dbClient.insert('classes', classes.toMap());
     return classes.id;
   }
-//  Future<List<StudentModel>> searchStudent(
-//      Future<List<StudentModel>> data, String textSearch) async {
-//    var dataList = await data;
-//    if (textSearch != null && textSearch.isNotEmpty) {
-//      String textWithoutSign = TiengViet.parse(textSearch);
-//      List<StudentModel> temp = [];
-//      for (int i = 0; i < dataList.length; i++) {
-//        String studentCodeWithoutSign = TiengViet.parse(dataList[i].studentCode);
-//        String studentNameWithoutSign = TiengViet.parse(dataList[i].studentName);
-//        if (studentCodeWithoutSign.contains(textWithoutSign) ||
-//            studentCodeWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase()) ||
-//            studentNameWithoutSign.contains(textWithoutSign) ||
-//            studentNameWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase())) {
-//          temp.add(dataList[i]);
-//        }
-//      }
-//      dataList = temp;
-//    }
-//    return dataList;
-//  }
+
   Future<List<ClassesModel>> searchClasses(
       Future<List<ClassesModel>> data, String textSearch) async {
     var dataList = await data;
@@ -448,7 +429,7 @@ class BaseDao {
           "admin",
           DateTime.now().toString(),
           "admin",
-          ""),
+          "HG01,HG02,HG03,HG04"),
       ClassesModel(
           2,
           "CL01",

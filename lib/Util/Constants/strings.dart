@@ -15,7 +15,8 @@ class CommonString {
   static const cStudentNav = "Học sinh";
   static const cClassNav = "Lớp học";
   static const cRollUpNav = "Điểm danh";
-  static const cHomePageNav = "Trang chủ";
+  static const cHomePageNav = "Báo cáo";
+  static const cBackupPageNav = "Cập nhật dữ liệu";
 
 //Login page
   static const cEnterPassword = "Nhập mật khẩu";
