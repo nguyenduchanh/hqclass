@@ -112,7 +112,7 @@ class _LoginState extends State<Login> {
         form.save();
         if (_userNameController.text == _userNameLocal &&
             _passwordController.text == _passwordLocal) {
-          NavigatorHelper().toRollUpPage(context);
+          NavigatorHelper().toClassesPage(context);
         } else {
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,

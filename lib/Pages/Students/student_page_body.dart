@@ -35,9 +35,6 @@ class _StudentListState extends State<StudentPageBody> {
     });
   }
 
-  doSearch() async {
-  }
-
   @override
   Widget build(BuildContext context) {
     final searchBox = TextFormField(

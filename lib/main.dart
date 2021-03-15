@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
             '/register': (context) => Register(),
             '/classes': (context) => ClassesPage(),
             '/students': (context) => StudentPage(),
-            '/rollup': (context) => RollUp(),
+//            '/rollup': (context) => RollUp(),
             '/backup': (context) => BackupPage(),
           }),
     );

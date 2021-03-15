@@ -34,18 +34,18 @@ class CommonDrawer extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.only(top: 24, left: 16, right: 16),
             children: [
-              DrawerTile(
-                  icon: Icons.list_alt_outlined,
-                  onTap: () {
-                    if (currentPage != "RollUp") {
-                      NavigatorHelper().toRollUpPage(context);
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
-                  iconColor: CommonColors.kPrimaryColor,
-                  title: CommonString.cRollUpNav,
-                  isSelected: currentPage == "RollUp" ? true : false),
+//              DrawerTile(
+//                  icon: Icons.list_alt_outlined,
+//                  onTap: () {
+//                    if (currentPage != "addStudent") {
+//                      NavigatorHelper().toAddStudentPage(context);
+//                    } else {
+//                      Navigator.pop(context);
+//                    }
+//                  },
+//                  iconColor: CommonColors.kPrimaryColor,
+//                  title: CommonString.cRollUpNav,
+//                  isSelected: currentPage == "RollUp" ? true : false),
               DrawerTile(
                   icon: Icons.class__outlined,
                   onTap: () {

@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/classes.dart';
+import 'package:hqclass/Pages/RollUp/roll_up_detail_page.dart';
 import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
+import 'classes_add_student_page.dart';
 import 'classes_detail.dart';
 
 class ClassesBody extends StatefulWidget {
@@ -26,6 +27,7 @@ class _ClassesListState extends State<ClassesBody> {
   Future<List<ClassesModel>> classesListOnSearch;
   BaseDao baseDao;
   String _searchText;
+
   @override
   void initState() {
     super.initState();
@@ -49,14 +51,16 @@ class _ClassesListState extends State<ClassesBody> {
         _searchText = text;
         refreshClassesList();
       },
-      decoration: buildSearchInputDecoration("Tìm kiếm lớp học","Nhập mã hoặc tên lớp học "),
+      decoration: buildSearchInputDecoration(
+          "Tìm kiếm lớp học", "Nhập mã hoặc tên lớp học "),
     );
     return Scaffold(
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[
-          Padding( padding: const EdgeInsets.only(
-              top: 8, bottom: 10, left: 15, right: 15),
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 8, bottom: 10, left: 15, right: 15),
             child: searchBox,
           ),
           Expanded(
@@ -115,6 +119,13 @@ class _ClassesListState extends State<ClassesBody> {
         ),
         trailing: Icon(Icons.keyboard_arrow_right,
             color: CommonColors.kPrimaryColor, size: 30.0),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      RollUpDetailPage(classesModel: classesModel)));
+        },
       );
 
   Card makeClassesCardV2(ClassesModel cls) => Card(
@@ -134,7 +145,14 @@ class _ClassesListState extends State<ClassesBody> {
               caption: 'Gán học sinh',
               color: Colors.black45,
               icon: Icons.add_to_photos,
-              onTap: () => {},
+              onTap: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ClassesAddStudentPage()
+                    ))
+              },
             ),
           ],
           secondaryActions: <Widget>[
@@ -179,8 +197,6 @@ class _ClassesListState extends State<ClassesBody> {
         });
   }
 }
-
-
 
 class CDialog {
   static Future _asyncConfirmDialog(

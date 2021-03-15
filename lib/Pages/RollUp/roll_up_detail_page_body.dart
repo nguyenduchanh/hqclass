@@ -8,7 +8,7 @@ class RollUpDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    return Scaffold();
   }
 }
 //class RollUpDetailBody extends StatefulWidget {

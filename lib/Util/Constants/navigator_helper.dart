@@ -11,8 +11,8 @@ class NavigatorHelper {
   toHomePage(BuildContext context){
     Navigator.pushReplacementNamed(context, '/home');
   }
-  toRollUpPage(BuildContext context){
-    Navigator.pushReplacementNamed(context, '/rollup');
+  toAddStudentPage(BuildContext context){
+    Navigator.pushReplacementNamed(context, '/addStudent');
   }
   toLoginPage(BuildContext context){
     Navigator.pushReplacementNamed(context, '/login');

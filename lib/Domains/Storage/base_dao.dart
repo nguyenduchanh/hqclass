@@ -1,5 +1,6 @@
 import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Domains/models/student.dart';
+import 'package:hqclass/Domains/models/student_add.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -46,14 +47,20 @@ class BaseDao {
     var dataList = await data;
     if (textSearch != null && textSearch.isNotEmpty) {
       String textWithoutSign = TiengViet.parse(textSearch);
-    List<StudentModel> temp = [];
+      List<StudentModel> temp = [];
       for (int i = 0; i < dataList.length; i++) {
-        String studentCodeWithoutSign = TiengViet.parse(dataList[i].studentCode);
-        String studentNameWithoutSign = TiengViet.parse(dataList[i].studentName);
+        String studentCodeWithoutSign =
+            TiengViet.parse(dataList[i].studentCode);
+        String studentNameWithoutSign =
+            TiengViet.parse(dataList[i].studentName);
         if (studentCodeWithoutSign.contains(textWithoutSign) ||
-            studentCodeWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase()) ||
+            studentCodeWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase()) ||
             studentNameWithoutSign.contains(textWithoutSign) ||
-            studentNameWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase())) {
+            studentNameWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase())) {
           temp.add(dataList[i]);
         }
       }
@@ -61,7 +68,32 @@ class BaseDao {
     }
     return dataList;
   }
-
+  Future<List<StudentAddModel>> searchStudentAdd(
+      Future<List<StudentAddModel>> data, String textSearch) async {
+    var dataList = await data;
+    if (textSearch != null && textSearch.isNotEmpty) {
+      String textWithoutSign = TiengViet.parse(textSearch);
+      List<StudentAddModel> temp = [];
+      for (int i = 0; i < dataList.length; i++) {
+        String studentCodeWithoutSign =
+        TiengViet.parse(dataList[i].studentCode);
+        String studentNameWithoutSign =
+        TiengViet.parse(dataList[i].studentName);
+        if (studentCodeWithoutSign.contains(textWithoutSign) ||
+            studentCodeWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase()) ||
+            studentNameWithoutSign.contains(textWithoutSign) ||
+            studentNameWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase())) {
+          temp.add(dataList[i]);
+        }
+      }
+      dataList = temp;
+    }
+    return dataList;
+  }
   Future<List<StudentModel>> getStudents() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('student', columns: [
@@ -88,6 +120,44 @@ class BaseDao {
     return students;
   }
 
+  Future<List<StudentAddModel>> getStudentsToAdd(
+      List<StudentAddModel> studentList) async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query('student', columns: [
+      'id',
+      'studentcode',
+      'studentname',
+      'studentage',
+      'schoolname',
+      'address',
+      'parentname',
+      'parentphone',
+      'currentstate',
+      'createdate',
+      'createby',
+      'updateddate',
+      'updatedby'
+    ]);
+    List<StudentAddModel> students = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        if (!isContain(studentList, StudentAddModel.fromMap(maps[i]).studentCode)) {
+          students.add(StudentAddModel.fromMap(maps[i]));
+        }
+      }
+    }
+    return students;
+  }
+  bool isContain(List<StudentAddModel> studentList, String studentCode){
+    if(studentList!=null && studentList.length > 0){
+      for(int i = 0; i < studentList.length; i++){
+        if(studentList[i].studentCode == studentCode){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   Future<int> deleteStudent(int id) async {
     var dbClient = await db;
     return await dbClient.delete(
@@ -136,9 +206,13 @@ class BaseDao {
         String classCodeWithoutSign = TiengViet.parse(dataList[i].classCode);
         String classNameWithoutSign = TiengViet.parse(dataList[i].className);
         if (classCodeWithoutSign.contains(textWithoutSign) ||
-            classCodeWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase()) ||
+            classCodeWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase()) ||
             classNameWithoutSign.contains(textWithoutSign) ||
-            classNameWithoutSign.toUpperCase().contains(textWithoutSign.toUpperCase())) {
+            classNameWithoutSign
+                .toUpperCase()
+                .contains(textWithoutSign.toUpperCase())) {
           temp.add(dataList[i]);
         }
       }
@@ -146,6 +220,7 @@ class BaseDao {
     }
     return dataList;
   }
+
   Future<List<ClassesModel>> getClasses() async {
     var dbClient = await db;
 
