@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/student_add.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
@@ -17,7 +18,8 @@ class ClassesAddStudentPageBody extends StatefulWidget {
 class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
   Future<List<StudentAddModel>> studentAddList;
   Future<List<StudentAddModel>> studentAddListOnSearch;
-  bool valuesecond = false;
+  List<StudentAddModel> stList =[];
+  bool isSelectedAll = false;
   BaseDao baseDao;
   String _searchText;
 
@@ -35,7 +37,12 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           baseDao.searchStudentAdd(studentAddList, _searchText);
     });
   }
-
+  chkCheckedClicked() async{
+    setState(() {
+      studentAddListOnSearch =
+      baseDao.studentAddCheckedAll(studentAddList);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final searchBox = TextFormField(
@@ -48,44 +55,60 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
       decoration: buildSearchInputDecoration(
           "Tìm kiếm học sinh", "Nhập mã hoặc tên học sinh"),
     );
-    final saveButton = Container(
-      child: Column(
-        children: <Widget>[
-          Row(
+    var btnSaveClicked = () async{
+      var st = await studentAddListOnSearch;
+      var t = Global.currentSelectedClassId;
+      for(int i = 0 ; i < st.length; i++){
+        if(st[i].isAdd){
+          stList.add(st[i]);
+        }
+      }
+//      addStudentCode(class);
+    };
+    final checkedRow = Row(
+      //Creates even space between each item and their parent container
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+          child: Column(
             children: <Widget>[
-              Theme(
-                data: ThemeData(
-                    unselectedWidgetColor: CommonColors.kPrimaryColor),
-                child: Checkbox(
-                  value: false,
-                  activeColor: CommonColors.kPrimaryColor,
-                  onChanged: (bool value) {
-                    setState(() {
-//                      studentAddModel.isAdd = value;
-                    });
-                  },
-                ),
-              ),
-              Text(
-                'Check all ',
-                style: TextStyle(fontSize: 16.0),
-              ),
-              MaterialButton(
-                textColor: CommonColors.kPrimaryColor,
-                color: CommonColors.kPrimaryColor,
-                child: SizedBox(
-//                  width: double.infinity,
-                  child: Text(
-                    "Save",
-                    textAlign: TextAlign.center,
+              Row(
+                children: <Widget>[
+                  Theme(
+                      data: ThemeData(
+                          unselectedWidgetColor: CommonColors.kPrimaryColor),
+                      child: Checkbox(
+                        value: isSelectedAll,
+                        activeColor: CommonColors.kPrimaryColor,
+                        onChanged: (bool value) {
+                          setState(() {
+                            isSelectedAll = !isSelectedAll;
+                            chkCheckedClicked();
+                          });
+                        },
+                      ),
+                    ),
+                  Text(
+                    'Check all ',
+                    style: TextStyle(fontSize: 16.0),
                   ),
-                ),
-              ),
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 50,
+            child: Padding(
+              padding:
+              const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 75),
+              child: longButtons(CommonString.cSaveButton, btnSaveClicked),
+            ),
+          )),
+      ],
     );
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: CommonColors.lightGray,
@@ -100,7 +123,7 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           Padding(
             padding:
                 const EdgeInsets.only(top: 0, bottom: 5, left: 0, right: 15),
-            child: saveButton,
+            child: checkedRow,
           ),
           Expanded(
             child: FutureBuilder(

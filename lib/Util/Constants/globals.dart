@@ -1,5 +1,6 @@
 class Global{
   static String Token = "";
+  static int currentSelectedClassId ;
 }
 class ResponseObj{
   bool status;

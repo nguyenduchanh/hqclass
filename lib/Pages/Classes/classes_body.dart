@@ -9,6 +9,7 @@ import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Pages/RollUp/roll_up_detail_page.dart';
 import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
@@ -146,6 +147,7 @@ class _ClassesListState extends State<ClassesBody> {
               color: Colors.black45,
               icon: Icons.add_to_photos,
               onTap: () => {
+                Global.currentSelectedClassId = cls.id,
                 Navigator.push(
                     context,
                     MaterialPageRoute(

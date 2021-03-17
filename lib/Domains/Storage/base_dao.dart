@@ -68,6 +68,20 @@ class BaseDao {
     }
     return dataList;
   }
+
+  Future<List<StudentAddModel>> studentAddCheckedAll(
+      Future<List<StudentAddModel>> studentList) async {
+    var data = await studentList;
+    List<StudentAddModel> result = [];
+    if (data != null && data.length > 0) {
+      for (int i = 0; i < data.length; i++) {
+        data[i].isAdd = !data[i].isAdd;
+        result.add(data[i]);
+      }
+    }
+    return result;
+  }
+
   Future<List<StudentAddModel>> searchStudentAdd(
       Future<List<StudentAddModel>> data, String textSearch) async {
     var dataList = await data;
@@ -76,9 +90,9 @@ class BaseDao {
       List<StudentAddModel> temp = [];
       for (int i = 0; i < dataList.length; i++) {
         String studentCodeWithoutSign =
-        TiengViet.parse(dataList[i].studentCode);
+            TiengViet.parse(dataList[i].studentCode);
         String studentNameWithoutSign =
-        TiengViet.parse(dataList[i].studentName);
+            TiengViet.parse(dataList[i].studentName);
         if (studentCodeWithoutSign.contains(textWithoutSign) ||
             studentCodeWithoutSign
                 .toUpperCase()
@@ -94,6 +108,7 @@ class BaseDao {
     }
     return dataList;
   }
+
   Future<List<StudentModel>> getStudents() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('student', columns: [
@@ -141,23 +156,26 @@ class BaseDao {
     List<StudentAddModel> students = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        if (!isContain(studentList, StudentAddModel.fromMap(maps[i]).studentCode)) {
+        if (!isContain(
+            studentList, StudentAddModel.fromMap(maps[i]).studentCode)) {
           students.add(StudentAddModel.fromMap(maps[i]));
         }
       }
     }
     return students;
   }
-  bool isContain(List<StudentAddModel> studentList, String studentCode){
-    if(studentList!=null && studentList.length > 0){
-      for(int i = 0; i < studentList.length; i++){
-        if(studentList[i].studentCode == studentCode){
+
+  bool isContain(List<StudentAddModel> studentList, String studentCode) {
+    if (studentList != null && studentList.length > 0) {
+      for (int i = 0; i < studentList.length; i++) {
+        if (studentList[i].studentCode == studentCode) {
           return true;
         }
       }
     }
     return false;
   }
+
   Future<int> deleteStudent(int id) async {
     var dbClient = await db;
     return await dbClient.delete(
@@ -256,7 +274,18 @@ class BaseDao {
       whereArgs: [id],
     );
   }
+  Future<void> addStudentCode(ClassesModel classesModel, List<StudentAddModel> studentAdd) async{
+    var currentStudentCode = classesModel.studentCodeList;
+    var currentList = currentStudentCode.split(';');
+    for(int i = 0; i < studentAdd.length; i++){
+      if(!currentList.contains(studentAdd[i].studentCode)){
+        currentList.add(studentAdd[i].studentCode);
+        currentStudentCode= currentStudentCode+";"+studentAdd[i].studentCode;
+      }
+    }
+    classesModel.studentCodeList = currentStudentCode;
 
+  }
   Future<int> updateClass(ClassesModel classes) async {
     var dbClient = await db;
     return await dbClient.update(

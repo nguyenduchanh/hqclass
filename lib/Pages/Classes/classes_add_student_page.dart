@@ -14,6 +14,7 @@ class ClassesAddStudentPage extends StatelessWidget {
           title: CommonString.cAddStudentTitle,
           searchBar: false,
           isOnSearch: false,
+          backButton: true,
         ),
         backgroundColor: CommonColors.bgColorScreen,
         drawer: CommonDrawer(currentPage: "addStudent"),
