@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/student_add.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
@@ -18,7 +19,7 @@ class ClassesAddStudentPageBody extends StatefulWidget {
 class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
   Future<List<StudentAddModel>> studentAddList;
   Future<List<StudentAddModel>> studentAddListOnSearch;
-  List<StudentAddModel> stList =[];
+  List<StudentAddModel> stList = [];
   bool isSelectedAll = false;
   BaseDao baseDao;
   String _searchText;
@@ -37,12 +38,13 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           baseDao.searchStudentAdd(studentAddList, _searchText);
     });
   }
-  chkCheckedClicked() async{
+
+  chkCheckedClicked() async {
     setState(() {
-      studentAddListOnSearch =
-      baseDao.studentAddCheckedAll(studentAddList);
+      studentAddListOnSearch = baseDao.studentAddCheckedAll(studentAddList);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final searchBox = TextFormField(
@@ -55,15 +57,17 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
       decoration: buildSearchInputDecoration(
           "Tìm kiếm học sinh", "Nhập mã hoặc tên học sinh"),
     );
-    var btnSaveClicked = () async{
+    var btnSaveClicked = () async {
       var st = await studentAddListOnSearch;
-      var t = Global.currentSelectedClassId;
-      for(int i = 0 ; i < st.length; i++){
-        if(st[i].isAdd){
+      var classId = Global.currentSelectedClassId;
+      for (int i = 0; i < st.length; i++) {
+        if (st[i].isAdd) {
           stList.add(st[i]);
         }
       }
-//      addStudentCode(class);
+      await baseDao
+          .addStudentCode(classId, stList)
+          .then((value) => {Navigator.pop(context)});
     };
     final checkedRow = Row(
       //Creates even space between each item and their parent container
@@ -75,19 +79,19 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
               Row(
                 children: <Widget>[
                   Theme(
-                      data: ThemeData(
-                          unselectedWidgetColor: CommonColors.kPrimaryColor),
-                      child: Checkbox(
-                        value: isSelectedAll,
-                        activeColor: CommonColors.kPrimaryColor,
-                        onChanged: (bool value) {
-                          setState(() {
-                            isSelectedAll = !isSelectedAll;
-                            chkCheckedClicked();
-                          });
-                        },
-                      ),
+                    data: ThemeData(
+                        unselectedWidgetColor: CommonColors.kPrimaryColor),
+                    child: Checkbox(
+                      value: isSelectedAll,
+                      activeColor: CommonColors.kPrimaryColor,
+                      onChanged: (bool value) {
+                        setState(() {
+                          isSelectedAll = !isSelectedAll;
+                          chkCheckedClicked();
+                        });
+                      },
                     ),
+                  ),
                   Text(
                     'Check all ',
                     style: TextStyle(fontSize: 16.0),
@@ -98,14 +102,14 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           ),
         ),
         Expanded(
-          child: Container(
-            height: 50,
-            child: Padding(
-              padding:
-              const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 75),
-              child: longButtons(CommonString.cSaveButton, btnSaveClicked),
-            ),
-          )),
+            child: Container(
+          height: 50,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 75),
+            child: longButtons(CommonString.cSaveButton, btnSaveClicked),
+          ),
+        )),
       ],
     );
 
@@ -200,5 +204,29 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
         itemBuilder: (BuildContext context, int index) {
           return makeStudentCardV2(classesModel[index]);
         });
+  }
+}
+
+class CDialog {
+  static Future _asyncConfirmDialog(
+      BuildContext context, String Title, String Content) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(Title),
+          content: Text(Content),
+          actions: [
+            FlatButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop(ConfirmAction.ACCEPT);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 }

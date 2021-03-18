@@ -8,6 +8,7 @@ import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 
 class StudentDetailBodyPage extends StatelessWidget {
+
   final StudentModel studentModel;
   final formKey = new GlobalKey<FormState>();
   BaseDao baseDao = BaseDao();

@@ -109,6 +109,33 @@ class BaseDao {
     return dataList;
   }
 
+  Future<StudentAddModel> getStudentByCode(String code) async {
+    final dbClient = await db;
+    var result = await dbClient
+        .query("student", where: "studentcode = ?", whereArgs: [code]);
+    return (result != null && result.isNotEmpty)
+        ? StudentAddModel.fromMap(result.first)
+        : Null;
+  }
+
+  Future<List<StudentAddModel>> getStudentsByCode(String code) async {
+    List<StudentAddModel> students = [];
+    if (code != null && code.isNotEmpty) {
+      var codeList = code.split(',');
+      if (codeList != null && codeList.isNotEmpty) {
+        for (int i = 0; i < codeList.length; i++) {
+          if(codeList[i]!=null && codeList[i].isNotEmpty && codeList[i]!=""){
+            var st = await getStudentByCode(codeList[i]);
+            if (st != null) {
+              students.add(st);
+            }
+          }
+        }
+      }
+    }
+    return students;
+  }
+
   Future<List<StudentModel>> getStudents() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('student', columns: [
@@ -214,6 +241,13 @@ class BaseDao {
     return classes.id;
   }
 
+  Future<ClassesModel> getClassesById(int id) async {
+    final dbClient = await db;
+    var result =
+        await dbClient.query("classes", where: "id = ?", whereArgs: [id]);
+    return result.isNotEmpty ? ClassesModel.fromMap(result.first) : Null;
+  }
+
   Future<List<ClassesModel>> searchClasses(
       Future<List<ClassesModel>> data, String textSearch) async {
     var dataList = await data;
@@ -274,18 +308,28 @@ class BaseDao {
       whereArgs: [id],
     );
   }
-  Future<void> addStudentCode(ClassesModel classesModel, List<StudentAddModel> studentAdd) async{
-    var currentStudentCode = classesModel.studentCodeList;
-    var currentList = currentStudentCode.split(';');
-    for(int i = 0; i < studentAdd.length; i++){
-      if(!currentList.contains(studentAdd[i].studentCode)){
+
+  Future<void> addStudentCode(
+      int classId, List<StudentAddModel> studentAdd) async {
+    var currentClasses = await getClassesById(classId);
+    var currentStudentCode = currentClasses.studentCodeList;
+    var currentList = currentStudentCode.split(',');
+    for (int i = 0; i < studentAdd.length; i++) {
+      if (currentList!=null && currentList.isNotEmpty && !currentList.contains(studentAdd[i].studentCode)) {
+        if (currentStudentCode.isNotEmpty || currentStudentCode != null) {
+          currentStudentCode =
+              currentStudentCode + "," + studentAdd[i].studentCode;
+        } else {
+          currentStudentCode = studentAdd[i].studentCode;
+        }
+
         currentList.add(studentAdd[i].studentCode);
-        currentStudentCode= currentStudentCode+";"+studentAdd[i].studentCode;
       }
     }
-    classesModel.studentCodeList = currentStudentCode;
-
+    currentClasses.studentCodeList = currentStudentCode;
+    updateClass(currentClasses);
   }
+
   Future<int> updateClass(ClassesModel classes) async {
     var dbClient = await db;
     return await dbClient.update(
@@ -533,129 +577,9 @@ class BaseDao {
           "admin",
           DateTime.now().toString(),
           "admin",
-          "HG01,HG02,HG03,HG04"),
+          ""),
       ClassesModel(
           2,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          3,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          4,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          5,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          6,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          7,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          8,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          9,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          9,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          9,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          9,
           "CL01",
           "Lop hoc phu dao",
           "Le Van D",
