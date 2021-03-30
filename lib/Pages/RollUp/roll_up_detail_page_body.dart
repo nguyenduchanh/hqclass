@@ -32,11 +32,8 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
   }
 
   refreshStudentList() async {
+    var studentCode = widget.currentClasses.studentCodeList;
     setState(() {
-      var studentCode = widget.currentClasses.studentCodeList;
-//      if(studentCode[0]==','){
-//        studentCode = studentCode.substring(0, studentCode.length - 1);
-//      }
       if (studentCode != null && studentCode.isNotEmpty) {
         studentList = baseDao.getStudentsByCode(studentCode);
       }

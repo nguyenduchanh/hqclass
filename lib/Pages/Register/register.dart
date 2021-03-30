@@ -68,7 +68,7 @@ class _RegisterState extends State<Register> {
       if (form.validate()) {
         form.save();
         await UserPreferences().CreateUserConfig(_username, _password, _email);
-        NavigatorHelper().toHomePage(context);
+        NavigatorHelper().toClassesPage(context);
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,

@@ -76,6 +76,8 @@ class CommonString {
   static const cBackToLogin = "Quay lại trang đăng nhập";
   static const cCancelButton = "Huỷ bỏ";
   static const cSaveButton = "Lưu";
+  static const cExportButton = "Xuất dữ liệu";
+  static const cImportButton = "Cập nhật dữ liệu mới";
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";
