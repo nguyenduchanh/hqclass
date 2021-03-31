@@ -124,18 +124,8 @@ class ClassDetailBody extends StatelessWidget {
         form.save();
         // thêm mới
         if (classes == null) {
-          final newClass = new ClassesModel(
-              0,
-              _classCode,
-              _className,
-              _contactName,
-              _contactPhone,
-              _numberOfStudents,
-              DateTime.now().toString(),
-              'admin',
-              DateTime.now().toString(),
-              'admin',
-              null);
+          final newClass = new ClassesModel(0, _classCode, _className,
+              _contactName, _contactPhone, _numberOfStudents, null);
           var idClass = await baseDao.addClass(newClass);
           if (idClass > 0) {
             NavigatorHelper().toClassesPage(context);
@@ -155,10 +145,6 @@ class ClassDetailBody extends StatelessWidget {
               _contactName,
               _contactPhone,
               _numberOfStudents,
-              classes.createDate,
-              classes.createBy,
-              classes.updatedDate,
-              classes.updatedBy,
               classes.studentCodeList);
           int updateClassId = await baseDao.updateClass(updateClass);
           if (updateClassId > 0) {

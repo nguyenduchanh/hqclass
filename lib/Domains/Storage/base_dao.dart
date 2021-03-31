@@ -31,7 +31,6 @@ class BaseDao {
         'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT, studentcodelist TEXT)');
     await db.execute(
         'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT,currentstate INTEGER, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
-    await initClasses();
     await initStudent();
   }
 
@@ -564,35 +563,4 @@ class BaseDao {
     }
   }
 
-  Future<void> initClasses() async {
-    List<ClassesModel> classes = [
-      ClassesModel(
-          1,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-      ClassesModel(
-          2,
-          "CL01",
-          "Lop hoc phu dao",
-          "Le Van D",
-          "0981843626",
-          23,
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          ""),
-    ];
-    for (int i = 0; i < classes.length; i++) {
-      addClass(classes[i]);
-    }
-  }
 }

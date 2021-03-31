@@ -40,6 +40,8 @@ class CommonString {
   static const cRegistering = "Đang đăng ký tài khoản";
   static const cRegisterFailed = "Đang đăng ký tài khoản không thành công";
   static const cReEnterLoginForm = "Nhập lại dữ liệu tài khoản";
+  static const cEnterUrlString = "Enter request URL";
+  static const cUrlString = "Request URL";
 
   // class detail page
   static const cEnterClassCode = "Nhập mã lớp";
@@ -53,6 +55,7 @@ class CommonString {
   static const cContactPhone = "Sdt liên lạc";
   static const cNumberOfStudent = "Sỹ số lớp";
   static const cStartDate = "Ngày bắt đầu";
+
   //student detail page
   static const cEnterStudentCode = "Nhập mã học sinh";
   static const cEnterStudentName = "Nhập tên học sinh";
@@ -70,6 +73,7 @@ class CommonString {
   static const cParentName = "Tên cha mẹ";
   static const cParentPhone = "Sdt cha mẹ";
   static const cState = "Trạng thái";
+
   // button
   static const cLoginButton = "Đăng nhập";
   static const cSignUpButton = "Đăng ký";
@@ -87,4 +91,13 @@ class CommonString {
   static const cSaveDataSuccessMessage = "Thành công rồi vợ yêu ơi!";
   static const cSaveDataFail = "Lưu dữ liệu thất bại!";
   static const cSaveDataFailMessage = "Vợ yêu lưu dữ liệu lỗi rồi";
+  static const cBackUpInitString =
+      "Nhấn nút Cập nhật dữ liệu để load dữ liệu từ server.\n"
+              "Nhấn nút Xuất dữ liệu để xuất dữ liệu ra thư mục của server.\n" +
+          "Lưu ý: Khi nhấn cập nhật dữ liệu thì dữ liệu trong máy sẽ được làm mới.\n" +
+          "Các bước thực hiện: \n\n" +
+          "B1: Lấy địa chỉ ip ghi trên form server thay thế vào link request Url\n" +
+          "VD: Ip trên server là: 10.1.13.136 thì đổi http://localhost:9999/v1/ thành http://10.1.3.136:9999/v1/ \n\n"
+          "B2: Nhấn nút xuất dữ liệu để backup ra dữ liệu sang server.\n" +
+          "B3: Nhấn nút Cập nhật dữ liệu để làm mới dữ liệu trên app.\n";
 }

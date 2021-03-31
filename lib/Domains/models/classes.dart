@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class ClassesModel {
   int id;
   String classCode;
@@ -5,10 +7,6 @@ class ClassesModel {
   String contactName;
   String contactPhone;
   int numberOfStudents;
-  String createDate;
-  String createBy;
-  String updatedDate;
-  String updatedBy;
   String studentCodeList;
 
   ClassesModel(
@@ -18,10 +16,6 @@ class ClassesModel {
       this.contactName,
       this.contactPhone,
       this.numberOfStudents,
-      this.createDate,
-      this.createBy,
-      this.updatedDate,
-      this.updatedBy,
       this.studentCodeList);
 
   Map<String, dynamic> toMap() {
@@ -32,10 +26,6 @@ class ClassesModel {
       'contactname': contactName,
       'contactphone': contactPhone,
       'numberofstudents': numberOfStudents,
-      'createdate': createDate,
-      'createby': createBy,
-      'updateddate': updatedDate,
-      'updatedby': updatedBy,
       'studentcodelist': studentCodeList,
 
     };
@@ -49,19 +39,6 @@ class ClassesModel {
     contactName = map['contactname'];
     contactPhone = map['contactphone'];
     numberOfStudents = map['numberofstudents'];
-    createDate = map['createdate'];
-    createBy = map['createby'];
-    updatedDate = map['updateddate'];
-    updatedBy = map['updatedby'];
     studentCodeList = map['studentcodelist'];
   }
 }
-
-//List getClasses() {
-//  return [
-//    Classes(1, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
-//        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd"),
-//    Classes(2, "CL01", "Lớp của em Quỳnh", "Beginner", "0981831653", 20,
-//        DateTime.now(), "Hanhnd", DateTime.now(), "Hanhnd")
-//  ];
-//}

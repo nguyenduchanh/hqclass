@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/dtb_helper.dart';
-import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:http/http.dart';
 enum Status {
   NotLoggedIn,
