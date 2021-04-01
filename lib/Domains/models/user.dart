@@ -34,4 +34,8 @@ class UserModel {
       deviceLogin: responseData['devicelogin'],
     );
   }
+  @override
+  String toString() {
+    return '{id: $id, username: $userName, password: $password, email: $email, devicelogin: $deviceLogin}';
+  }
 }

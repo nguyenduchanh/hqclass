@@ -12,6 +12,11 @@ class DBHelper {
 
   //get student api
   static const student_url = ":9999/v1/students";
+
   //export student api
   static const export_student_url = ":9999/v1/students/export";
+  //export classes api
+  static const export_classes_url = ":9999/v1/classes/export";
+  //export user api
+  static const export_user_url = ":9999/v1/user/export";
 }

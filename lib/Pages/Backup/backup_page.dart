@@ -7,7 +7,7 @@ import 'package:hqclass/Domains/controllers/student_controller.dart';
 import 'package:hqclass/Domains/controllers/user_controller.dart';
 import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Domains/models/student.dart';
-import 'package:hqclass/Domains/user.dart';
+import 'file:///D:/Study/Github/hqclass/lib/Domains/models/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -26,54 +26,73 @@ class _BackupPageState extends State<BackupPage> {
   UserModel userList;
   String logStr = CommonString.cBackUpInitString;
   BaseDao baseDao;
-  bool isExportStudent;
+  bool isExportStudent = false;
+  bool isExportClasses = false;
+
   @override
   void initState() {
     super.initState();
     baseDao = BaseDao();
   }
+
   doExport() async {
     logStr = "";
     studentList = await baseDao.getStudents();
-    isExportStudent = await StudentController().ExportStudents(_domain, studentList);
+    classesList = await baseDao.getClasses();
+    if (studentList != null && studentList.length > 0) {
+      isExportStudent =
+      await StudentController().ExportStudents(_domain, studentList);
+    } else {
+      printResult("Dữ liệu học sinh không tồn tại");
+    }
+    if (classesList != null && classesList.length > 0) {
+      isExportClasses = isExportClasses =
+      await ClassController().ExportClasses(_domain, classesList);
+    } else {
+      printResult("Dữ liệu lớp học không tồn tại");
+    }
+
     setState(() {
-      if(isExportStudent){
+      if (isExportStudent) {
         printResult("Xuất danh sách học sinh thành công");
+      } else {
+        printResult("Xuất danh sách học sinh không thành công");
+      }
+
+      if (isExportClasses) {
+        printResult("Xuất danh sách lớp học thành công");
+      } else {
+        printResult("Xuất danh sách lớp học không thành công");
       }
     });
   }
+
   doImport() async {
     logStr = "";
     classesList = await ClassController().GetClasses(_domain);
-    userList = await UserController().GetUsers(_domain);
+//    userList = await UserController().GetUsers(_domain);
     studentList = await StudentController().GetStudents(_domain);
     setState(() {
       if (classesList.length > 0) {
         printResult("-----Danh sách lớp học:-----");
-        for(int i = 0 ; i < classesList.length; i++){
-          printResult( classesList[i].toMap().toString());
-        }
+        baseDao.initClasses(classesList);
       }
-      printResult("-----Thông tin người dùng:-----");
-      if(userList.id > 0){
-        printResult( userList.toMap().toString());
-      }
+
       printResult("-----Danh sách học sinh:-----");
-      if(studentList.length > 0){
-        for(int i = 0 ; i < studentList.length; i++){
-          printResult(studentList[i].toMap().toString());
-        }
+      if (studentList.length > 0) {
+        baseDao.initStudent(studentList);
       }
     });
   }
+
   printResult(String txt) async {
     logStr += txt + "\n";
   }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _urlDomainController =
-        new TextEditingController(text: _domain);
-
+    new TextEditingController(text: _domain);
 
     final urlFromField = new TextFormField(
       autofocus: false,
@@ -158,8 +177,8 @@ class _BackupPageState extends State<BackupPage> {
                 SizedBox(height: 15.0),
                 cardResult,
               ])
-          //
-          ),
+        //
+      ),
     );
   }
 }

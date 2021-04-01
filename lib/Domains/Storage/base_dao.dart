@@ -31,7 +31,6 @@ class BaseDao {
         'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT, studentcodelist TEXT)');
     await db.execute(
         'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT,currentstate INTEGER, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
-    await initStudent();
   }
 
   /// student
@@ -123,7 +122,9 @@ class BaseDao {
       var codeList = code.split(',');
       if (codeList != null && codeList.isNotEmpty) {
         for (int i = 0; i < codeList.length; i++) {
-          if(codeList[i]!=null && codeList[i].isNotEmpty && codeList[i]!=""){
+          if (codeList[i] != null &&
+              codeList[i].isNotEmpty &&
+              codeList[i] != "") {
             var st = await getStudentByCode(codeList[i]);
             if (st != null) {
               students.add(st);
@@ -314,7 +315,9 @@ class BaseDao {
     var currentStudentCode = currentClasses.studentCodeList;
     var currentList = currentStudentCode.split(',');
     for (int i = 0; i < studentAdd.length; i++) {
-      if (currentList!=null && currentList.isNotEmpty && !currentList.contains(studentAdd[i].studentCode)) {
+      if (currentList != null &&
+          currentList.isNotEmpty &&
+          !currentList.contains(studentAdd[i].studentCode)) {
         if (currentStudentCode.isNotEmpty || currentStudentCode != null) {
           currentStudentCode =
               currentStudentCode + "," + studentAdd[i].studentCode;
@@ -345,222 +348,35 @@ class BaseDao {
     dbClient.close();
   }
 
-  Future<void> initStudent() async {
-    List<StudentModel> students = [
-      StudentModel(
-          1,
-          "TB01",
-          "Cù Chí Tuệ",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          2,
-          "TB02",
-          "Lê Văn Lựu",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          3,
-          "TB03",
-          "Lê Thị Lương",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          4,
-          "DR01",
-          "Vũ Thị Bười",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          5,
-          "DR02",
-          "Ái Tan Giác La Phổ Nghi",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          6,
-          "HG01",
-          "Công Tằng Tôn Nữ Thị Ninh",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          7,
-          "HG02",
-          "Thành Cát Tam Hãn",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          8,
-          "HG03",
-          "Vũ Đức Phượng Sồ",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          9,
-          "HG04",
-          "Vũ Đức Ngọa Long",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          10,
-          "BT01",
-          "Nguyễn Lê Hùng Dâm",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          11,
-          "BT02",
-          "Nguyễn Lê Hường",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          12,
-          "HS04",
-          "Nguyên Văn Tý",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          13,
-          "HS03",
-          "Nguyên Thị Lượm",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          14,
-          "HS08",
-          "Phạm Thị Bưởi",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-      StudentModel(
-          15,
-          "HS12",
-          "Lê Thị Na",
-          12,
-          "THPT Chuyên Ngoại",
-          "Chuyên Ngoại - Duy Tiên - Hà Nam",
-          "Nguyễn Văn X",
-          "0981831654",
-          1,
-          "admin",
-          DateTime.now().toString(),
-          "admin",
-          DateTime.now().toString()),
-    ];
+  Future<void> deleteAllClasses() async {
+    var data = await getClasses();
+    if (data != null) {
+      for (int i = 0; i < data.length; i++) {
+        await deleteClass(data[i].id);
+      }
+    }
+  }
+
+  Future<void> deleteAllStudent() async {
+    var data = await getStudents();
+    if (data != null) {
+      for (int i = 0; i < data.length; i++) {
+        await deleteStudent(data[i].id);
+      }
+    }
+  }
+
+  Future<void> initStudent(List<StudentModel> students) async {
+    await deleteAllStudent();
     for (int i = 0; i < students.length; i++) {
       addStudent(students[i]);
     }
   }
 
+  Future<void> initClasses(List<ClassesModel> classes) async {
+    await deleteAllClasses();
+    for (int i = 0; i < classes.length; i++) {
+      addClass(classes[i]);
+    }
+  }
 }
