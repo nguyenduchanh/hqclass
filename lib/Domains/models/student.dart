@@ -30,6 +30,7 @@ class StudentModel {
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
+      'id': id,
       'studentcode': studentCode,
       'studentname': studentName,
       'studentage': studentAge,
@@ -60,5 +61,9 @@ class StudentModel {
     createBy = map['createby'];
     updatedDate = map['updateddate'];
     updatedBy = map['updatedby'];
+  }
+  @override
+  String toString() {
+    return '{id: $id, studentcode: $studentCode, studentname: $studentName, studentage: $studentAge, parentname: $parentName, parentphone: $parentPhone,currentstate: $currentState,schoolname: $schoolName,address: $address,createdate: $createDate,createby: $createBy,updateddate: $updatedDate,updatedby: $updatedBy}';
   }
 }

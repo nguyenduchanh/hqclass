@@ -97,7 +97,7 @@ class CommonString {
           "Lưu ý: Khi nhấn cập nhật dữ liệu thì dữ liệu trong máy sẽ được làm mới.\n" +
           "Các bước thực hiện: \n\n" +
           "B1: Lấy địa chỉ ip ghi trên form server thay thế vào link request Url\n" +
-          "VD: Ip trên server là: 10.1.13.136 thì đổi http://localhost:9999/v1/ thành http://10.1.3.136:9999/v1/ \n\n"
+          "VD: Ip trên server là: 10.1.3.136 thì đổi http://localhost thành http://10.1.3.136 \n\n"
           "B2: Nhấn nút xuất dữ liệu để backup ra dữ liệu sang server.\n" +
           "B3: Nhấn nút Cập nhật dữ liệu để làm mới dữ liệu trên app.\n";
 }

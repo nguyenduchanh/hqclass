@@ -1,42 +1,94 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:hqclass/Domains/ClassController.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
+import 'package:hqclass/Domains/controllers/class_controller.dart';
+import 'package:hqclass/Domains/controllers/student_controller.dart';
+import 'package:hqclass/Domains/controllers/user_controller.dart';
 import 'package:hqclass/Domains/models/classes.dart';
+import 'package:hqclass/Domains/models/student.dart';
+import 'package:hqclass/Domains/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
-import 'package:hqclass/Util/Constants/dtb_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:hqclass/Widgets/drawer.dart';
 import 'package:hqclass/Widgets/navbar.dart';
 
-class BackupPage extends StatelessWidget {
-  // final GlobalKey _scaffoldKey = new GlobalKey();
+class BackupPage extends StatefulWidget {
+  @override
+  _BackupPageState createState() => _BackupPageState();
+}
+
+class _BackupPageState extends State<BackupPage> {
+  String _domain = "http://10.1.3.136";
+  List<ClassesModel> classesList;
+  List<StudentModel> studentList;
+  UserModel userList;
+  String logStr = CommonString.cBackUpInitString;
+  BaseDao baseDao;
+  bool isExportStudent;
+  @override
+  void initState() {
+    super.initState();
+    baseDao = BaseDao();
+  }
+  doExport() async {
+    logStr = "";
+    studentList = await baseDao.getStudents();
+    isExportStudent = await StudentController().ExportStudents(_domain, studentList);
+    setState(() {
+      if(isExportStudent){
+        printResult("Xuất danh sách học sinh thành công");
+      }
+    });
+  }
+  doImport() async {
+    logStr = "";
+    classesList = await ClassController().GetClasses(_domain);
+    userList = await UserController().GetUsers(_domain);
+    studentList = await StudentController().GetStudents(_domain);
+    setState(() {
+      if (classesList.length > 0) {
+        printResult("-----Danh sách lớp học:-----");
+        for(int i = 0 ; i < classesList.length; i++){
+          printResult( classesList[i].toMap().toString());
+        }
+      }
+      printResult("-----Thông tin người dùng:-----");
+      if(userList.id > 0){
+        printResult( userList.toMap().toString());
+      }
+      printResult("-----Danh sách học sinh:-----");
+      if(studentList.length > 0){
+        for(int i = 0 ; i < studentList.length; i++){
+          printResult(studentList[i].toMap().toString());
+        }
+      }
+    });
+  }
+  printResult(String txt) async {
+    logStr += txt + "\n";
+  }
   @override
   Widget build(BuildContext context) {
-    String _domain =  DBHelper.class_url;
-    List<ClassesModel> classesList;
-    Map<String, dynamic> res;
-    const String logStr = CommonString.cBackUpInitString;
-    var doImport = () async {
+    TextEditingController _urlDomainController =
+        new TextEditingController(text: _domain);
 
-    };
-    var doExport = () async {
-      classesList = await ClassController().GetClasses();
-      log(classesList[0].className);
-    };
+
     final urlFromField = new TextFormField(
       autofocus: false,
       initialValue: _domain,
       keyboardType: TextInputType.url,
       onSaved: (value) => _domain = value,
-      decoration: buildInputDecoration(
-          CommonString.cEnterUrlString, Icons.add_link,
-          CommonString.cUrlString),
+      onChanged: (text) {
+        _domain = text;
+      },
+      decoration: buildInputDecoration(CommonString.cEnterUrlString,
+          Icons.add_link, CommonString.cUrlString),
     );
     final cardResult = new Container(
       // adding padding
-      padding: const EdgeInsets.only(top: 25, bottom: 10, left: 0, right: 0),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 0, right: 0),
       // height should be fixed for vertical scrolling
       height: 500.0,
       decoration: BoxDecoration(
@@ -48,15 +100,36 @@ class BackupPage extends StatelessWidget {
       child: Form(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Text(
-            logStr,
-            style: TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.normal,
-              fontSize: 16.0,
-              letterSpacing: 1,
-              wordSpacing: 1,
-            ),
+//          child: Text(
+//            logStr,
+//            textAlign: TextAlign.start,
+//            style: TextStyle(
+//              color: Colors.black54,
+//              fontWeight: FontWeight.normal,
+//              fontSize: 16.0,
+//              letterSpacing: 1,
+//              wordSpacing: 1,
+//            ),
+//          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                  child: Text(
+                    logStr,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16.0,
+                      letterSpacing: 1,
+                      wordSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -84,10 +157,9 @@ class BackupPage extends StatelessWidget {
                 longButtons(CommonString.cExportButton, doExport),
                 SizedBox(height: 15.0),
                 cardResult,
-              ]
-          )
-        //
-      ),
+              ])
+          //
+          ),
     );
   }
- }
+}

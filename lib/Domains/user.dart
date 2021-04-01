@@ -1,32 +1,37 @@
-import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 
-class User {
-  String name;
+class UserModel {
+  int id;
+  String userName;
   String password;
   String email;
-  String phone;
-  String type;
-  String token;
-  String renewalToken;
+  String deviceLogin;
 
-  User({
-    this.name,
+  UserModel({
+    this.id,
+    this.userName,
     this.password,
     this.email,
-    this.phone,
-    this.type,
-    this.token,
-    this.renewalToken
+    this.deviceLogin,
   });
 
-  factory User.fromJson(Map<String, dynamic> responseData){
-    return User(
-        name: responseData['name'],
-        email: responseData['email'],
-        phone: responseData['phone'],
-        type: responseData['type'],
-        token: responseData['access_token'],
-        renewalToken: responseData['renewal_token']
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+//      'id': id,
+      'username': userName,
+      'password': password,
+      'email': email,
+      'devicelogin': deviceLogin,
+    };
+    return map;
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> responseData) {
+    return UserModel(
+      id : responseData['id'],
+      userName: responseData['username'],
+      password: responseData['password'],
+      email: responseData['email'],
+      deviceLogin: responseData['devicelogin'],
     );
   }
 }
