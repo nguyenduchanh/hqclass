@@ -1,4 +1,5 @@
 import 'package:hqclass/Domains/models/classes.dart';
+import 'package:hqclass/Domains/models/rollup.dart';
 import 'package:hqclass/Domains/models/student.dart';
 import 'package:hqclass/Domains/models/student_add.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,8 +32,47 @@ class BaseDao {
         'CREATE TABLE classes (id INTEGER PRIMARY KEY, classcode TEXT, classname TEXT, contactname TEXT, contactphone TEXT, numberofstudents INTEGER,createdate TEXT, createby TEXT, updateddate DATETIME, updatedby TEXT, studentcodelist TEXT)');
     await db.execute(
         'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT,currentstate INTEGER, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
+    await db.execute(
+        'CREATE TABLE rollup (id INTEGER PRIMARY KEY, classcode TEXT, studentcodelist TEXT, createdate TEXT, rollupdata TEXT)');
   }
-
+  /// roll up
+  Future<List<RollUpModel>> getRollup() async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query('rollup', columns: [
+      'id',
+      'classcode',
+      'studentcodelist',
+      'createdate',
+      'rollupdata',
+    ]);
+    List<RollUpModel> rollups = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        rollups.add(RollUpModel.fromMap(maps[i]));
+      }
+    }
+    return rollups;
+  }
+  Future<RollUpModel> getRollupById(int id) async {
+    final dbClient = await db;
+    var result =
+    await dbClient.query("rollup", where: "id = ?", whereArgs: [id]);
+    return result.isNotEmpty ? RollUpModel.fromMap(result.first) : Null;
+  }
+  Future<int> addRollup(RollUpModel rollUpModel) async {
+    var dbClient = await db;
+    rollUpModel.id = await dbClient.insert('rollup', rollUpModel.toMap());
+    return rollUpModel.id;
+  }
+  Future<int> updateRollup(RollUpModel rollUpModel) async {
+    var dbClient = await db;
+    return await dbClient.update(
+      'rollup',
+      rollUpModel.toMap(),
+      where: 'id = ?',
+      whereArgs: [rollUpModel.id],
+    );
+  }
   /// student
   Future<int> addStudent(StudentModel student) async {
     var dbClient = await db;
@@ -115,7 +155,16 @@ class BaseDao {
         ? StudentAddModel.fromMap(result.first)
         : Null;
   }
-
+  Future<List<StudentAddModel>> convertToStudentAddCode(List<StudentAddModel> stdAddModel,Map<String, bool> stdState) async {
+    for(int i = 0; i< stdAddModel.length; i++){
+      if(stdState.containsKey(stdAddModel[i].studentCode)){
+        stdAddModel[i].isAdd = stdState[stdAddModel[i].studentCode];
+      }else{
+        stdAddModel[i].isAdd = false;
+      }
+    }
+    return stdAddModel;
+  }
   Future<List<StudentAddModel>> getStudentsByCode(String code) async {
     List<StudentAddModel> students = [];
     if (code != null && code.isNotEmpty) {
@@ -161,7 +210,12 @@ class BaseDao {
     }
     return students;
   }
-
+//  Future<List<StudentAddModel>> getStudentsAddByClassCode(String classCode) async {
+//    List<StudentModel> stdLst= new List<StudentModel>();
+//    List<StudentAddModel> stdAddLst= new List<StudentAddModel>();
+//    stdLst = await getStudents();
+//
+//  }
   Future<List<StudentAddModel>> getStudentsToAdd(
       List<StudentAddModel> studentList) async {
     var dbClient = await db;

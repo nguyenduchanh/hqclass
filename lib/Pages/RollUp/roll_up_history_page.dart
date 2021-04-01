@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/models/classes.dart';
-import 'package:hqclass/Pages/RollUp/roll_up_detail_page_body.dart';
+import 'package:hqclass/Pages/RollUp/roll_up_history_detail_page.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Widgets/navbar.dart';
 
-class RollUpDetailPage extends StatelessWidget{
-  final ClassesModel classesModel;
-  final Map<String, bool> state;
-  RollUpDetailPage({Key key,this.classesModel,this.state}) : super(key: key);
+class RollUpHistoryPage extends StatelessWidget{
+  final ClassesModel clsModel;
+  RollUpHistoryPage({Key key,this.clsModel}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Navbar(
-        title: "Điểm danh",
+        title: "Lịch sử điểm danh",
         searchBar: false,
         isOnSearch: false,
         backButton: true,
       ),
       backgroundColor: CommonColors.bgColorScreen,
-      body: new RollUpDetailBody(currentClasses: classesModel, stdState: null),
+      body: new RollUpHistoryDetailBody(currentClasses: clsModel),
     );
   }
 }
