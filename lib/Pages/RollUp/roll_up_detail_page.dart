@@ -18,7 +18,7 @@ class RollUpDetailPage extends StatelessWidget{
         backButton: true,
       ),
       backgroundColor: CommonColors.bgColorScreen,
-      body: new RollUpDetailBody(currentClasses: classesModel, stdState: null),
+      body: new RollUpDetailBody(currentClasses: classesModel, stdState: state),
     );
   }
 }

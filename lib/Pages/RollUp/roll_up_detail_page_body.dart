@@ -37,11 +37,14 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
     baseDao = BaseDao();
     if (widget.stdState == null) {
       refreshRollupDetailList();
-    } else {}
+    } else {
+      geStdState(widget.stdState);
+    }
   }
 
   geStdState(Map<String, bool> state) async {
-    studentList2 = await studentList;
+    var studentCode = widget.currentClasses.studentCodeList;
+    studentList2 = await baseDao.getStudentsByCode(studentCode);
     setState(() {
       studentList = baseDao.convertToStudentAddCode(studentList2, state);
     });
