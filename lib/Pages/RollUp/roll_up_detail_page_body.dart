@@ -47,9 +47,19 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
     studentList2 = await baseDao.getStudentsByCode(studentCode);
     setState(() {
       studentList = baseDao.convertToStudentAddCode(studentList2, state);
+      isSelectedAll = checkState(state);
     });
   }
-
+  bool checkState(Map<String, bool> state){
+    bool result = true;
+    state.forEach((key, value) {
+      if(value == false){
+        result =  false;
+      }
+    }
+    );
+    return result;
+  }
   refreshRollupDetailList() async {
     var studentCode = widget.currentClasses.studentCodeList;
     setState(() {
@@ -74,8 +84,13 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
     setState(() {
       rollUpModel = new RollUpModel(0, widget.currentClasses.classCode,
           widget.currentClasses.studentCodeList, DateTime.now(), rollupData);
-      baseDao.addRollup(rollUpModel);
-      Navigator.pop(context);
+      if (widget.stdState == null) { //insert
+        baseDao.addRollup(rollUpModel);
+        Navigator.pop(context);
+      }else{  // update
+
+      }
+
     });
   }
 
