@@ -108,12 +108,12 @@ class BaseDao {
   }
 
   Future<List<StudentAddModel>> studentAddCheckedAll(
-      Future<List<StudentAddModel>> studentList) async {
+      Future<List<StudentAddModel>> studentList, bool chkState) async {
     var data = await studentList;
     List<StudentAddModel> result = [];
     if (data != null && data.length > 0) {
       for (int i = 0; i < data.length; i++) {
-        data[i].isAdd = !data[i].isAdd;
+        data[i].isAdd = chkState;
         result.add(data[i]);
       }
     }

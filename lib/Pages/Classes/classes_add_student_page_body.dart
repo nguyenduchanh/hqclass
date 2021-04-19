@@ -41,7 +41,7 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
 
   chkCheckedClicked() async {
     setState(() {
-      studentAddListOnSearch = baseDao.studentAddCheckedAll(studentAddList);
+      studentAddListOnSearch = baseDao.studentAddCheckedAll(studentAddList, isSelectedAll);
     });
   }
 

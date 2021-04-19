@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'file:///D:/Study/Github/hqclass/lib/Domains/models/user.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Util/Constants/dtb_helper.dart';
 import 'package:http/http.dart';
 

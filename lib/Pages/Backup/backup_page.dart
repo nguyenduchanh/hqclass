@@ -7,7 +7,7 @@ import 'package:hqclass/Domains/controllers/student_controller.dart';
 import 'package:hqclass/Domains/controllers/user_controller.dart';
 import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Domains/models/student.dart';
-import 'file:///D:/Study/Github/hqclass/lib/Domains/models/user.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -119,17 +119,6 @@ class _BackupPageState extends State<BackupPage> {
       child: Form(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-//          child: Text(
-//            logStr,
-//            textAlign: TextAlign.start,
-//            style: TextStyle(
-//              color: Colors.black54,
-//              fontWeight: FontWeight.normal,
-//              fontSize: 16.0,
-//              letterSpacing: 1,
-//              wordSpacing: 1,
-//            ),
-//          ),
           child: Column(
             children: <Widget>[
               SizedBox(

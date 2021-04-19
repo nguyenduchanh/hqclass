@@ -71,7 +71,7 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
 
   chkCheckedClicked() async {
     setState(() {
-      studentList = baseDao.studentAddCheckedAll(studentList);
+      studentList = baseDao.studentAddCheckedAll(studentList, isSelectedAll);
     });
   }
 
