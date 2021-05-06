@@ -144,7 +144,7 @@ class _BackupPageState extends State<BackupPage> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: Navbar(
         title: CommonString.cBackupPageNav,
         searchBar: false,

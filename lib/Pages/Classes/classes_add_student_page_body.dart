@@ -114,7 +114,7 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
     );
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[

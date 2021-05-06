@@ -192,7 +192,7 @@ class StudentDetailBodyPage extends StatelessWidget {
     };
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.all(15.0),
           child: Form(

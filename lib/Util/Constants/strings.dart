@@ -91,6 +91,7 @@ class CommonString {
   static const cSaveDataSuccessMessage = "Thành công rồi vợ yêu ơi!";
   static const cSaveDataFail = "Lưu dữ liệu thất bại!";
   static const cSaveDataFailMessage = "Vợ yêu lưu dữ liệu lỗi rồi";
+  static const cBackUpInitUrlString = "";
   static const cBackUpInitString =
       "Nhấn nút Cập nhật dữ liệu để load dữ liệu từ server.\n"
               "Nhấn nút Xuất dữ liệu để xuất dữ liệu ra thư mục của server.\n" +

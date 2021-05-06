@@ -33,7 +33,7 @@ class _RollUpHistoryDetailBodyState extends State<RollUpHistoryDetailBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[

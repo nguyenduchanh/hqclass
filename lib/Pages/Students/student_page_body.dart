@@ -48,7 +48,7 @@ class _StudentListState extends State<StudentPageBody> {
           "Tìm kiếm học sinh", "Nhập mã hoặc tên học sinh"),
     );
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[

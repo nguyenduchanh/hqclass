@@ -150,7 +150,7 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
       ],
     );
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: CommonColors.lightGray,
       body: Column(
         children: <Widget>[

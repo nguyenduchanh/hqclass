@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
           child: Form(

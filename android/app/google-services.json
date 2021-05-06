@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "456424124175",
+    "project_id": "hqclass-ca7a2",
+    "storage_bucket": "hqclass-ca7a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456424124175:android:60ca39b9eef9e0adead87a",
+        "android_client_info": {
+          "package_name": "com.example.hqclass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456424124175-a4lvgf8hh4iumegmagd1feclffak4nbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFFjyBiXUtpMk7mDp55awDAh9UzihBMXA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456424124175-a4lvgf8hh4iumegmagd1feclffak4nbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "456424124175-jcd8o0q3r9899m8rqa4mqoh806bacboo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hqclass"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
