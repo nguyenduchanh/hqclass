@@ -1,4 +1,3 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
@@ -86,28 +85,7 @@ class ClassDetailBody extends StatelessWidget {
       decoration: buildInputDecorationWithoutIcon(
           CommonString.cNumberOfStudent, CommonString.cEnterNumberOfStudent),
     );
-    //create date field
-    final startDate = DateTimePicker(
-      type: DateTimePickerType.dateTime,
-      dateMask: 'dd/MM/yyyy',
-      initialValue: DateTime.now().toString(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      icon: Icon(Icons.event),
-      dateLabelText: 'Date',
-      decoration: buildInputDecorationWithoutIcon(
-          CommonString.cStartDate, CommonString.cStartDate),
-      selectableDayPredicate: (date) {
-        // Disable weekend days to select from the calendar
-        if (date.weekday == 6 || date.weekday == 7) {
-          return false;
-        }
-        return true;
-      },
-      validator: (val) {
-        return null;
-      },
-    );
+
     var afterSuccess = () async {
       Navigator.pop(context);
 
