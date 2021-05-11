@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hqclass/Pages/Backup/backup_page.dart';
 import 'package:hqclass/Pages/Login/login.dart';
+import 'Pages/LoginWithGoogle/sign_in_screen.dart';
 import 'file:///D:/Study/Github/hqclass/lib/Pages/LoginWithGoogle/login_with_google.dart';
 import 'package:hqclass/Pages/Register/register.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,14 @@ class MyApp extends StatelessWidget {
 //                final mediaQueryData = MediaQuery.of(context);
 //                final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
                 return MediaQuery(
-                  child: Login(),
+                  child: SignInScreen(),
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                 );
             return Login();
           }),
           routes: {
             '/home': (context) => Home(),
-            '/login': (context) => LoginWithGoogle(),
+            '/login': (context) => SignInScreen(),
             '/register': (context) => Register(),
             '/classes': (context) => ClassesPage(),
             '/students': (context) => StudentPage(),

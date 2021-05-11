@@ -30,8 +30,9 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     Response response ;
     try{
+
       response  = await post(
-        DBHelper.login_url,
+        Uri(path: DBHelper.login_url),
         body: json.encode(loginData),
         headers: {'Content-Type': 'application/json'},
       ).timeout(const Duration(seconds: 5));

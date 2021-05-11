@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/controllers/class_controller.dart';
 import 'package:hqclass/Domains/controllers/student_controller.dart';
-import 'package:hqclass/Domains/controllers/user_controller.dart';
 import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Domains/models/student.dart';
 import 'package:hqclass/Domains/models/user.dart';
