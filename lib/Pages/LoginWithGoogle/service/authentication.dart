@@ -64,7 +64,8 @@ class Authentication {
         );
 
         try {
-          final UserCredential userCredential =
+          UserCredential userCredential;
+          userCredential =
           await auth.signInWithCredential(credential);
 
           user = userCredential.user;

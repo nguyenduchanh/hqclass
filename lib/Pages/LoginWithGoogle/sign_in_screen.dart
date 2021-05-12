@@ -29,30 +29,30 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      child: Image.asset(
-                        'assets/firebase_logo.png',
-                        height: 160,
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'FlutterFire',
-                      style: TextStyle(
-                        color: CustomColors.firebaseYellow,
-                        fontSize: 40,
-                      ),
-                    ),
-                    Text(
-                      'Authentication',
-                      style: TextStyle(
-                        color: CustomColors.firebaseOrange,
-                        fontSize: 40,
-                      ),
-                    ),
-                  ],
+//                  children: [
+//                    Flexible(
+//                      flex: 1,
+//                      child: Image.asset(
+//                        'assets/firebase_logo.png',
+//                        height: 160,
+//                      ),
+//                    ),
+//                    SizedBox(height: 20),
+//                    Text(
+//                      'FlutterFire',
+//                      style: TextStyle(
+//                        color: CustomColors.firebaseYellow,
+//                        fontSize: 40,
+//                      ),
+//                    ),
+//                    Text(
+//                      'Authentication',
+//                      style: TextStyle(
+//                        color: CustomColors.firebaseOrange,
+//                        fontSize: 40,
+//                      ),
+//                    ),
+//                  ],
                 ),
               ),
               FutureBuilder(

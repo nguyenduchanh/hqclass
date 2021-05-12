@@ -3,8 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/custom_color.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/google_sign_in_button.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:hqclass/Util/google_firebase_button.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +38,7 @@ class _LoginState extends State<Login> {
     prefs = await SharedPreferences.getInstance();
     String userName = prefs.getString("userName");
     String password = prefs.getString("password");
+    SignInSource signInSource = prefs.getString("signInSource")==SignInSource.none.toString()?SignInSource.none:SignInSource.google;
     _userNameLocal = userName;
     _passwordLocal = password;
     setState(() {
@@ -78,6 +84,7 @@ class _LoginState extends State<Login> {
     final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+
         CircularProgressIndicator(),
         Text(CommonString.cAuthenticating)
       ],
@@ -85,8 +92,7 @@ class _LoginState extends State<Login> {
     final forgotLabel = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        FlatButton(
-          padding: EdgeInsets.all(0.0),
+        TextButton(
           child: Text(
             CommonString.cForgotPassword,
             style: TextStyle(fontWeight: FontWeight.w300),
@@ -95,8 +101,7 @@ class _LoginState extends State<Login> {
             // Navigator.pushReplacementNamed(context, '/reset-password');
           },
         ),
-        FlatButton(
-          padding: EdgeInsets.only(left: 0.0),
+        TextButton(
           onPressed: () {
             NavigatorHelper().toRegisterPage(context);
           },
@@ -156,6 +161,7 @@ class _LoginState extends State<Login> {
                 auth.loggedInStatus == Status.Authenticating
                     ? loading
                     : longButtons(CommonString.cLoginButton, doLogin),
+
                 SizedBox(height: 5.0),
                 forgotLabel
               ],

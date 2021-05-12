@@ -1,5 +1,9 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/user_info_screen.dart';
+import 'package:hqclass/Pages/UserInfo/user_info_body.dart';
 
 class NavigatorHelper {
   toStudentPage(BuildContext context) {
@@ -22,5 +26,8 @@ class NavigatorHelper {
   }
   toBackupPage(BuildContext context){
     Navigator.pushReplacementNamed(context, '/backup');
+  }
+  toUserInfoPage(BuildContext context) async{
+    Navigator.pushReplacementNamed(context, '/user_info');
   }
 }

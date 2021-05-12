@@ -2,9 +2,13 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:hqclass/Pages/Classes/classes_page.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/custom_color.dart';
+import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:hqclass/Util/google_firebase_button.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +20,24 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final formKey = new GlobalKey<FormState>();
+  Route _routeToSignInScreen() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => ClassesPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(-1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
   String _username, _email, _password, _confirmPassword;
 
@@ -67,8 +89,9 @@ class _RegisterState extends State<Register> {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        await UserPreferences().CreateUserConfig(_username, _password, _email);
-        NavigatorHelper().toClassesPage(context);
+        await UserPreferences().CreateUserConfig(_username, _password, _email, SignInSource.none);
+        Navigator.of(context)
+            .pushReplacement(_routeToSignInScreen());
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
@@ -82,8 +105,7 @@ class _RegisterState extends State<Register> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
 
-        FlatButton(
-          padding: EdgeInsets.only(left: 0),
+        TextButton(
           onPressed: () {
             NavigatorHelper().toLoginPage(context);
           },
@@ -138,7 +160,24 @@ class _RegisterState extends State<Register> {
                     ? loading
                     : longButtons(CommonString.cSignUpButton, doRegister),
                 SizedBox(height: 5.0),
-                loginLabel
+                FutureBuilder(
+                  future: Authentication.initializeFirebase(context: context),
+                  builder: (context, snapshot) {
+//                    if (snapshot.hasError) {
+//                      return Text('Error initializing Firebase');
+//                    } else if (snapshot.connectionState == ConnectionState.done) {
+//                      return GoogleFirebaseButton();
+//                    }
+//                    return CircularProgressIndicator(
+//                      valueColor: AlwaysStoppedAnimation<Color>(
+//                        CustomColors.firebaseOrange,
+//                      ),
+//                    );
+                    return GoogleFirebaseButton();
+                  },
+                ),
+//                SizedBox(height: 5.0),
+//                loginLabel
               ],
             ),
           ),

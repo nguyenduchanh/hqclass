@@ -92,14 +92,14 @@ class CommonDrawer extends StatelessWidget {
                   title: CommonString.cBackupPageNav,
                   isSelected: currentPage == "Backup" ? true : false),
               DrawerTile(
-                  icon: Icons.logout,
+                  icon: Icons.person,
                   onTap: () {
-                    if (currentPage != "Logout")
-                      NavigatorHelper().toLoginPage(context);
+                    if (currentPage != "UserInfo")
+                      NavigatorHelper().toUserInfoPage(context);
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: CommonString.cSignOutNav,
-                  isSelected: currentPage == "Login" ? true : false),
+                  title: CommonString.cUserInfoNav,
+                  isSelected: currentPage == "UserInfo" ? true : false),
             ],
           ),
         ),

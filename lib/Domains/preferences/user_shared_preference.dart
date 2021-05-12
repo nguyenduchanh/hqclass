@@ -2,10 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences{
 
-  CreateUserConfig(String userName, String password, String token) async{
+  CreateUserConfig(String userName, String password, String token, SignInSource signInSource) async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("userName", userName);
     await prefs.setString("password", password);
+    await prefs.setString("signInSource", signInSource.toString());
     await prefs.setString("token", token);
   }
   Future<String> GetTokenConfig()async{
@@ -23,4 +24,8 @@ class UserPreferences{
     final token = prefs.getString('password') ?? "";
     return token;
   }
+}
+enum SignInSource {
+  none,
+  google
 }

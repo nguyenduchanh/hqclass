@@ -29,6 +29,7 @@ class _ClassesListState extends State<ClassesBody> {
   Future<List<ClassesModel>> classesListOnSearch;
   BaseDao baseDao;
   String _searchText;
+  bool _isLoaded = false;
 
   @override
   void initState() {
@@ -58,34 +59,41 @@ class _ClassesListState extends State<ClassesBody> {
     );
     return Scaffold(
       backgroundColor: CommonColors.lightGray,
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 8, bottom: 10, left: 15, right: 15),
-            child: searchBox,
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: classesListOnSearch,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return generateListV2(snapshot.data);
-                }
-                if (snapshot.data == null || snapshot.data.length == 0) {
-                  return Text('', textAlign: TextAlign.center);
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                      backgroundColor: Colors.cyanAccent,
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(Colors.red)),
-                );
-              },
+      body: _isLoaded
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(CommonColors.kPrimaryColor),
+              ),
+            )
+          : Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8, bottom: 10, left: 15, right: 15),
+                  child: searchBox,
+                ),
+                Expanded(
+                  child: FutureBuilder(
+                    future: classesListOnSearch,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return generateListV2(snapshot.data);
+                      }
+                      if (snapshot.data == null || snapshot.data.length == 0) {
+                        return Text('', textAlign: TextAlign.center);
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                            backgroundColor: Colors.cyanAccent,
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(Colors.red)),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() => {
               Navigator.push(
@@ -152,9 +160,7 @@ class _ClassesListState extends State<ClassesBody> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            ClassesAddStudentPage()
-                    ))
+                        builder: (context) => ClassesAddStudentPage()))
               },
             ),
             IconSlideAction(
@@ -165,9 +171,7 @@ class _ClassesListState extends State<ClassesBody> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            RollUpHistoryPage(clsModel: cls)
-                    ))
+                        builder: (context) => RollUpHistoryPage(clsModel: cls)))
               },
             ),
           ],
@@ -225,13 +229,13 @@ class CDialog {
           title: Text(Title),
           content: Text(Content),
           actions: [
-            FlatButton(
+            TextButton(
               child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop(ConfirmAction.CANCEL);
               },
             ),
-            FlatButton(
+            TextButton(
               child: const Text('ACCEPT'),
               onPressed: () {
                 Navigator.of(context).pop(ConfirmAction.ACCEPT);

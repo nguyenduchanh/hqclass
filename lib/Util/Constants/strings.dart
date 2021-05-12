@@ -10,6 +10,8 @@ class CommonString {
   static const cClassTitle = "Danh sách lớp học";
   static const cStudentTitle = "Danh sách học sinh";
   static const cAddStudentTitle = "Gán học sinh";
+  static const cUserInfoTitle = "Thông tin người dùng";
+  static const cRegisterTitle = "Đăng ký tài khoản";
 
 // Nav
   static const cSignOutNav = "Đăng xuất";
@@ -17,6 +19,7 @@ class CommonString {
   static const cClassNav = "Lớp học";
   static const cRollUpNav = "Điểm danh";
   static const cHomePageNav = "Báo cáo";
+  static const cUserInfoNav = "Thông tin người đùng";
   static const cBackupPageNav = "Cập nhật dữ liệu";
 
 //Login page
