@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class CommonColors {
-  static const Color kPrimaryColor = Color(0xFF238174);//#238174
-  static const Color kPrimaryLightColor = Color(0xFF9EDBD3);//#9EDBD3
+  static const Color kPrimaryColor = Color(0xFF238174); //#238174
+  static const Color kPrimaryLightColor = Color(0xFF9EDBD3); //#9EDBD3
 
   static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
@@ -37,4 +37,10 @@ class CommonColors {
 
   static const Color text = Color.fromRGBO(50, 50, 93, 1.0);
   static const Color lightGray = Color(0xD3D3D3);
+  static final Color firebaseNavy = Color(0xFF2C384A);
+  static final Color firebaseOrange = Color(0xFFF57C00);
+  static final Color firebaseAmber = Color(0xFFFFA000);
+  static final Color firebaseYellow = Color(0xFFFFCA28);
+  static final Color firebaseGrey = Color(0xFFECEFF1);
+  static final Color googleBackground = Color(0xFF4285F4);
 }

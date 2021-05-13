@@ -33,7 +33,9 @@ class CommonString {
   static const cAuthenticating = "Đang xác thực.... ";
 
   static const cUsername = "Tên tài khoản";
+  static const cPhoneNumber = "Số điện thoại";
   static const cUsernameRequire = "Tên tài khoản là bắt buộc";
+  static const cPhoneNumberRequire = "Số điện thoại là bắt buộc";
   static const cEmailRequire = "Email là bắt buộc";
   static const cPasswordRequire = "Mật khẩu là bắt buộc";
   static const cConfirmPasswordRequire = "Xác nhận mật khẩu là bắt buộc";

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Classes/classes_page.dart';
-import 'package:hqclass/Pages/Login/LoginWithGoogle/custom_color.dart';
-import 'package:hqclass/Pages/Login/LoginWithGoogle/google_firebase_button.dart';
-import 'package:hqclass/Pages/Login/LoginWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
+
+import 'RegisterWithGoogle/google_firebase_button.dart';
+import 'RegisterWithGoogle/service/authentication.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  String _username, _email, _password, _confirmPassword;
+  String _username, _email, _password, _confirmPassword, _phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,15 @@ class _RegisterState extends State<Register> {
       onSaved: (value) => _username = value,
       decoration: buildInputDecoration(
           CommonString.cUsername, Icons.account_box, CommonString.cUsername),
+    );
+    final phoneNumberField = TextFormField(
+      autofocus: false,
+      keyboardType: TextInputType.phone,
+      validator: (value) =>
+          value.isEmpty ? CommonString.cPhoneNumberRequire : null,
+      onSaved: (value) => _phoneNumber = value,
+      decoration: buildInputDecoration(
+          CommonString.cPhoneNumber, Icons.phone, CommonString.cPhoneNumber),
     );
     final emailField = TextFormField(
       autofocus: false,
@@ -108,39 +117,14 @@ class _RegisterState extends State<Register> {
         ).show(context);
       }
     };
-    final loginLabel = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        TextButton(
-          onPressed: () {
-            NavigatorHelper().toLoginPage(context);
-          },
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: CommonColors.kPrimaryColor,
-                  size: 25.0,
-                ),
-                // onPressed: () {
-                //   Scaffold.of(context).openDrawer();
-                // }
-              ),
-              Text(CommonString.cBackToLogin,
-                  style: TextStyle(fontWeight: FontWeight.w300)),
-            ],
-          )
-          // Text(CommonString.cLoginButton,
-          //     style: TextStyle(fontWeight: FontWeight.w300))
-          ,
-        )
-      ],
-    );
-    return SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
+
+    return
+      SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+
+        body: SingleChildScrollView(
+          child: Container(
             padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
             child: Form(
               key: formKey,
@@ -155,7 +139,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 15.0),
                   usernameField,
                   SizedBox(height: 15.0),
-                  emailField,
+                  phoneNumberField,
                   SizedBox(height: 15.0),
                   passwordField,
                   SizedBox(height: 15.0),
@@ -176,10 +160,9 @@ class _RegisterState extends State<Register> {
                       }
                       return CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.firebaseOrange,
+                          CommonColors.firebaseOrange,
                         ),
                       );
-                      return GoogleFirebaseButton();
                     },
                   ),
 //                SizedBox(height: 5.0),
@@ -188,7 +171,9 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-        ),
+        )
+
+      ),
     );
   }
 }

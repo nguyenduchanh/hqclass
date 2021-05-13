@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:hqclass/Pages/Login/LoginWithGoogle/service/authentication.dart';
+import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

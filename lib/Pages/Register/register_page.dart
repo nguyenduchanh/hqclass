@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hqclass/Pages/Register/register.dart';
+import 'package:hqclass/Pages/Register/register_body.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Widgets/drawer.dart';
