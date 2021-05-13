@@ -34,8 +34,8 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
           String passwordRandom =
               CString().generatePassword(true, true, true, true, 12);
 
-          await UserPreferences()
-              .CreateUserConfig(user.displayName, passwordRandom, user.email, SignInSource.google);
+          await UserPreferences().CreateUserConfig(user.displayName,
+              passwordRandom, user.email, SignInSource.google);
           NavigatorHelper().toClassesPage(context);
         }
       } catch (x) {}
@@ -44,46 +44,78 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
         padding: const EdgeInsets.all(0),
         child: _isSigningIn
             ? Center(
-          child: CircularProgressIndicator(
-            valueColor:
-            AlwaysStoppedAnimation<Color>(CommonColors.kPrimaryColor),
-          ),
-        )
-            : OutlinedButton(
+                child: CircularProgressIndicator(
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(CommonColors.kPrimaryColor),
+                ),
+              )
+            : MaterialButton(
                 onPressed: doRegisterWithGoogle,
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                color: Colors.grey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 90, top: 10, right: 90, bottom: 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image(
-                        image: AssetImage("assets/google_logo.png"),
-                        height: 25.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Sign in with Google',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w600,
-                          ),
+                height: 45,
+                minWidth: 600,
+                child: SizedBox(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Image(
+                          image: AssetImage("assets/google_logo.png"),
+                          height: 25.0,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ));
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            'Sign in with Google',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+              )
+//        OutlinedButton(
+//                onPressed: doRegisterWithGoogle,
+//                style: ButtonStyle(
+//                  backgroundColor: MaterialStateProperty.all(Colors.white),
+//                  shape: MaterialStateProperty.all(
+//                    RoundedRectangleBorder(
+//                      borderRadius: BorderRadius.circular(10),
+//                    ),
+//                  ),
+//                ),
+//                child: Padding(
+//                  padding: const EdgeInsets.all(20),
+//                  child: Row(
+//                    mainAxisSize: MainAxisSize.min,
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: <Widget>[
+//                      Image(
+//                        image: AssetImage("assets/google_logo.png"),
+//                        height: 25.0,
+//                      ),
+//                      Padding(
+//                        padding: const EdgeInsets.only(left: 10),
+//                        child: Text(
+//                          'Sign in with Google',
+//                          style: TextStyle(
+//                            fontSize: 14,
+//                            color: Colors.black54,
+//                            fontWeight: FontWeight.w600,
+//                          ),
+//                        ),
+//                      )
+//                    ],
+//                  ),
+//                ),
+//              )
+        );
   }
 }

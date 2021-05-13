@@ -1,23 +1,16 @@
+// @dart=2.10
 import 'package:flutter/material.dart';
 import 'package:hqclass/Pages/Backup/backup_page.dart';
 import 'package:hqclass/Pages/Login/login.dart';
 import 'package:hqclass/Pages/Register/register_page.dart';
-import 'package:hqclass/Pages/UserInfo/user_info_body.dart';
 import 'package:hqclass/Pages/UserInfo/user_info_page.dart';
-import 'Pages/LoginWithGoogle/sign_in_screen.dart';
-import 'Pages/LoginWithGoogle/user_info_screen.dart';
-import 'file:///D:/Study/Github/hqclass/lib/Pages/LoginWithGoogle/login_with_google.dart';
-import 'package:hqclass/Pages/Register/register.dart';
 import 'package:provider/provider.dart';
 import 'Components/splash_screen.dart';
 import 'Domains/auth.dart';
 import 'Pages/Classes/classes_page.dart';
 import 'Pages/Home/home.dart';
-import 'Pages/RollUp/roll_up_page.dart';
 import 'Pages/Students/students_page.dart';
 import 'Util/Constants/strings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 void main() {
   // runApp(MyApp());
