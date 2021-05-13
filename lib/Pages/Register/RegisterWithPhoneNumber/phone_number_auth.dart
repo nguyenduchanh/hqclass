@@ -5,7 +5,7 @@ import 'package:hqclass/Pages/Register/RegisterWithPhoneNumber/FireBase.dart';
 
 enum PhoneAuthState {
   Started,
-  CodeSend,
+  CodeSent,
   CodeRequest,
   Verified,
   Failed,
@@ -98,7 +98,7 @@ class PhoneNumberAuthDataProvider with ChangeNotifier {
     final PhoneCodeSent codeSent = (String verificationId,[int forceResendingToken])async{
       actualCode = verificationId;
       _addStatusMessage("\nEnter the code sent to " + phone);
-      _addStatus(PhoneAuthState.CodeSend);
+      _addStatus(PhoneAuthState.CodeSent);
       if(onCodeSent != null) onCodeSent();
     };
     final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout = (String verificationId) {
@@ -140,20 +140,40 @@ class PhoneNumberAuthDataProvider with ChangeNotifier {
         _addStatusMessage('Something has gone wrong, please try later $error');
       });
     };
-    FireBase.auth.verifyPhoneNumber(phoneNumber: phone.toString(),
+    FireBase.auth
+        .verifyPhoneNumber(
+        phoneNumber: phone.toString(),
+        timeout: Duration(seconds: 60),
         verificationCompleted: verificationCompleted,
         verificationFailed: verificationFailed,
         codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout).then((value) {
-
-    }).catchError((error){
-
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout)
+        .then((value) {
+      if (onCodeSent != null) onCodeSent();
+      _addStatus(PhoneAuthState.CodeSent);
+      _addStatusMessage('Code sent');
+    }).catchError((error) {
+      if (onError != null) onError();
+      _addStatus(PhoneAuthState.Error);
+      _addStatusMessage(error.toString());
     });
+  }
+  void verifyOTPAndLogin({String smsCode}) async {
+    _authCredential = PhoneAuthProvider.credential(
+        verificationId: actualCode, smsCode: smsCode);
 
-
-
-
-
+    FireBase.auth
+        .signInWithCredential(_authCredential)
+        .then((UserCredential result) async {
+      _addStatusMessage('Authentication successful');
+      _addStatus(PhoneAuthState.Verified);
+      if (onVerified != null) onVerified();
+    }).catchError((error) {
+      if (onError != null) onError();
+      _addStatus(PhoneAuthState.Error);
+      _addStatusMessage(
+          'Something has gone wrong, please try later(signInWithPhoneNumber) $error');
+    });
   }
   _addStatus(PhoneAuthState state){
     status = state;
