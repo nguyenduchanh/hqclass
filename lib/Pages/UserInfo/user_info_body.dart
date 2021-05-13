@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/app_bar_title.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/custom_color.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/sign_in_screen.dart';
+import 'package:hqclass/Pages/Login/LoginWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

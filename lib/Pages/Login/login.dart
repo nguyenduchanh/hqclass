@@ -1,15 +1,10 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/custom_color.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/google_sign_in_button.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
-import 'package:hqclass/Util/google_firebase_button.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

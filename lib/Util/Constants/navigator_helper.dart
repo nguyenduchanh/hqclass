@@ -1,9 +1,5 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/service/authentication.dart';
-import 'package:hqclass/Pages/LoginWithGoogle/user_info_screen.dart';
-import 'package:hqclass/Pages/UserInfo/user_info_body.dart';
 
 class NavigatorHelper {
   toStudentPage(BuildContext context) {
