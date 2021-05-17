@@ -106,7 +106,7 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           height: 50,
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 75),
+                const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
             child: longButtons(CommonString.cSaveButton, btnSaveClicked),
           ),
         )),
@@ -121,7 +121,7 @@ class _ClassAddStudentPageBodyState extends State<ClassesAddStudentPageBody> {
           // seach box
           Padding(
             padding:
-                const EdgeInsets.only(top: 8, bottom: 10, left: 15, right: 15),
+                const EdgeInsets.only(top: 8, bottom: 10, left: 10, right: 10),
             child: searchBox,
           ),
           Padding(

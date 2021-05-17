@@ -265,7 +265,8 @@ class _RegisterState extends State<Register> {
                     // longButtons(CommonString.cCountrySelected, showCountrySelected),
                     // countriesSelected,
                     // // SizedBox(height: 15.0),
-                    phoneNumberField,
+                    // phoneNumberField,
+                    emailField,
                     SizedBox(height: 15.0),
                     passwordField,
                     SizedBox(height: 15.0),
@@ -274,7 +275,7 @@ class _RegisterState extends State<Register> {
                     SizedBox(height: 20.0),
                     auth.loggedInStatus == Status.Authenticating
                         ? loading
-                        : longButtons(CommonString.cSignUpButton, startPhoneAuth),
+                        : longButtons(CommonString.cSignUpButton, doRegister),
                     SizedBox(height: 5.0),
                     FutureBuilder(
                       future:

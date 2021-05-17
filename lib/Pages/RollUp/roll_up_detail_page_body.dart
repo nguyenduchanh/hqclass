@@ -108,47 +108,46 @@ class _RollUpDetailBodyState extends State<RollUpDetailBody> {
     );
     final checkedRow = Row(
       //Creates even space between each item and their parent container
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         Container(
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Theme(
-                    data: ThemeData(
-                        unselectedWidgetColor: CommonColors.kPrimaryColor),
-                    child: Checkbox(
-                      value: isSelectedAll,
-                      activeColor: CommonColors.kPrimaryColor,
-                      onChanged: (bool value) {
-                        setState(() {
-                          isSelectedAll = !isSelectedAll;
-                          chkCheckedClicked();
-                        });
-                      },
-                    ),
+            child: Row(
+              children: <Widget>[
+                Theme(
+                  data: ThemeData(
+                      unselectedWidgetColor: CommonColors.kPrimaryColor),
+                  child: Checkbox(
+                    value: isSelectedAll,
+                    activeColor: CommonColors.kPrimaryColor,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isSelectedAll = !isSelectedAll;
+                        chkCheckedClicked();
+                      });
+                    },
                   ),
-                  Text(
-                    'Check all ',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ],
-              )
-            ],
-          ),
+                ),
+                Text(
+                  'Check all ',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ],
+            )
         ),
-        Expanded(
-            child: Container(
-          height: 50,
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 75),
-            child: longButtons(CommonString.cSaveButton, btnSaveClicked),
-          ),
-        )),
+        Container(
+           child: Expanded(
+                child: Container(
+                  height: 50,
+                  child: Padding(
+                    padding:
+                    const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                    child: longButtons(CommonString.cSaveButton, btnSaveClicked),
+                  ),
+                ))
+        ),
       ],
     );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: CommonColors.lightGray,

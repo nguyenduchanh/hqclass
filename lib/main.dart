@@ -1,4 +1,3 @@
-// @dart=2.10
 import 'package:flutter/material.dart';
 import 'package:hqclass/Pages/Backup/backup_page.dart';
 import 'package:hqclass/Pages/Login/login.dart';
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
 //                final mediaQueryData = MediaQuery.of(context);
 //                final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
                 return MediaQuery(
-                  child: BiometricPage(title:"test"),
+                  child: BiometricPage(title: "test"),
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                 );
             return Login();

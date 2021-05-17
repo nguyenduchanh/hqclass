@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -16,7 +18,7 @@ class _BiometricPageState extends State<BiometricPage> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
   String _authorizedOrNot = "Not Authorized";
-  List<BiometricType> _availableBiometricTypes = List<BiometricType>();
+  List<BiometricType> _availableBiometricTypes = [];
 
   Future<void> _checkBiometric() async {
     bool canCheckBiometric = false;
@@ -51,11 +53,11 @@ class _BiometricPageState extends State<BiometricPage> {
   Future<void> _authorizeNow() async {
     bool isAuthorized = false;
     try {
-      var localAuth = LocalAuthentication();
-      bool didAuthenticate =
-      await localAuth.authenticate(
-          localizedReason: 'Please authenticate to show account balance',
-          biometricOnly: true);
+      isAuthorized = await _localAuthentication.authenticate(
+        localizedReason: "Please authenticate to complete your transaction",
+        useErrorDialogs: true,
+        stickyAuth: true,
+      );
     } on PlatformException catch (e) {
       print(e);
     }
@@ -65,8 +67,10 @@ class _BiometricPageState extends State<BiometricPage> {
     setState(() {
       if (isAuthorized) {
         _authorizedOrNot = "Authorized";
+        print("Authorized");
       } else {
         _authorizedOrNot = "Not Authorized";
+        print("Not Authorized");
       }
     });
   }
@@ -82,19 +86,25 @@ class _BiometricPageState extends State<BiometricPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text("Can we check Biometric : $_canCheckBiometric"),
-            TextButton(
+            RaisedButton(
               onPressed: _checkBiometric,
               child: Text("Check Biometric"),
+              color: Colors.red,
+              colorBrightness: Brightness.light,
             ),
             Text("List Of Biometric : ${_availableBiometricTypes.toString()}"),
-            TextButton(
+            RaisedButton(
               onPressed: _getListOfBiometricTypes,
               child: Text("List of Biometric Types"),
+              color: Colors.red,
+              colorBrightness: Brightness.light,
             ),
             Text("Authorized : $_authorizedOrNot"),
-            TextButton(
+            RaisedButton(
               onPressed: _authorizeNow,
               child: Text("Authorize now"),
+              color: Colors.red,
+              colorBrightness: Brightness.light,
             ),
           ],
         ),

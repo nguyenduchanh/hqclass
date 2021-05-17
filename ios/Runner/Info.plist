@@ -18,17 +18,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.575368071013-upld2gc2dgi46ml0aak07er6aavhnu37</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -37,6 +26,19 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSFaceIDUsageDescription</key>
+    <string>Biometric authentication for accessing secrets</string>
+	<key>CFBundleURLTypes</key>
+    	<array>
+    		<dict>
+    			<key>CFBundleTypeRole</key>
+    			<string>Editor</string>
+    			<key>CFBundleURLSchemes</key>
+    			<array>
+    				<string>com.googleusercontent.apps.575368071013-upld2gc2dgi46ml0aak07er6aavhnu37</string>
+    			</array>
+    		</dict>
+    	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
