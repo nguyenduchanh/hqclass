@@ -1,11 +1,13 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +18,11 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
+  List<BiometricType> _availableBiometricTypes = [];
+  bool _canCheckBiometric = false;
+
+  String _authorizedOrNot = "Not Authorized";
   TextEditingController _userNameController;
   TextEditingController _passwordController;
 
@@ -27,7 +34,57 @@ class _LoginState extends State<Login> {
     super.initState();
     _loadData();
   }
+  Future<void> _checkBiometric() async {
+    bool canCheckBiometric = false;
+    try {
+      canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      print(e);
+    }
 
+    if (!mounted) return;
+
+    setState(() {
+      _canCheckBiometric = canCheckBiometric;
+    });
+  }
+  Future<void> _getListOfBiometricTypes() async {
+    List<BiometricType> listofBiometrics;
+    try {
+      listofBiometrics = await _localAuthentication.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _availableBiometricTypes = listofBiometrics;
+    });
+  }
+
+  Future<void> _authorizeNow() async {
+    bool isAuthorized = false;
+    try {
+      isAuthorized = await _localAuthentication.authenticateWithBiometrics(
+        localizedReason: "Please authenticate to complete your transaction",
+        useErrorDialogs: true,
+        stickyAuth: true,
+      );
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      if (isAuthorized) {
+        _authorizedOrNot = "Authorized";
+      } else {
+        _authorizedOrNot = "Not Authorized";
+      }
+    });
+  }
   //Loading counter value on start
   Future<Null> _loadData() async {
     prefs = await SharedPreferences.getInstance();

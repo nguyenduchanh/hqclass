@@ -71,14 +71,13 @@ class PhoneNumberAuthDataProvider with ChangeNotifier {
     this.onAutoRetrievalTimeout = onAutoRetrievalTimeout;
   }
   Future<bool> instantiate(
-      String dialCode,
+  {String dialCode,
       VoidCallback onStarted,
       VoidCallback onCodeSent,
       VoidCallback onCodeResent,
       VoidCallback onVerified,
       VoidCallback onFailed,
-      VoidCallback onError,
-      VoidCallback onAutoRetrievalTimeout
+      VoidCallback onError,}
       ) async {
     this.onStarted = onStarted;
     this.onCodeSent = onCodeSent;
@@ -140,6 +139,7 @@ class PhoneNumberAuthDataProvider with ChangeNotifier {
         _addStatusMessage('Something has gone wrong, please try later $error');
       });
     };
+    _addStatusMessage('Phone auth started');
     FireBase.auth
         .verifyPhoneNumber(
         phoneNumber: phone.toString(),

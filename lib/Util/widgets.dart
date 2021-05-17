@@ -33,7 +33,18 @@ InputDecoration buildSearchInputDecoration(
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
   );
 }
-
+InputDecoration buildInputDecorationWithSuffixIcon(
+    String placeHolder, IconData icon,IconData suffixIcon, String _hintText) {
+  return InputDecoration(
+    hintText: _hintText,
+    labelText: placeHolder,
+    prefixIcon: Icon(icon, color: CommonColors.kPrimaryColor),
+    // hintText: hintText,
+    suffixIcon: Icon(suffixIcon, color: CommonColors.kPrimaryColor),
+    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+  );
+}
 InputDecoration buildInputDecoration(
     String placeHolder, IconData icon, String _hintText) {
   return InputDecoration(
@@ -41,6 +52,7 @@ InputDecoration buildInputDecoration(
     labelText: placeHolder,
     prefixIcon: Icon(icon, color: CommonColors.kPrimaryColor),
     // hintText: hintText,
+    // suffixIcon: Icon(suffixIcon, color: CommonColors.kPrimaryColor),
     contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
   );
@@ -53,6 +65,16 @@ InputDecoration buildInputDecorationWithoutIcon(
     hintText: _hintText,
     labelText: placeHolder,
     contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+  );
+}
+InputDecoration buildInputDecorationWithoutIconAndBorder(
+    String placeHolder, String _hintText) {
+  return InputDecoration(
+    hintText: _hintText,
+    labelText: placeHolder,
+    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
   );
 }

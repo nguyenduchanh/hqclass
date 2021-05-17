@@ -39,6 +39,7 @@ class CommonString {
   static const cEmailRequire = "Email là bắt buộc";
   static const cPasswordRequire = "Mật khẩu là bắt buộc";
   static const cConfirmPasswordRequire = "Xác nhận mật khẩu là bắt buộc";
+  static const cCountrySelected = "Lựa chọn quốc gia";
   static const cEmail = "Email";
   static const cValidEmailMessage =
       "Vui lòng cung cấp một địa chỉ email hợp lệ";

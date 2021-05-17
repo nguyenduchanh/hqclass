@@ -9,6 +9,7 @@ import 'Components/splash_screen.dart';
 import 'Domains/auth.dart';
 import 'Pages/Classes/classes_page.dart';
 import 'Pages/Home/home.dart';
+import 'Pages/Login/biometric_service.dart';
 import 'Pages/Students/students_page.dart';
 import 'Util/Constants/strings.dart';
 
@@ -40,14 +41,14 @@ class MyApp extends StatelessWidget {
 //                final mediaQueryData = MediaQuery.of(context);
 //                final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
                 return MediaQuery(
-                  child: Login(),
+                  child: BiometricPage(title:"test"),
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                 );
             return Login();
           }),
           routes: {
             '/home': (context) => Home(),
-            '/login': (context) => Login(),
+            '/login': (context) => BiometricPage(title:"test"),
             '/register': (context) => RegisterPage(),
             '/classes': (context) => ClassesPage(),
             '/students': (context) => StudentPage(),

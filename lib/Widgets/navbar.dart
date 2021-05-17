@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -104,8 +105,16 @@ class _NavbarState extends State<Navbar> {
                             onPressed: () {
                               if (!widget.backButton)
                                 Scaffold.of(context).openDrawer();
-                              else
-                                Navigator.pop(context);
+                              else{
+                                if(widget.title == CommonString.cRegisterTitle){
+                                  NavigatorHelper().toLoginPage(context);
+                                }else{
+                                  Navigator.pop(context);
+                                }
+                              }
+                                // Navigator.of(context).maybePop();
+                                // NavigatorHelper().toLoginPage(context);
+                                // Navigator.pop(context);
                             }),
                         Text(widget.title,
                             style: TextStyle(
