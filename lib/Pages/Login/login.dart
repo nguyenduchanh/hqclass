@@ -37,72 +37,22 @@ class _LoginState extends State<Login> {
 
   void initState() {
     super.initState();
-    _loadData();
-  }
-
-  Future<void> _checkBiometric() async {
-    bool canCheckBiometric = false;
-    try {
-      canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      print(e);
-    }
-
-    if (!mounted) return;
-
     setState(() {
-      _canCheckBiometric = canCheckBiometric;
+      _loadData();
     });
   }
 
-  Future<void> _getListOfBiometricTypes() async {
-    List<BiometricType> listofBiometrics;
-    try {
-      listofBiometrics = await _localAuthentication.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print(e);
-    }
 
-    if (!mounted) return;
-
-    setState(() {
-      _availableBiometricTypes = listofBiometrics;
-    });
-  }
-
-  Future<void> _authorizeNow() async {
-    bool isAuthorized = false;
-    try {
-      isAuthorized = await _localAuthentication.authenticate(
-        localizedReason: "Please authenticate to complete your transaction",
-        useErrorDialogs: true,
-        stickyAuth: true,
-      );
-    } on PlatformException catch (e) {
-      print(e);
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      if (isAuthorized) {
-        _authorizedOrNot = "Authorized";
-      } else {
-        _authorizedOrNot = "Not Authorized";
-      }
-    });
-  }
 
   //Loading counter value on start
-  Future<Null> _loadData() async {
+  Future<void> _loadData() async {
     prefs = await SharedPreferences.getInstance();
     String userName = prefs.getString("userName");
     String password = prefs.getString("password");
-    _isUseBiometric = prefs.getBool("isBiometricAvailable");
-    SignInSource signInSource = prefs.getString("signInSource") ==
-        SignInSource.none.toString() ? SignInSource.none : SignInSource.google;
-    _canCheckBiometric =
-    await _localAuthentication.canCheckBiometrics;
+    bool isBioAvailable = prefs.getBool("isBiometricAvailable");
+//    SignInSource signInSource = prefs.getString("signInSource") ==
+//        SignInSource.none.toString() ? SignInSource.none : SignInSource.google;
+    _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
     // List<BiometricType> availableBiometrics =
     // await _localAuthentication.getAvailableBiometrics();
     // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
@@ -115,6 +65,7 @@ class _LoginState extends State<Login> {
     setState(() {
       _userNameController = new TextEditingController(text: userName);
       _passwordController = new TextEditingController(text: password);
+      _isUseBiometric = isBioAvailable;
     });
   }
 
@@ -216,7 +167,7 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-    final fingerSprintButton = _isUseBiometric ?
+    final fingerSprintButton = (_isUseBiometric == null || _isUseBiometric == false) ? Container():
       TextButton(
         onPressed: biometricAuth,
         style: ButtonStyle(
@@ -253,7 +204,7 @@ class _LoginState extends State<Login> {
             ],
           ),
         ),
-      ) : Container();
+      ) ;
 
     var doLogin = () async {
       final form = formKey.currentState;
