@@ -116,9 +116,7 @@ class _BackupPageState extends State<BackupPage> {
         ),
       ),
       child: Form(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
+        child: Column(
             children: <Widget>[
               SizedBox(
                 width: double.infinity,
@@ -139,7 +137,6 @@ class _BackupPageState extends State<BackupPage> {
             ],
           ),
         ),
-      ),
     );
 
     return Scaffold(
@@ -151,21 +148,23 @@ class _BackupPageState extends State<BackupPage> {
       ),
       backgroundColor: CommonColors.bgColorScreen,
       drawer: CommonDrawer(currentPage: "Backup"),
-      body: Container(
-          padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 15.0),
-                urlFromField,
-                SizedBox(height: 15.0),
-                longButtons(CommonString.cImportButton, doImport),
-                SizedBox(height: 15.0),
-                longButtons(CommonString.cExportButton, doExport),
-                SizedBox(height: 15.0),
-                cardResult,
-              ])
-        //
+      body: SingleChildScrollView(
+        child:Container(
+            padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 15.0),
+                  urlFromField,
+                  SizedBox(height: 15.0),
+                  longButtons(CommonString.cImportButton, doImport),
+                  SizedBox(height: 15.0),
+                  longButtons(CommonString.cExportButton, doExport),
+                  SizedBox(height: 15.0),
+                  cardResult,
+                ])
+          //
+        ),
       ),
     );
   }

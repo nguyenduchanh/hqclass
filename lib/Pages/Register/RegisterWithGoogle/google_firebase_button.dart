@@ -30,7 +30,6 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
         setState(() {
           _isSigningIn = false;
         });
-
         if (user != null) {
           String passwordRandom =
               CString().generatePassword(true, true, true, true, 12);

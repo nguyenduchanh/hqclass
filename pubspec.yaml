@@ -93,6 +93,7 @@ flutter:
     - assets/loading.flr
     - assets/line.png
     - assets/drive-steering-wheel.jpg
+    - assets/img/faceID.png
   fonts:
     - family: OpenSans
       fonts:
