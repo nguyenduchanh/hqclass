@@ -10,12 +10,12 @@ class UserInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: Navbar(
-          title: CommonString.cUserInfoTitle,
+          title: CommonString.cSettingTitle,
           searchBar: false,
           isOnSearch: false,
         ),
         backgroundColor: CommonColors.bgColorScreen,
-        drawer: CommonDrawer(currentPage: "UserInfo"),
+        drawer: CommonDrawer(currentPage: "Setting"),
         body: new UserInfoPageBody());
 //        body: new ListPage());
   }

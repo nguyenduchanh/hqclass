@@ -10,7 +10,7 @@ class CommonString {
   static const cClassTitle = "Danh sách lớp học";
   static const cStudentTitle = "Danh sách học sinh";
   static const cAddStudentTitle = "Gán học sinh";
-  static const cUserInfoTitle = "Thông tin người dùng";
+  static const cSettingTitle = "Cài đặt chung";
   static const cRegisterTitle = "Đăng ký tài khoản";
 
 // Nav
@@ -19,7 +19,7 @@ class CommonString {
   static const cClassNav = "Lớp học";
   static const cRollUpNav = "Điểm danh";
   static const cHomePageNav = "Báo cáo";
-  static const cUserInfoNav = "Thông tin người đùng";
+  static const cSettingNav = "Cài đặt chung";
   static const cBackupPageNav = "Cập nhật dữ liệu";
 
 //Login page
@@ -84,11 +84,14 @@ class CommonString {
   static const cLoginButton = "Đăng nhập";
   static const cLoginWithFingerButton = "Đăng nhập bằng vân tay";
   static const cSignUpButton = "Đăng ký";
+  static const cSignOutButton = "Đăng xuất";
   static const cBackToLogin = "Quay lại trang đăng nhập";
   static const cCancelButton = "Huỷ bỏ";
   static const cSaveButton = "Lưu";
   static const cExportButton = "Xuất dữ liệu";
   static const cImportButton = "Cập nhật dữ liệu mới";
+  static const cLoginWithTouchId = "Đăng nhập bằng TouchID";
+  static const cLoginWithTouchIdHint = "Sử dụng TouchId của bản để đăng nhập thay cho mật khẩu";
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";

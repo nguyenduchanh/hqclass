@@ -34,18 +34,6 @@ class CommonDrawer extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.only(top: 24, left: 16, right: 16),
             children: [
-//              DrawerTile(
-//                  icon: Icons.list_alt_outlined,
-//                  onTap: () {
-//                    if (currentPage != "addStudent") {
-//                      NavigatorHelper().toAddStudentPage(context);
-//                    } else {
-//                      Navigator.pop(context);
-//                    }
-//                  },
-//                  iconColor: CommonColors.kPrimaryColor,
-//                  title: CommonString.cRollUpNav,
-//                  isSelected: currentPage == "RollUp" ? true : false),
               DrawerTile(
                   icon: Icons.class__outlined,
                   onTap: () {
@@ -85,21 +73,27 @@ class CommonDrawer extends StatelessWidget {
               DrawerTile(
                   icon: Icons.backup,
                   onTap: () {
-                    if (currentPage != "Backup")
+                    if (currentPage != "Backup") {
                       NavigatorHelper().toBackupPage(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
                   title: CommonString.cBackupPageNav,
                   isSelected: currentPage == "Backup" ? true : false),
               DrawerTile(
-                  icon: Icons.person,
+                  icon: Icons.settings,
                   onTap: () {
-                    if (currentPage != "UserInfo")
+                    if (currentPage != "Setting") {
                       NavigatorHelper().toUserInfoPage(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                   iconColor: CommonColors.kPrimaryColor,
-                  title: CommonString.cUserInfoNav,
-                  isSelected: currentPage == "UserInfo" ? true : false),
+                  title: CommonString.cSettingNav,
+                  isSelected: currentPage == "Setting" ? true : false),
             ],
           ),
         ),

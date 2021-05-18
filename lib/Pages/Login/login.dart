@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
   Future<void> _authorizeNow() async {
     bool isAuthorized = false;
     try {
-      isAuthorized = await _localAuthentication.authenticateWithBiometrics(
+      isAuthorized = await _localAuthentication.authenticate(
         localizedReason: "Please authenticate to complete your transaction",
         useErrorDialogs: true,
         stickyAuth: true,
@@ -105,8 +105,9 @@ class _LoginState extends State<Login> {
     await _localAuthentication.canCheckBiometrics;
     // List<BiometricType> availableBiometrics =
     // await _localAuthentication.getAvailableBiometrics();
+    // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
     if (_isUseBiometric && _canCheckBiometric) {
-
+      biometricAuth();
     }
 
     _userNameLocal = userName;
@@ -130,6 +131,9 @@ class _LoginState extends State<Login> {
         useErrorDialogs: false,
         stickyAuth: false,
       );
+      if(isAuthorized){
+        NavigatorHelper().toClassesPage(context);
+      }
     } on PlatformException catch (e) {
       print(e);
     }

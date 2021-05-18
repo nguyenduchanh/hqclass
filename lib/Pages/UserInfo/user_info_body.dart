@@ -5,6 +5,7 @@ import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInfoPageBody extends StatefulWidget {
@@ -17,26 +18,39 @@ class UserInfoPageBody extends StatefulWidget {
 class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   User _user;
   bool _isSigningOut = false;
+  bool isSwitched = false;
+  bool _canCheckBiometric = false;
+  bool _isUseBiometric = false;
   SharedPreferences prefs;
+  final LocalAuthentication _localAuthentication = LocalAuthentication();
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _loadData();
+    });
+  }
+
+  Future<Null> _loadData() async {
+    _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+    prefs = await SharedPreferences.getInstance();
+    _isUseBiometric = prefs.getBool("isBiometricAvailable");
   }
 
   @override
   Widget build(BuildContext context) {
     // nút đăng xuất
-    final fingerSprintButton = OutlinedButton(
+    final signOutButton = OutlinedButton(
       onPressed: () async {
-        prefs = await SharedPreferences.getInstance();
-        SignInSource signInSource =
-            prefs.getString("signInSource") == SignInSource.none.toString()
-                ? SignInSource.none
-                : SignInSource.google;
-        if (signInSource == SignInSource.google) {
-          await Authentication.signOut(context: context);
-        }
+        // prefs = await SharedPreferences.getInstance();
+        // SignInSource signInSource =
+        //     prefs.getString("signInSource") == SignInSource.none.toString()
+        //         ? SignInSource.none
+        //         : SignInSource.google;
+        // if (signInSource == SignInSource.google) {
+        //   await Authentication.signOut(context: context);
+        // }
         NavigatorHelper().toLoginPage(context);
       },
       style: OutlinedButton.styleFrom(
@@ -50,7 +64,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
         width: double.infinity,
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(
               Icons.login_rounded,
@@ -60,7 +74,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Đăng xuất',
+                CommonString.cSignOutButton,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.red,
@@ -72,7 +86,44 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
         ),
       ),
     );
-
+    // seting
+    // cài đặt chế độ đăng nhập bằng touch Id hoặc face id
+    final biometricLoginSetting = Card(
+        shadowColor: CommonColors.kPrimaryColor,
+        child: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              child: new Padding(
+                padding: const EdgeInsets.only(left: 0,right: 10,top: 10,bottom: 10),
+                  child: ListTile(
+                    title: Text(CommonString.cLoginWithTouchId),
+                    subtitle: Text(CommonString.cLoginWithTouchIdHint),
+                  ),
+              ),
+            ),
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    child: Switch(
+                      value: _isUseBiometric,
+                      onChanged: (value) {
+                        setState(() {
+                          _isUseBiometric = value;
+                          UserPreferences().SetBiometric(_isUseBiometric);
+                        });
+                      },
+                      activeTrackColor: CommonColors.kPrimaryLightColor,
+                      activeColor: CommonColors.kPrimaryColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -82,29 +133,22 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
             child: new Column(
               // mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                biometricLoginSetting,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text("test"),
+                      Container(
+                        child: _isSigningOut
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              )
+                            : signOutButton,
+                      )
                     ],
                   ),
                 ),
-                Expanded(child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      child:  _isSigningOut
-                          ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      ):fingerSprintButton,
-                    )
-                  ],
-                ),
-                ),
-
-
               ],
             ),
           ),
