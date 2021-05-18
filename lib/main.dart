@@ -40,14 +40,14 @@ class MyApp extends StatelessWidget {
 //                final mediaQueryData = MediaQuery.of(context);
 //                final scale = mediaQueryData.textScaleFactor.clamp(1.0, 1.3);
                 return MediaQuery(
-                  child: BiometricPage(title: "test"),
+                  child: Login(),
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
                 );
             return Login();
           }),
           routes: {
             '/home': (context) => Home(),
-            '/login': (context) => BiometricPage(title:"test"),
+            '/login': (context) =>  Login(),
             '/register': (context) => RegisterPage(),
             '/classes': (context) => ClassesPage(),
             '/students': (context) => StudentPage(),

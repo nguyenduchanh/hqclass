@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -162,7 +163,43 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-
+    final fingerSprintButton = TextButton(
+      onPressed: ()=>{},
+      style: ButtonStyle(
+//        backgroundColor: MaterialStateProperty.all(Colors.white),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+      child: SizedBox(
+        height: 30,
+        width: double.infinity,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.fingerprint,
+              color: CommonColors.kPrimaryColor,
+              size: 25.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                CommonString.cLoginWithFingerButton,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
     var doLogin = () async {
       final form = formKey.currentState;
       if (form.validate()) {
@@ -179,7 +216,6 @@ class _LoginState extends State<Login> {
           ).show(context);
         }
       } else {
-//          print(CommonString.cDataInvalid);
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
           title: CommonString.cDataInvalid,
@@ -192,34 +228,39 @@ class _LoginState extends State<Login> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: size.height * 0.02),
-                Image.asset(
-                  "assets/img/blackboard.png",
-                  height: size.height * 0.2,
-                ),
-                SizedBox(height: 15.0),
+        body:SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: size.height * 0.02),
+                  Image.asset(
+                    "assets/img/blackboard.png",
+                    height: size.height * 0.2,
+                  ),
+                  SizedBox(height: 15.0),
 //                _userNameTextFormField,
-                userNameField,
-                SizedBox(height: 15.0),
-                passwordField,
-                SizedBox(height: 15.0),
-                auth.loggedInStatus == Status.Authenticating
-                    ? loading
-                    : longButtons(CommonString.cLoginButton, doLogin),
+                  userNameField,
+                  SizedBox(height: 15.0),
+                  passwordField,
+                  SizedBox(height: 15.0),
+                  auth.loggedInStatus == Status.Authenticating
+                      ? loading
+                      : longButtons(CommonString.cLoginButton, doLogin),
 
-                SizedBox(height: 5.0),
-                forgotLabel
-              ],
+                  SizedBox(height: 10.0),
+                  fingerSprintButton,
+                  SizedBox(height: 5.0),
+                  forgotLabel
+                ],
+              ),
             ),
           ),
-        ),
+        )
+
       ),
     );
   }

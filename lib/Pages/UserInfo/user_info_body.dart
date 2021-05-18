@@ -37,10 +37,11 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
             bottom: 20.0,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(),
+              Row(
 
+              ),
               _isSigningOut
                   ? CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -62,7 +63,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
                   if(signInSource == SignInSource.google){
                     await Authentication.signOut(context: context);
                   }
-                  await UserPreferences().CreateUserConfig("", "", "",SignInSource.none);
+//                  await UserPreferences().CreateUserConfig("", "", "",SignInSource.none);
                   NavigatorHelper().toLoginPage(context);
                 },
                 child: Padding(

@@ -34,7 +34,7 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
 
           await UserPreferences().CreateUserConfig(user.displayName,
               passwordRandom, user.email, SignInSource.google);
-          NavigatorHelper().toClassesPage(context);
+          NavigatorHelper().toLoginPage(context);
         }
       } catch (x) {}
     };

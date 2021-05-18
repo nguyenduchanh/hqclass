@@ -23,88 +23,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final formKey = new GlobalKey<FormState>();
-  // var controller = new TextEditingController();
-  // static List<CountryModel> _dropdownItems = [];
-  // CountryModel _dropdownValue;
-  // String _errorText;
-  // TextEditingController phoneController = new TextEditingController();
-  //
-  // Widget _buildCountry() {
-  //   return FormField(
-  //     builder: (FormFieldState state) {
-  //       return DropdownButtonHideUnderline(
-  //         child: new Column(
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: <Widget>[
-  //             new InputDecorator(
-  //               decoration: InputDecoration(
-  //                   filled: false,
-  //                   prefixIcon: Icon(Icons.location_on),
-  //                   labelText: _dropdownValue == null
-  //                       ? 'Đất nước của bản'
-  //                       : 'Quốc gia',
-  //                   errorText: _errorText,
-  //                   border: OutlineInputBorder()),
-  //               isEmpty: _dropdownValue == null,
-  //               child: new DropdownButton<CountryModel>(
-  //                 value: _dropdownValue,
-  //                 isDense: true,
-  //                 onChanged: (CountryModel newValue) {
-  //                   setState(() {
-  //                     _dropdownValue = newValue;
-  //                     phoneController.text = _dropdownValue.countryCode;
-  //                   });
-  //                 },
-  //                 items: _dropdownItems.map((CountryModel value) {
-  //                   return DropdownMenuItem<CountryModel>(
-  //                     value: value,
-  //                     child: Text(value.country),
-  //                   );
-  //                 }).toList(),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Widget _buildPhoneFiled() {
-  //   return Container(
-  //       decoration: new BoxDecoration(
-  //         borderRadius: new BorderRadius.circular(5),
-  //         border: Border.all(color: Colors.grey),
-  //         color: Colors.white,
-  //       ),
-  //       child: SizedBox(
-  //         height: 50,
-  //         width: double.infinity,
-  //         child: Row(
-  //           children: <Widget>[
-  //             SizedBox(width: 5.0),
-  //             Text(" (" + phoneController.text + ") ",
-  //                 style: TextStyle(fontSize: 16.0)),
-  //             // SizedBox(width: 2.0),
-  //             Expanded(
-  //               child: TextFormField(
-  //                 controller: controller,
-  //                 autofocus: false,
-  //                 keyboardType: TextInputType.phone,
-  //                 key: Key('EnterPhone-TextFormField'),
-  //                 decoration: InputDecoration(
-  //                   border: InputBorder.none,
-  //                   contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-  //                   hintText: "Nhập số điện thoại của bạn",
-  //                   errorMaxLines: 1,
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ));
-  // }
-
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => ClassesPage(),
@@ -129,10 +47,6 @@ class _RegisterState extends State<Register> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      // _dropdownItems.add(CountryModel(country: 'India', countryCode: '+91'));
-      // _dropdownItems.add(CountryModel(country: 'USA', countryCode: '+1'));
-      // _dropdownValue = _dropdownItems[1];
-      // phoneController.text = _dropdownValue.countryCode;
     });
   }
 
@@ -187,16 +101,7 @@ class _RegisterState extends State<Register> {
       decoration: buildInputDecoration(CommonString.cConfirmPasswordRequire,
           Icons.lock, CommonString.cPasswordRequire),
     );
-    // final countriesSelected = Center(
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: <Widget>[
-    //       _buildCountry(),
-    //       SizedBox(height: 15.0),
-    //       _buildPhoneFiled(),
-    //     ],
-    //   ),
-    // );
+
     var loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
