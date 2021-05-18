@@ -4,9 +4,12 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -30,91 +33,29 @@ class _LoginState extends State<Login> {
 
   TextEditingController _userNameController;
   TextEditingController _passwordController;
-
-  SharedPreferences prefs;
-  String _userNameLocal;
-  String _passwordLocal;
+  BaseDao baseDao = BaseDao();
+  UserModel userModel;
 
   void initState() {
+    userModel = Global.userModel;
+    _isUseBiometric = userModel.isBiometricAvailable;
     super.initState();
     _loadData();
   }
 
-  Future<void> _checkBiometric() async {
-    bool canCheckBiometric = false;
-    try {
-      canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      print(e);
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      _canCheckBiometric = canCheckBiometric;
-    });
-  }
-
-  Future<void> _getListOfBiometricTypes() async {
-    List<BiometricType> listofBiometrics;
-    try {
-      listofBiometrics = await _localAuthentication.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      print(e);
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      _availableBiometricTypes = listofBiometrics;
-    });
-  }
-
-  Future<void> _authorizeNow() async {
-    bool isAuthorized = false;
-    try {
-      isAuthorized = await _localAuthentication.authenticate(
-        localizedReason: "Please authenticate to complete your transaction",
-        useErrorDialogs: true,
-        stickyAuth: true,
-      );
-    } on PlatformException catch (e) {
-      print(e);
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      if (isAuthorized) {
-        _authorizedOrNot = "Authorized";
-      } else {
-        _authorizedOrNot = "Not Authorized";
-      }
-    });
-  }
-
   //Loading counter value on start
   Future<Null> _loadData() async {
-    prefs = await SharedPreferences.getInstance();
-    String userName = prefs.getString("userName");
-    String password = prefs.getString("password");
-    _isUseBiometric = prefs.getBool("isBiometricAvailable");
-    SignInSource signInSource = prefs.getString("signInSource") ==
-        SignInSource.none.toString() ? SignInSource.none : SignInSource.google;
-    _canCheckBiometric =
-    await _localAuthentication.canCheckBiometrics;
-    // List<BiometricType> availableBiometrics =
-    // await _localAuthentication.getAvailableBiometrics();
+    userModel = Global.userModel;
+
+    _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
     // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
     if (_isUseBiometric && _canCheckBiometric) {
       biometricAuth();
     }
 
-    _userNameLocal = userName;
-    _passwordLocal = password;
     setState(() {
-      _userNameController = new TextEditingController(text: userName);
-      _passwordController = new TextEditingController(text: password);
+      _userNameController = new TextEditingController(text: userModel!=null?userModel.userName:"");
+      _passwordController = new TextEditingController(text: userModel!=null?userModel.password:"");
     });
   }
 
@@ -126,12 +67,11 @@ class _LoginState extends State<Login> {
         androidAuthStrings: AndroidAuthMessages(
             signInTitle: "Touch Id cho HQClass",
             biometricRequiredTitle: "Sử dụng TouchId để mở khóa",
-            biometricHint: "Chạm vào cảm ứng để đăng nhập"
-        ),
+            biometricHint: "Chạm vào cảm ứng để đăng nhập"),
         useErrorDialogs: false,
         stickyAuth: false,
       );
-      if(isAuthorized){
+      if (isAuthorized) {
         NavigatorHelper().toClassesPage(context);
       }
     } on PlatformException catch (e) {
@@ -153,9 +93,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
     final userNameField = TextFormField(
         autofocus: false,
@@ -190,7 +128,6 @@ class _LoginState extends State<Login> {
     final loading = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-
         CircularProgressIndicator(),
         Text(CommonString.cAuthenticating)
       ],
@@ -216,51 +153,52 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-    final fingerSprintButton = _isUseBiometric ?
-      TextButton(
-        onPressed: biometricAuth,
-        style: ButtonStyle(
+    final fingerSprintButton = _isUseBiometric
+        ? TextButton(
+            onPressed: biometricAuth,
+            style: ButtonStyle(
 //        backgroundColor: MaterialStateProperty.all(Colors.white),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ),
-        child: SizedBox(
-          height: 30,
-          width: double.infinity,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.fingerprint,
-                color: CommonColors.kPrimaryColor,
-                size: 25.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text(
-                  CommonString.cLoginWithFingerButton,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w600,
-                  ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              )
-            ],
-          ),
-        ),
-      ) : Container();
+              ),
+            ),
+            child: SizedBox(
+              height: 30,
+              width: double.infinity,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.fingerprint,
+                    color: CommonColors.kPrimaryColor,
+                    size: 25.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      CommonString.cLoginWithFingerButton,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        : Container();
 
     var doLogin = () async {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        if (_userNameController.text == _userNameLocal &&
-            _passwordController.text == _passwordLocal) {
+        if (_userNameController.text == userModel.userName &&
+            _passwordController.text == userModel.password) {
           NavigatorHelper().toClassesPage(context);
         } else {
           Flushbar(
@@ -313,9 +251,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-          )
-
-      ),
+          )),
     );
   }
 }

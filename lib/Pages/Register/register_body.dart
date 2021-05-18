@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/auth.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Classes/classes_page.dart';
 import 'package:hqclass/Pages/Register/RegisterWithPhoneNumber/phone_number_auth.dart';
@@ -23,22 +26,7 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final formKey = new GlobalKey<FormState>();
-  Route _routeToSignInScreen() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => ClassesPage(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(-1.0, 0.0);
-        var end = Offset.zero;
-        var curve = Curves.ease;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
+  BaseDao baseDao = BaseDao();
 
   String _username, _email, _password, _confirmPassword, _phoneNumber;
 
@@ -49,7 +37,22 @@ class _RegisterState extends State<Register> {
     setState(() {
     });
   }
-
+  Route _routeToSignInScreen() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => ClassesPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(-1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+        var tween =
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -137,6 +140,13 @@ class _RegisterState extends State<Register> {
         form.save();
         await UserPreferences()
             .CreateUserConfig(_username, _password, _email, SignInSource.none);
+        final newUser = new UserModel(0,
+            _username,
+            _password,
+            _email,
+            Platform.isIOS?"IOS":"Android",
+            false);
+        var idClass = await baseDao.addUser(newUser);
         Navigator.of(context).pushReplacement(_routeToSignInScreen());
       } else {
         Flushbar(

@@ -2,6 +2,8 @@ import 'package:hqclass/Domains/models/classes.dart';
 import 'package:hqclass/Domains/models/rollup.dart';
 import 'package:hqclass/Domains/models/student.dart';
 import 'package:hqclass/Domains/models/student_add.dart';
+import 'package:hqclass/Domains/models/user.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -34,6 +36,55 @@ class BaseDao {
         'CREATE TABLE student (id INTEGER PRIMARY KEY, studentcode TEXT, studentname TEXT, studentage INTEGER, schoolname TEXT, address TEXT, parentname TEXT, parentphone TEXT,currentstate INTEGER, createdate TEXT, createby TEXT, updateddate TEXT, updatedby TEXT)');
     await db.execute(
         'CREATE TABLE rollup (id INTEGER PRIMARY KEY, classcode TEXT, studentcodelist TEXT, createdate TEXT, rollupdata TEXT)');
+    await db.execute(
+        'CREATE TABLE user (id INTEGER PRIMARY KEY, userName TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER )');
+  }
+  /// user
+  Future<List<UserModel>> getUser() async {
+    var dbClient = await db;
+    List<Map> maps = await dbClient.query('user', columns: [
+      'id',
+      'userName',
+      'password',
+      'email',
+      'deviceLogin',
+      'isbiometricavailable',
+    ]);
+    List<UserModel> userModel = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        userModel.add(UserModel.fromMap(maps[i]));
+      }
+    }
+    return userModel;
+  }
+  Future<int> addUser(UserModel userModel) async {
+    var dbClient = await db;
+    userModel.id = await dbClient.insert('user', userModel.toMap());
+    if(userModel.id > 0){
+      Global.userModel = userModel;
+    }
+    return userModel.id;
+
+  }
+  Future<UserModel> getUserByEmail(String email) async {
+    final dbClient = await db;
+    var result =
+    await dbClient.query("user", where: "email = ?", whereArgs: [email]);
+    return result.isNotEmpty ? UserModel.fromMap(result.first) : Null;
+  }
+  Future<int> updateUser(UserModel userModel) async {
+    var dbClient = await db;
+    var userId = await dbClient.update(
+      'user',
+      userModel.toMap(),
+      where: 'id = ?',
+      whereArgs: [userModel.id],
+    );
+    if(userId > 0){
+      Global.userModel = userModel;
+    }
+    return userId;
   }
   /// roll up
   Future<List<RollUpModel>> getRollup() async {

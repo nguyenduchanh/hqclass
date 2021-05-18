@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/cString.dart';
@@ -15,6 +18,7 @@ class GoogleFirebaseButton extends StatefulWidget {
 
 class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
   bool _isSigningIn = false;
+  BaseDao baseDao = BaseDao();
   @override
   Widget build(BuildContext context) {
     var doRegisterWithGoogle = () async {
@@ -30,7 +34,13 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
         if (user != null) {
           String passwordRandom =
               CString().generatePassword(true, true, true, true, 12);
-
+          final newUser = new UserModel(0,
+              user.displayName,
+              passwordRandom,
+              user.email,
+              Platform.isIOS?"IOS":"Android",
+              false);
+          var idClass = await baseDao.addUser(newUser);
           await UserPreferences().CreateUserConfig(user.displayName,
               passwordRandom, user.email, SignInSource.google);
           NavigatorHelper().toLoginPage(context);

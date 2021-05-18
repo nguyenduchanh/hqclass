@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
+import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:local_auth/local_auth.dart';
@@ -23,23 +26,39 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   bool _isUseBiometric = false;
   SharedPreferences prefs;
   final LocalAuthentication _localAuthentication = LocalAuthentication();
+  UserModel userModel;
+  BaseDao baseDao = BaseDao();
 
   @override
   void initState() {
     super.initState();
+    userModel = Global.userModel;
+    _isUseBiometric = userModel.isBiometricAvailable;
     setState(() {
       _loadData();
     });
   }
 
-  Future<Null> _loadData() async {
+  _loadData() async {
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-    prefs = await SharedPreferences.getInstance();
-    _isUseBiometric = prefs.getBool("isBiometricAvailable");
+
   }
 
   @override
   Widget build(BuildContext context) {
+    final switchButton = Container(
+      child: Switch(
+        value: userModel.isBiometricAvailable,
+        onChanged: (value) {
+          setState(() {
+            userModel.isBiometricAvailable = value;
+            baseDao.updateUser(userModel);
+          });
+        },
+        activeTrackColor: CommonColors.kPrimaryLightColor,
+        activeColor: CommonColors.kPrimaryColor,
+      ),
+    );
     // nút đăng xuất
     final signOutButton = OutlinedButton(
       onPressed: () async {
@@ -95,31 +114,18 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
           children: <Widget>[
             Expanded(
               child: new Padding(
-                padding: const EdgeInsets.only(left: 0,right: 10,top: 10,bottom: 10),
-                  child: ListTile(
-                    title: Text(CommonString.cLoginWithTouchId),
-                    subtitle: Text(CommonString.cLoginWithTouchIdHint),
-                  ),
+                padding: const EdgeInsets.only(
+                    left: 0, right: 10, top: 10, bottom: 10),
+                child: ListTile(
+                  title: Text(CommonString.cLoginWithTouchId),
+                  subtitle: Text(CommonString.cLoginWithTouchIdHint),
+                ),
               ),
             ),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                    child: Switch(
-                      value: _isUseBiometric,
-                      onChanged: (value) {
-                        setState(() {
-                          _isUseBiometric = value;
-                          UserPreferences().SetBiometric(_isUseBiometric);
-                        });
-                      },
-                      activeTrackColor: CommonColors.kPrimaryLightColor,
-                      activeColor: CommonColors.kPrimaryColor,
-                    ),
-                  )
-                ],
+                children: <Widget>[switchButton],
               ),
             ),
           ],

@@ -1,6 +1,9 @@
+import 'package:hqclass/Domains/models/user.dart';
+
 class Global{
   static String Token = "";
   static int currentSelectedClassId ;
+  static UserModel userModel;
 }
 class ResponseObj{
   bool status;
