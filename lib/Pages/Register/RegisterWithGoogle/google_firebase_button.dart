@@ -15,7 +15,6 @@ class GoogleFirebaseButton extends StatefulWidget {
 
 class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
   bool _isSigningIn = false;
-
   @override
   Widget build(BuildContext context) {
     var doRegisterWithGoogle = () async {

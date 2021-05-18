@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Authentication {
   static SnackBar customSnackBar({ String content}) {
     return SnackBar(
@@ -36,6 +38,7 @@ class Authentication {
   static Future<User> signInWithGoogle({BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User user;
+    SharedPreferences prefs;
 
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
@@ -49,6 +52,14 @@ class Authentication {
         print(e);
       }
     } else {
+      prefs = await SharedPreferences.getInstance();
+      SignInSource signInSource =
+      prefs.getString("signInSource") == SignInSource.none.toString()
+          ? SignInSource.none
+          : SignInSource.google;
+      if (signInSource == SignInSource.google) {
+        await Authentication.signOut(context: context);
+      }
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
       final GoogleSignInAccount googleSignInAccount =
