@@ -27,7 +27,6 @@ class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
-  bool _isUseBiometric = false;
   String _authorizedOrNot = "Not Authorized";
   List<BiometricType> _availableBiometricTypes = [];
 
@@ -38,7 +37,6 @@ class _LoginState extends State<Login> {
 
   void initState() {
     userModel = Global.userModel;
-    _isUseBiometric = userModel.isBiometricAvailable;
     super.initState();
     _loadData();
   }
@@ -49,7 +47,7 @@ class _LoginState extends State<Login> {
 
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
     // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
-    if (_isUseBiometric && _canCheckBiometric) {
+    if (userModel!=null && userModel.isBiometricAvailable && _canCheckBiometric) {
       biometricAuth();
     }
 
@@ -153,8 +151,8 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-    final fingerSprintButton = _isUseBiometric
-        ? TextButton(
+    final fingerSprintButton = (userModel == null || userModel.isBiometricAvailable == false)
+        ?Container(): TextButton(
             onPressed: biometricAuth,
             style: ButtonStyle(
 //        backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -190,8 +188,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-          )
-        : Container();
+          );
 
     var doLogin = () async {
       final form = formKey.currentState;
