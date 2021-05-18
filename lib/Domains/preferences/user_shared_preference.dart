@@ -8,6 +8,11 @@ class UserPreferences{
     await prefs.setString("password", password);
     await prefs.setString("signInSource", signInSource.toString());
     await prefs.setString("token", token);
+    await prefs.setBool("isBiometricAvailable", false);
+  }
+  SetBiometric(bool isBiometricAvailable) async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("isBiometricAvailable", isBiometricAvailable);
   }
   Future<String> GetTokenConfig()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();

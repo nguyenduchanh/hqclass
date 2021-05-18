@@ -197,13 +197,13 @@ class CDialog {
           title: Text(Title),
           content: Text(Content),
           actions: [
-            FlatButton(
+            TextButton(
               child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop(StudentConfirmAction.CANCEL);
               },
             ),
-            FlatButton(
+            TextButton(
               child: const Text('ACCEPT'),
               onPressed: () {
                 Navigator.of(context).pop(StudentConfirmAction.ACCEPT);
