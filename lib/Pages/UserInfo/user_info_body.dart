@@ -80,13 +80,30 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
           padding: const EdgeInsets.all(5),
           child: Container(
             child: new Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                _isSigningOut
-                    ? CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                )
-                    : fingerSprintButton
+              // mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text("test"),
+                    ],
+                  ),
+                ),
+                Expanded(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      child:  _isSigningOut
+                          ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ):fingerSprintButton,
+                    )
+                  ],
+                ),
+                ),
+
 
               ],
             ),
