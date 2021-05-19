@@ -53,7 +53,11 @@ class _LoginState extends State<Login> {
 
     setState(() {
       _userNameController = new TextEditingController(text: userModel!=null?userModel.userName:"");
-      _passwordController = new TextEditingController(text: userModel!=null?userModel.password:"");
+      if(userModel!=null && userModel.isBiometricAvailable){
+        _passwordController = new TextEditingController(text: "");
+      }else{
+        _passwordController = new TextEditingController(text: userModel!=null?userModel.password:"");
+      }
     });
   }
 
