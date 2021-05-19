@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flushbar/flushbar.dart';
@@ -35,6 +36,7 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
+    startTime();
     userModel = Global.userModel;
     setState(() {
       _userNameController = new TextEditingController(
@@ -49,15 +51,25 @@ class _LoginState extends State<Login> {
     });
     _loadData();
   }
-
-  //Loading counter value on start
-  Future<Null> _loadData() async {
-    _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+  startTime() async {
+    var duration = new Duration(seconds: 1);
+    return new Timer(duration, openBiometricAuth);
+  }
+  openBiometricAuth() {
     if (userModel != null &&
         userModel.isBiometricAvailable &&
         _canCheckBiometric) {
       biometricAuth();
     }
+  }
+  //Loading counter value on start
+  Future<Null> _loadData() async {
+    _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+    // if (userModel != null &&
+    //     userModel.isBiometricAvailable &&
+    //     _canCheckBiometric) {
+    //   biometricAuth();
+    // }
   }
 
   Future<void> biometricAuth() async {
