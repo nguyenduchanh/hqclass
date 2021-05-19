@@ -27,7 +27,6 @@ class _LoginState extends State<Login> {
   final formKey = new GlobalKey<FormState>();
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
-  String _authorizedOrNot = "Not Authorized";
   List<BiometricType> _availableBiometricTypes = [];
 
   TextEditingController _userNameController;
@@ -47,9 +46,7 @@ class _LoginState extends State<Login> {
 
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
     // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
-    if (userModel!=null && userModel.isBiometricAvailable && _canCheckBiometric) {
-      biometricAuth();
-    }
+
 
     setState(() {
       _userNameController = new TextEditingController(text: userModel!=null?userModel.userName:"");
@@ -57,6 +54,9 @@ class _LoginState extends State<Login> {
         _passwordController = new TextEditingController(text: "");
       }else{
         _passwordController = new TextEditingController(text: userModel!=null?userModel.password:"");
+      }
+      if (userModel!=null && userModel.isBiometricAvailable && _canCheckBiometric) {
+        biometricAuth();
       }
     });
   }
@@ -73,9 +73,9 @@ class _LoginState extends State<Login> {
         useErrorDialogs: false,
         stickyAuth: false,
       );
-      if (isAuthorized) {
-        NavigatorHelper().toClassesPage(context);
-      }
+//      if (isAuthorized) {
+//        NavigatorHelper().toClassesPage(context);
+//      }
     } on PlatformException catch (e) {
       print(e);
     }
@@ -84,11 +84,8 @@ class _LoginState extends State<Login> {
 
     setState(() {
       if (isAuthorized) {
-        _authorizedOrNot = "Authorized";
-        print("Authorized");
+        NavigatorHelper().toClassesPage(context);
       } else {
-        _authorizedOrNot = "Not Authorized";
-        print("Not Authorized");
       }
     });
   }
