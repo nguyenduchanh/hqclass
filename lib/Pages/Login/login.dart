@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/models/user.dart';
-import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
@@ -16,7 +15,6 @@ import 'package:hqclass/Util/widgets.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -34,31 +32,32 @@ class _LoginState extends State<Login> {
   BaseDao baseDao = BaseDao();
   UserModel userModel;
 
+  @override
   void initState() {
-    userModel = Global.userModel;
     super.initState();
+    userModel = Global.userModel;
+    setState(() {
+      _userNameController = new TextEditingController(
+          text: userModel != null ? userModel.userName : "");
+      if (userModel != null && userModel.isBiometricAvailable) {
+        _passwordController = new TextEditingController(text: "");
+      } else {
+        _passwordController = new TextEditingController(
+            text: userModel != null ? userModel.password : "");
+      }
+
+    });
     _loadData();
   }
 
   //Loading counter value on start
   Future<Null> _loadData() async {
-    userModel = Global.userModel;
-
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-    // nếu đăng ký đăng nhập bằng touchId thì mới tự động bật lên
-
-
-    setState(() {
-      _userNameController = new TextEditingController(text: userModel!=null?userModel.userName:"");
-      if(userModel!=null && userModel.isBiometricAvailable){
-        _passwordController = new TextEditingController(text: "");
-      }else{
-        _passwordController = new TextEditingController(text: userModel!=null?userModel.password:"");
-      }
-      if (userModel!=null && userModel.isBiometricAvailable && _canCheckBiometric) {
-        biometricAuth();
-      }
-    });
+    if (userModel != null &&
+        userModel.isBiometricAvailable &&
+        _canCheckBiometric) {
+      biometricAuth();
+    }
   }
 
   Future<void> biometricAuth() async {
@@ -85,8 +84,7 @@ class _LoginState extends State<Login> {
     setState(() {
       if (isAuthorized) {
         NavigatorHelper().toClassesPage(context);
-      } else {
-      }
+      } else {}
     });
   }
 
@@ -152,44 +150,46 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-    final fingerSprintButton = (userModel == null || userModel.isBiometricAvailable == false)
-        ?Container(): TextButton(
-            onPressed: biometricAuth,
-            style: ButtonStyle(
+    final fingerSprintButton =
+        (userModel == null || userModel.isBiometricAvailable == false)
+            ? Container()
+            : TextButton(
+                onPressed: biometricAuth,
+                style: ButtonStyle(
 //        backgroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-            child: SizedBox(
-              height: 30,
-              width: double.infinity,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    Icons.fingerprint,
-                    color: CommonColors.kPrimaryColor,
-                    size: 25.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      CommonString.cLoginWithFingerButton,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  )
-                ],
-              ),
-            ),
-          );
+                  ),
+                ),
+                child: SizedBox(
+                  height: 30,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.fingerprint,
+                        color: CommonColors.kPrimaryColor,
+                        size: 25.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          CommonString.cLoginWithFingerButton,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
 
     var doLogin = () async {
       final form = formKey.currentState;
