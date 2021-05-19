@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
@@ -56,7 +57,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    List<String> t;
     AuthProvider auth = Provider.of<AuthProvider>(context);
 
     final usernameField = TextFormField(
@@ -133,6 +134,11 @@ class _RegisterState extends State<Register> {
         phoneAuthDataProvider.loading = false;
         return;
       }
+    };
+    //check tài khoản trên firebase
+    var doRegister1=()async{
+        FirebaseAuth auth = FirebaseAuth.instance;
+        t =await auth.fetchSignInMethodsForEmail("nguyenduchanhndh01091993@gmail.com");
     };
     var doRegister = () async {
       final form = formKey.currentState;

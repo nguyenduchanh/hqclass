@@ -33,7 +33,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   void initState() {
     super.initState();
     userModel = Global.userModel;
-    _isUseBiometric = userModel.isBiometricAvailable;
+    _isUseBiometric = userModel!=null?userModel.isBiometricAvailable:false;
     setState(() {
       _loadData();
     });
