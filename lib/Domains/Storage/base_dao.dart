@@ -37,14 +37,14 @@ class BaseDao {
     await db.execute(
         'CREATE TABLE rollup (id INTEGER PRIMARY KEY, classcode TEXT, studentcodelist TEXT, createdate TEXT, rollupdata TEXT)');
     await db.execute(
-        'CREATE TABLE user (id INTEGER PRIMARY KEY, userName TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER )');
+        'CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER )');
   }
   /// user
-  Future<List<UserModel>> getUser() async {
+  Future<UserModel> getUser() async {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('user', columns: [
       'id',
-      'userName',
+      'username',
       'password',
       'email',
       'deviceLogin',
@@ -56,7 +56,7 @@ class BaseDao {
         userModel.add(UserModel.fromMap(maps[i]));
       }
     }
-    return userModel;
+    return (userModel!=null && userModel.length > 0)?userModel.first:null;
   }
   Future<int> addUser(UserModel userModel) async {
     var dbClient = await db;
@@ -85,6 +85,18 @@ class BaseDao {
       Global.userModel = userModel;
     }
     return userId;
+  }
+  Future<void> deleteAllUser() async{
+    var user = await getUser();
+    await deleteUser(user.id);
+  }
+  Future<void> deleteUser(int id) async {
+    var dbClient = await db;
+    await dbClient.delete(
+      'user',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
   /// roll up
   Future<List<RollUpModel>> getRollup() async {

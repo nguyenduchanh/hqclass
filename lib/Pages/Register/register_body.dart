@@ -138,8 +138,7 @@ class _RegisterState extends State<Register> {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        await UserPreferences()
-            .CreateUserConfig(_username, _password, _email, SignInSource.none);
+        await baseDao.deleteAllUser();
         final newUser = new UserModel(0,
             _username,
             _password,

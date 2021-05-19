@@ -37,18 +37,7 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     startTime();
-    userModel = Global.userModel;
-    setState(() {
-      _userNameController = new TextEditingController(
-          text: userModel != null ? userModel.userName : "");
-      if (userModel != null && userModel.isBiometricAvailable) {
-        _passwordController = new TextEditingController(text: "");
-      } else {
-        _passwordController = new TextEditingController(
-            text: userModel != null ? userModel.password : "");
-      }
 
-    });
     _loadData();
   }
   startTime() async {
@@ -65,11 +54,18 @@ class _LoginState extends State<Login> {
   //Loading counter value on start
   Future<Null> _loadData() async {
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-    // if (userModel != null &&
-    //     userModel.isBiometricAvailable &&
-    //     _canCheckBiometric) {
-    //   biometricAuth();
-    // }
+    userModel = await baseDao.getUser();
+    setState(() {
+      _userNameController = new TextEditingController(
+          text: userModel != null ? userModel.userName : "");
+      if (userModel != null && userModel.isBiometricAvailable) {
+        _passwordController = new TextEditingController(text: "");
+      } else {
+        _passwordController = new TextEditingController(
+            text: userModel != null ? userModel.password : "");
+      }
+
+    });
   }
 
   Future<void> biometricAuth() async {
