@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/models/user.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
   TextEditingController _passwordController;
   BaseDao baseDao = BaseDao();
   UserModel userModel;
-
+  BiometricTypeEnum biometricTypeEnum;
   @override
   void initState() {
     super.initState();
@@ -40,10 +41,12 @@ class _LoginState extends State<Login> {
 
     _loadData();
   }
+
   startTime() async {
     var duration = new Duration(seconds: 1);
     return new Timer(duration, openBiometricAuth);
   }
+
   openBiometricAuth() {
     if (userModel != null &&
         userModel.isBiometricAvailable &&
@@ -51,20 +54,28 @@ class _LoginState extends State<Login> {
       biometricAuth();
     }
   }
+
   //Loading counter value on start
   Future<Null> _loadData() async {
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
+    _availableBiometricTypes =
+        await _localAuthentication.getAvailableBiometrics();
+
     userModel = await baseDao.getUser();
     setState(() {
+      if(_availableBiometricTypes.contains(BiometricType.face)){
+        biometricTypeEnum = BiometricTypeEnum.FaceID;
+      }else if(_availableBiometricTypes.contains(BiometricType.fingerprint)){
+        biometricTypeEnum = BiometricTypeEnum.TouchID;
+      }
       _userNameController = new TextEditingController(
           text: userModel != null ? userModel.userName : "");
-      if (userModel != null && userModel.isBiometricAvailable) {
+      if (userModel != null && userModel.isBiometricAvailable && _availableBiometricTypes.length > 0) {
         _passwordController = new TextEditingController(text: "");
       } else {
         _passwordController = new TextEditingController(
             text: userModel != null ? userModel.password : "");
       }
-
     });
   }
 
@@ -159,7 +170,7 @@ class _LoginState extends State<Login> {
       ],
     );
     final fingerSprintButton =
-        (userModel == null || userModel.isBiometricAvailable == false)
+        (userModel == null || userModel.isBiometricAvailable == false || _availableBiometricTypes.length == 0)
             ? Container()
             : TextButton(
                 onPressed: biometricAuth,
@@ -178,11 +189,16 @@ class _LoginState extends State<Login> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        Icons.fingerprint,
-                        color: CommonColors.kPrimaryColor,
-                        size: 25.0,
-                      ),
+                      (biometricTypeEnum == BiometricTypeEnum.FaceID)
+                          ? Image(
+                              image: AssetImage("assets/img/faceID.png"),
+                              height: 25.0,
+                            )
+                          : Icon(
+                              Icons.fingerprint,
+                              color: CommonColors.kPrimaryColor,
+                              size: 25.0,
+                            ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
