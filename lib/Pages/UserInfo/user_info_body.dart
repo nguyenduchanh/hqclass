@@ -33,7 +33,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   void initState() {
     super.initState();
     userModel = Global.userModel;
-    _isUseBiometric = userModel!=null?userModel.isBiometricAvailable:false;
+    _isUseBiometric = (userModel!=null && userModel.isBiometricAvailable!=null)?userModel.isBiometricAvailable:false;
     setState(() {
       _loadData();
     });
@@ -48,7 +48,7 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   Widget build(BuildContext context) {
     final switchButton = Container(
       child: Switch(
-        value: userModel.isBiometricAvailable,
+        value: userModel!=null?userModel.isBiometricAvailable:false,
         onChanged: (value) {
           setState(() {
             userModel.isBiometricAvailable = value;
