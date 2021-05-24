@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/auth.dart';
 import 'package:hqclass/Domains/models/user.dart';
+import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
 import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
@@ -28,12 +30,14 @@ class _LoginState extends State<Login> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   bool _canCheckBiometric = false;
   List<BiometricType> _availableBiometricTypes = [];
-
+  List<String> userFirebaseLst;
   TextEditingController _userNameController;
   TextEditingController _passwordController;
   BaseDao baseDao = BaseDao();
   UserModel userModel;
   BiometricTypeEnum biometricTypeEnum;
+  User user;
+
   @override
   void initState() {
     super.initState();
@@ -63,14 +67,16 @@ class _LoginState extends State<Login> {
 
     userModel = await baseDao.getUser();
     setState(() {
-      if(_availableBiometricTypes.contains(BiometricType.face)){
+      if (_availableBiometricTypes.contains(BiometricType.face)) {
         biometricTypeEnum = BiometricTypeEnum.FaceID;
-      }else if(_availableBiometricTypes.contains(BiometricType.fingerprint)){
+      } else if (_availableBiometricTypes.contains(BiometricType.fingerprint)) {
         biometricTypeEnum = BiometricTypeEnum.TouchID;
       }
       _userNameController = new TextEditingController(
           text: userModel != null ? userModel.userName : "");
-      if (userModel != null && userModel.isBiometricAvailable && _availableBiometricTypes.length > 0) {
+      if (userModel != null &&
+          userModel.isBiometricAvailable &&
+          _availableBiometricTypes.length > 0) {
         _passwordController = new TextEditingController(text: "");
       } else {
         _passwordController = new TextEditingController(
@@ -169,59 +175,77 @@ class _LoginState extends State<Login> {
         )
       ],
     );
-    final fingerSprintButton =
-        (userModel == null || userModel.isBiometricAvailable == false || _availableBiometricTypes.length == 0)
-            ? Container()
-            : TextButton(
-                onPressed: biometricAuth,
-                style: ButtonStyle(
-//        backgroundColor: MaterialStateProperty.all(Colors.white),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+    final fingerSprintButton = (userModel == null ||
+            userModel.isBiometricAvailable == false ||
+            _availableBiometricTypes.length == 0)
+        ? Container()
+        : TextButton(
+            onPressed: biometricAuth,
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: SizedBox(
-                  height: 30,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      (biometricTypeEnum == BiometricTypeEnum.FaceID)
-                          ? Image(
-                              image: AssetImage("assets/img/faceID.png"),
-                              height: 25.0,
-                            )
-                          : Icon(
-                              Icons.fingerprint,
-                              color: CommonColors.kPrimaryColor,
-                              size: 25.0,
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          CommonString.cLoginWithFingerButton,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w600,
-                          ),
+              ),
+            ),
+            child: SizedBox(
+              height: 30,
+              width: double.infinity,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  (biometricTypeEnum == BiometricTypeEnum.FaceID)
+                      ? Image(
+                          image: AssetImage("assets/img/faceID.png"),
+                          height: 25.0,
+                        )
+                      : Icon(
+                          Icons.fingerprint,
+                          color: CommonColors.kPrimaryColor,
+                          size: 25.0,
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              );
-
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      CommonString.cLoginWithFingerButton,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+    var checkAvailableUser = () async {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: userModel.userName, password: userModel.password)
+          .then((userCredential) {
+        user = userCredential.user;
+        NavigatorHelper().toClassesPage(context);
+        //        saveUserToLocal();
+      }).catchError((error) {
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: CommonString.cDataInvalid,
+          message: CommonString.cFirebasePasswordError,
+          duration: Duration(seconds: 10),
+        ).show(context);
+      });
+    };
     var doLogin = () async {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
+        userFirebaseLst =
+        await FirebaseAuth.instance.fetchSignInMethodsForEmail(userModel.email);
         if (_userNameController.text == userModel.userName &&
             _passwordController.text == userModel.password) {
-          NavigatorHelper().toClassesPage(context);
+          checkAvailableUser();
         } else {
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,
@@ -240,40 +264,55 @@ class _LoginState extends State<Login> {
       }
     };
 
-    return SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: size.height * 0.02),
-                    Image.asset(
-                      "assets/img/blackboard.png",
-                      height: size.height * 0.2,
-                    ),
-                    SizedBox(height: 15.0),
+    return FutureBuilder(
+      future: Authentication.initializeFirebase(context: context),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text('Error initializing Firebase');
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          return SafeArea(
+            child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                body: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 5, bottom: 10, left: 30, right: 30),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: size.height * 0.02),
+                          Image.asset(
+                            "assets/img/blackboard.png",
+                            height: size.height * 0.2,
+                          ),
+                          SizedBox(height: 15.0),
 //                _userNameTextFormField,
-                    userNameField,
-                    SizedBox(height: 15.0),
-                    passwordField,
-                    SizedBox(height: 15.0),
-                    auth.loggedInStatus == Status.Authenticating
-                        ? loading
-                        : longButtons(CommonString.cLoginButton, doLogin),
-                    SizedBox(height: 10.0),
-                    fingerSprintButton,
-                    SizedBox(height: 5.0),
-                    forgotLabel
-                  ],
-                ),
-              ),
-            ),
-          )),
+                          userNameField,
+                          SizedBox(height: 15.0),
+                          passwordField,
+                          SizedBox(height: 15.0),
+                          auth.loggedInStatus == Status.Authenticating
+                              ? loading
+                              : longButtons(CommonString.cLoginButton, doLogin),
+                          SizedBox(height: 10.0),
+                          fingerSprintButton,
+                          SizedBox(height: 5.0),
+                          forgotLabel
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
+          );
+        }
+        return CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(
+            CommonColors.firebaseOrange,
+          ),
+        );
+      },
     );
   }
 }

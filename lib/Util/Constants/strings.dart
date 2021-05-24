@@ -96,6 +96,8 @@ class CommonString {
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";
+  static const cFirebaseSignUpError = "Tài khoản đăng ký đã tồn tại!";
+  static const cFirebasePasswordError = "Mật khẩu không chính xác";
 
   // Add data
   static const cSaveDataSuccess = "Lưu mới dữ liệu thành công!";

@@ -39,6 +39,7 @@ class BaseDao {
     await db.execute(
         'CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER )');
   }
+
   /// user
   Future<UserModel> getUser() async {
     var dbClient = await db;
@@ -56,23 +57,25 @@ class BaseDao {
         userModel.add(UserModel.fromMap(maps[i]));
       }
     }
-    return (userModel!=null && userModel.length > 0)?userModel.first:null;
+    return (userModel != null && userModel.length > 0) ? userModel.first : null;
   }
+
   Future<int> addUser(UserModel userModel) async {
     var dbClient = await db;
     userModel.id = await dbClient.insert('user', userModel.toMap());
-    if(userModel.id > 0){
+    if (userModel.id > 0) {
       Global.userModel = userModel;
     }
     return userModel.id;
-
   }
+
   Future<UserModel> getUserByEmail(String email) async {
     final dbClient = await db;
     var result =
-    await dbClient.query("user", where: "email = ?", whereArgs: [email]);
+        await dbClient.query("user", where: "email = ?", whereArgs: [email]);
     return result.isNotEmpty ? UserModel.fromMap(result.first) : Null;
   }
+
   Future<int> updateUser(UserModel userModel) async {
     var dbClient = await db;
     var userId = await dbClient.update(
@@ -81,15 +84,19 @@ class BaseDao {
       where: 'id = ?',
       whereArgs: [userModel.id],
     );
-    if(userId > 0){
+    if (userId > 0) {
       Global.userModel = userModel;
     }
     return userId;
   }
-  Future<void> deleteAllUser() async{
+
+  Future<void> deleteAllUser() async {
     var user = await getUser();
-    await deleteUser(user.id);
+    if (user!= null && user.id > 0) {
+      await deleteUser(user.id);
+    }
   }
+
   Future<void> deleteUser(int id) async {
     var dbClient = await db;
     await dbClient.delete(
@@ -98,6 +105,7 @@ class BaseDao {
       whereArgs: [id],
     );
   }
+
   /// roll up
   Future<List<RollUpModel>> getRollup() async {
     var dbClient = await db;
@@ -116,17 +124,20 @@ class BaseDao {
     }
     return rollups;
   }
+
   Future<RollUpModel> getRollupById(int id) async {
     final dbClient = await db;
     var result =
-    await dbClient.query("rollup", where: "id = ?", whereArgs: [id]);
+        await dbClient.query("rollup", where: "id = ?", whereArgs: [id]);
     return result.isNotEmpty ? RollUpModel.fromMap(result.first) : Null;
   }
+
   Future<int> addRollup(RollUpModel rollUpModel) async {
     var dbClient = await db;
     rollUpModel.id = await dbClient.insert('rollup', rollUpModel.toMap());
     return rollUpModel.id;
   }
+
   Future<int> updateRollup(RollUpModel rollUpModel) async {
     var dbClient = await db;
     return await dbClient.update(
@@ -136,6 +147,7 @@ class BaseDao {
       whereArgs: [rollUpModel.id],
     );
   }
+
   /// student
   Future<int> addStudent(StudentModel student) async {
     var dbClient = await db;
@@ -218,16 +230,19 @@ class BaseDao {
         ? StudentAddModel.fromMap(result.first)
         : Null;
   }
-  Future<List<StudentAddModel>> convertToStudentAddCode(List<StudentAddModel> stdAddModel,Map<String, bool> stdState) async {
-    for(int i = 0; i< stdAddModel.length; i++){
-      if(stdState.containsKey(stdAddModel[i].studentCode)){
+
+  Future<List<StudentAddModel>> convertToStudentAddCode(
+      List<StudentAddModel> stdAddModel, Map<String, bool> stdState) async {
+    for (int i = 0; i < stdAddModel.length; i++) {
+      if (stdState.containsKey(stdAddModel[i].studentCode)) {
         stdAddModel[i].isAdd = stdState[stdAddModel[i].studentCode];
-      }else{
+      } else {
         stdAddModel[i].isAdd = false;
       }
     }
     return stdAddModel;
   }
+
   Future<List<StudentAddModel>> getStudentsByCode(String code) async {
     List<StudentAddModel> students = [];
     if (code != null && code.isNotEmpty) {
@@ -273,6 +288,7 @@ class BaseDao {
     }
     return students;
   }
+
 //  Future<List<StudentAddModel>> getStudentsAddByClassCode(String classCode) async {
 //    List<StudentModel> stdLst= new List<StudentModel>();
 //    List<StudentAddModel> stdAddLst= new List<StudentAddModel>();

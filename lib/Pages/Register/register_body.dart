@@ -17,6 +17,7 @@ import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'RegisterWithEmailPassword/FirebaseEmailPasswordButton.dart';
 import 'RegisterWithGoogle/google_firebase_button.dart';
 import 'RegisterWithGoogle/service/authentication.dart';
 
@@ -28,38 +29,21 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final formKey = new GlobalKey<FormState>();
   BaseDao baseDao = BaseDao();
-
+  List<String> userFirebaseLst;
   String _username, _email, _password, _confirmPassword, _phoneNumber;
+  User user;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-    });
+    setState(() {});
   }
-  Route _routeToSignInScreen() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => ClassesPage(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(-1.0, 0.0);
-        var end = Offset.zero;
-        var curve = Curves.ease;
-        var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List<String> t;
-    AuthProvider auth = Provider.of<AuthProvider>(context);
-
     final usernameField = TextFormField(
       autofocus: false,
       validator: (value) =>
@@ -113,46 +97,62 @@ class _RegisterState extends State<Register> {
         Text(CommonString.cRegistering)
       ],
     );
-    var startPhoneAuth = () async {
-      final phoneAuthDataProvider = Provider.of<PhoneNumberAuthDataProvider>(context, listen: false);
-      phoneAuthDataProvider.loading = true;
-      bool validPhone = await phoneAuthDataProvider.instantiate(
-          dialCode: "+84",
-          onCodeSent: () {
-            NavigatorHelper().toLoginPage(context);
-            // Navigator.of(context).pushReplacement(CupertinoPageRoute(
-            //     builder: (BuildContext context) => PhoneAuthVerify()));
-          },
-          onFailed: () {
-            // _showSnackBar(phoneAuthDataProvider.message);
-          },
-          onError: () {
-            // _showSnackBar(phoneAuthDataProvider.message);
-          },
-      );
-      if (!validPhone) {
-        phoneAuthDataProvider.loading = false;
-        return;
+    var saveUserToLocal = () async {
+      await baseDao.deleteAllUser();
+      final newUser = new UserModel(0, _username, _email, _password,
+          Platform.isIOS ? "IOS" : "Android", false);
+      var idClass = await baseDao.addUser(newUser);
+      if (idClass != null && idClass > 0) {
+        NavigatorHelper().toLoginPage(context);
+      } else {
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: CommonString.cDataInvalid,
+          message: CommonString.cReEnterLoginForm,
+          duration: Duration(seconds: 10),
+        ).show(context);
       }
     };
     //check tài khoản trên firebase
-    var doRegister1=()async{
-        FirebaseAuth auth = FirebaseAuth.instance;
-        t =await auth.fetchSignInMethodsForEmail("nguyenduchanhndh01091993@gmail.com");
+    var checkAvailableUser = () async {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email, password: _password)
+          .catchError((error) {
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: CommonString.cDataInvalid,
+          message: CommonString.cFirebaseSignUpError,
+          duration: Duration(seconds: 10),
+        ).show(context);
+      }).then((userCredential) {
+        user = userCredential.user;
+        saveUserToLocal();
+      });
     };
+
     var doRegister = () async {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        await baseDao.deleteAllUser();
-        final newUser = new UserModel(0,
-            _username,
-            _password,
-            _email,
-            Platform.isIOS?"IOS":"Android",
-            false);
-        var idClass = await baseDao.addUser(newUser);
-        Navigator.of(context).pushReplacement(_routeToSignInScreen());
+        userFirebaseLst =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(_email);
+        if (userFirebaseLst.length > 0) {
+          /// đã có tài khoản sử dụng email này
+          Flushbar(
+            flushbarPosition: FlushbarPosition.TOP,
+            title: CommonString.cDataInvalid,
+            message: CommonString.cFirebaseSignUpError,
+            duration: Duration(seconds: 10),
+          ).show(context);;
+        } else {
+          FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                  email: _email, password: _password)
+              .then((userCredential) {
+            user = userCredential.user;
+            saveUserToLocal();
+          });
+        }
       } else {
         Flushbar(
           flushbarPosition: FlushbarPosition.TOP,
@@ -191,12 +191,7 @@ class _RegisterState extends State<Register> {
                     passwordField,
                     SizedBox(height: 15.0),
                     confirmPassword,
-
                     SizedBox(height: 20.0),
-                    auth.loggedInStatus == Status.Authenticating
-                        ? loading
-                        : longButtons(CommonString.cSignUpButton, doRegister),
-                    SizedBox(height: 5.0),
                     FutureBuilder(
                       future:
                           Authentication.initializeFirebase(context: context),
@@ -205,7 +200,15 @@ class _RegisterState extends State<Register> {
                           return Text('Error initializing Firebase');
                         } else if (snapshot.connectionState ==
                             ConnectionState.done) {
-                          return GoogleFirebaseButton();
+                          return Column(
+                            children: <Widget>[
+                              longButtons(
+                                  CommonString.cSignUpButton, doRegister),
+                              SizedBox(height: 5.0),
+                              GoogleFirebaseButton(),
+                            ],
+                          );
+                          GoogleFirebaseButton();
                         }
                         return CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation<Color>(
