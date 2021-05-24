@@ -33,6 +33,7 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
         if (user != null) {
           String passwordRandom =
               CString().generatePassword(true, true, true, true, 12);
+          await baseDao.deleteAllUser();
           final newUser = new UserModel(0,
               user.displayName,
               passwordRandom,
@@ -40,8 +41,6 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
               Platform.isIOS?"IOS":"Android",
               false);
           var idClass = await baseDao.addUser(newUser);
-          await UserPreferences().CreateUserConfig(user.displayName,
-              passwordRandom, user.email, SignInSource.google);
           NavigatorHelper().toLoginPage(context);
         }
       } catch (x) {}
