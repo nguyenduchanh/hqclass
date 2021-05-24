@@ -15,6 +15,7 @@ import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
+import 'package:hqclass/Util/validators.dart';
 import 'package:hqclass/Util/widgets.dart';
 import 'package:local_auth/auth_strings.dart';
 import 'package:local_auth/local_auth.dart';
@@ -32,6 +33,7 @@ class _LoginState extends State<Login> {
   List<BiometricType> _availableBiometricTypes = [];
   List<String> userFirebaseLst;
   TextEditingController _userNameController;
+  TextEditingController _userEmailController;
   TextEditingController _passwordController;
   BaseDao baseDao = BaseDao();
   UserModel userModel;
@@ -72,8 +74,8 @@ class _LoginState extends State<Login> {
       } else if (_availableBiometricTypes.contains(BiometricType.fingerprint)) {
         biometricTypeEnum = BiometricTypeEnum.TouchID;
       }
-      _userNameController = new TextEditingController(
-          text: userModel != null ? userModel.userName : "");
+      _userEmailController = new TextEditingController(
+          text: userModel != null ? userModel.email : "");
       if (userModel != null &&
           userModel.isBiometricAvailable &&
           _availableBiometricTypes.length > 0) {
@@ -117,6 +119,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     AuthProvider auth = Provider.of<AuthProvider>(context);
+    Authentication.initializeFirebase(context: context);
     final userNameField = TextFormField(
         autofocus: false,
         validator: (value) {
@@ -131,6 +134,15 @@ class _LoginState extends State<Login> {
         controller: _userNameController,
         decoration: buildInputDecoration(
             CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
+    final emailField = TextFormField(
+      autofocus: false,
+      keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
+      onSaved: (value) => value.isEmpty ? _userEmailController.text : "",
+      controller: _userEmailController,
+      decoration: buildInputDecoration(
+          CommonString.cEmail, Icons.email, CommonString.cEmail),
+    );
     final passwordField = TextFormField(
       autofocus: false,
       obscureText: true,
@@ -223,9 +235,21 @@ class _LoginState extends State<Login> {
     var checkAvailableUser = () async {
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: userModel.userName, password: userModel.password)
-          .then((userCredential) {
+              email: _userEmailController.text,
+              password: _passwordController.text)
+          .catchError((er) {
+        Flushbar(
+          flushbarPosition: FlushbarPosition.TOP,
+          title: CommonString.cDataInvalid,
+          message: CommonString.cFirebasePasswordError,
+          duration: Duration(seconds: 10),
+        ).show(context);
+      }).then((userCredential)async {
         user = userCredential.user;
+        await baseDao.deleteAllUser();
+        final newUser = new UserModel(0, "", _passwordController.text, _userEmailController.text,
+            Platform.isIOS ? "IOS" : "Android", false);
+        var idClass = await baseDao.addUser(newUser);
         NavigatorHelper().toClassesPage(context);
         //        saveUserToLocal();
       }).catchError((error) {
@@ -241,10 +265,16 @@ class _LoginState extends State<Login> {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-        userFirebaseLst =
-        await FirebaseAuth.instance.fetchSignInMethodsForEmail(userModel.email);
-        if (_userNameController.text == userModel.userName &&
-            _passwordController.text == userModel.password) {
+
+        if ( _userEmailController.text != null &&
+            _userEmailController.text != "" &&
+            _passwordController.text != null &&
+            _passwordController.text != "") {
+          if(userModel!=null){
+
+          }
+          userFirebaseLst = await FirebaseAuth.instance
+              .fetchSignInMethodsForEmail(_userEmailController.text);
           checkAvailableUser();
         } else {
           Flushbar(
@@ -264,55 +294,49 @@ class _LoginState extends State<Login> {
       }
     };
 
-    return FutureBuilder(
-      future: Authentication.initializeFirebase(context: context),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error initializing Firebase');
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          return SafeArea(
-            child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                body: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        top: 5, bottom: 10, left: 30, right: 30),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(height: size.height * 0.02),
-                          Image.asset(
-                            "assets/img/blackboard.png",
-                            height: size.height * 0.2,
-                          ),
-                          SizedBox(height: 15.0),
-//                _userNameTextFormField,
-                          userNameField,
-                          SizedBox(height: 15.0),
-                          passwordField,
-                          SizedBox(height: 15.0),
-                          auth.loggedInStatus == Status.Authenticating
-                              ? loading
-                              : longButtons(CommonString.cLoginButton, doLogin),
-                          SizedBox(height: 10.0),
-                          fingerSprintButton,
-                          SizedBox(height: 5.0),
-                          forgotLabel
-                        ],
-                      ),
+//    return FutureBuilder(
+//      future: Authentication.initializeFirebase(context: context),
+//      builder: (context, snapshot) {
+//        if (snapshot.hasError) {
+//          return Text('Error initializing Firebase');
+//        } else if (snapshot.connectionState == ConnectionState.done) {
+//
+//        };
+//        return null;
+//      },
+//    );
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(top: 5, bottom: 10, left: 30, right: 30),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: size.height * 0.02),
+                    Image.asset(
+                      "assets/img/blackboard.png",
+                      height: size.height * 0.2,
                     ),
-                  ),
-                )),
-          );
-        }
-        return CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(
-            CommonColors.firebaseOrange,
-          ),
-        );
-      },
+                    SizedBox(height: 15.0),
+//                _userNameTextFormField,
+                    emailField,
+                    SizedBox(height: 15.0),
+                    passwordField,
+                    SizedBox(height: 15.0),
+                    longButtons(CommonString.cLoginButton, doLogin),
+                    SizedBox(height: 10.0),
+                    fingerSprintButton,
+                    SizedBox(height: 5.0),
+                    forgotLabel
+                  ],
+                ),
+              ),
+            ),
+          )),
     );
   }
 }

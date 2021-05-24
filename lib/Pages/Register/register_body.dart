@@ -99,7 +99,7 @@ class _RegisterState extends State<Register> {
     );
     var saveUserToLocal = () async {
       await baseDao.deleteAllUser();
-      final newUser = new UserModel(0, _username, _email, _password,
+      final newUser = new UserModel(0, _username, _password, _email,
           Platform.isIOS ? "IOS" : "Android", false);
       var idClass = await baseDao.addUser(newUser);
       if (idClass != null && idClass > 0) {
@@ -143,7 +143,7 @@ class _RegisterState extends State<Register> {
             title: CommonString.cDataInvalid,
             message: CommonString.cFirebaseSignUpError,
             duration: Duration(seconds: 10),
-          ).show(context);;
+          ).show(context);
         } else {
           FirebaseAuth.instance
               .createUserWithEmailAndPassword(
