@@ -5,6 +5,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/user.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
 import 'package:hqclass/Util/widgets.dart';
@@ -41,7 +42,7 @@ class _FirebaseEmailPasswordButtonState
             .then((_) async {
           await baseDao.deleteAllUser();
           final newUser = new UserModel(0, widget.userName, widget.userPassword, widget.userPassword,
-              Platform.isIOS ? "IOS" : "Android", false);
+              Platform.isIOS ? "IOS" : "Android", false, RegisterTypeEnum.Email);
           var idClass = await baseDao.addUser(newUser);
           if(idClass > 0){
             NavigatorHelper().toLoginPage(context);

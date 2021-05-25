@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
   }
 
   openBiometricAuth() {
-    if (userModel != null &&
+    if (user!= null && userModel != null &&
         userModel.isBiometricAvailable &&
         _canCheckBiometric) {
       biometricAuth();
@@ -99,9 +99,6 @@ class _LoginState extends State<Login> {
         useErrorDialogs: false,
         stickyAuth: false,
       );
-//      if (isAuthorized) {
-//        NavigatorHelper().toClassesPage(context);
-//      }
     } on PlatformException catch (e) {
       print(e);
     }
@@ -118,22 +115,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    AuthProvider auth = Provider.of<AuthProvider>(context);
     Authentication.initializeFirebase(context: context);
-    final userNameField = TextFormField(
-        autofocus: false,
-        validator: (value) {
-          if (_userNameController.text.isEmpty) {
-            return 'Please Enter User Name';
-          }
-          if (_userNameController.text.trim() == "")
-            return "Only Space is Not Valid!!!";
-          return null;
-        },
-        onSaved: (value) => value.isEmpty ? _userNameController.text : "",
-        controller: _userNameController,
-        decoration: buildInputDecoration(
-            CommonString.cUsername, Icons.email, CommonString.cEmailOrUser));
     final emailField = TextFormField(
       autofocus: false,
       keyboardType: TextInputType.emailAddress,
@@ -220,7 +202,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      CommonString.cLoginWithFingerButton,
+                      (biometricTypeEnum == BiometricTypeEnum.FaceID) ?CommonString.cLoginWithFaceIdButton:CommonString.cLoginWithFingerButton,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.black54,
@@ -245,37 +227,28 @@ class _LoginState extends State<Login> {
           duration: Duration(seconds: 10),
         ).show(context);
       }).then((userCredential)async {
-        user = userCredential.user;
-        await baseDao.deleteAllUser();
-        final newUser = new UserModel(0, "", _passwordController.text, _userEmailController.text,
-            Platform.isIOS ? "IOS" : "Android", false);
-        var idClass = await baseDao.addUser(newUser);
         NavigatorHelper().toClassesPage(context);
-        //        saveUserToLocal();
-      }).catchError((error) {
-        Flushbar(
-          flushbarPosition: FlushbarPosition.TOP,
-          title: CommonString.cDataInvalid,
-          message: CommonString.cFirebasePasswordError,
-          duration: Duration(seconds: 10),
-        ).show(context);
       });
+    };
+    var checkGoogleUserAvailable = () async {
+      user = FirebaseAuth.instance.currentUser;
+      if(user!= null && _userEmailController.text == userModel.email && _passwordController.text == userModel.password){
+        NavigatorHelper().toClassesPage(context);
+      }
     };
     var doLogin = () async {
       final form = formKey.currentState;
       if (form.validate()) {
         form.save();
-
         if ( _userEmailController.text != null &&
             _userEmailController.text != "" &&
             _passwordController.text != null &&
             _passwordController.text != "") {
-          if(userModel!=null){
-
+          if(userModel!=null && !userModel.isBiometricAvailable && userModel.registerType ==  RegisterTypeEnum.Email){
+            checkAvailableUser();
+          }else if(userModel!=null && !userModel.isBiometricAvailable && userModel.registerType ==  RegisterTypeEnum.Google){
+            checkGoogleUserAvailable();
           }
-          userFirebaseLst = await FirebaseAuth.instance
-              .fetchSignInMethodsForEmail(_userEmailController.text);
-          checkAvailableUser();
         } else {
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,
@@ -294,17 +267,6 @@ class _LoginState extends State<Login> {
       }
     };
 
-//    return FutureBuilder(
-//      future: Authentication.initializeFirebase(context: context),
-//      builder: (context, snapshot) {
-//        if (snapshot.hasError) {
-//          return Text('Error initializing Firebase');
-//        } else if (snapshot.connectionState == ConnectionState.done) {
-//
-//        };
-//        return null;
-//      },
-//    );
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,

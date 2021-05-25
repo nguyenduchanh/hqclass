@@ -83,7 +83,7 @@ class CommonString {
   // button
   static const cLoginButton = "Đăng nhập";
   static const cLoginWithFingerButton = "Đăng nhập bằng vân tay";
-  static const biometricTypeEnum = "Đăng nhập bằng FaceID";
+  static const cLoginWithFaceIdButton = "Đăng nhập bằng FaceID";
   static const cSignUpButton = "Đăng ký";
   static const cSignOutButton = "Đăng xuất";
   static const cBackToLogin = "Quay lại trang đăng nhập";

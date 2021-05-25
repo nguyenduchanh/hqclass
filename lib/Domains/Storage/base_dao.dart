@@ -37,7 +37,7 @@ class BaseDao {
     await db.execute(
         'CREATE TABLE rollup (id INTEGER PRIMARY KEY, classcode TEXT, studentcodelist TEXT, createdate TEXT, rollupdata TEXT)');
     await db.execute(
-        'CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER )');
+        'CREATE TABLE user (id INTEGER PRIMARY KEY, username TEXT, password TEXT, email TEXT, deviceLogin TEXT, isbiometricavailable INTEGER, registertype TEXT)');
   }
 
   /// user
@@ -50,6 +50,7 @@ class BaseDao {
       'email',
       'deviceLogin',
       'isbiometricavailable',
+      'registertype',
     ]);
     List<UserModel> userModel = [];
     if (maps.length > 0) {

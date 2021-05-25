@@ -97,38 +97,6 @@ class _RegisterState extends State<Register> {
         Text(CommonString.cRegistering)
       ],
     );
-    var saveUserToLocal = () async {
-      await baseDao.deleteAllUser();
-      final newUser = new UserModel(0, _username, _password, _email,
-          Platform.isIOS ? "IOS" : "Android", false);
-      var idClass = await baseDao.addUser(newUser);
-      if (idClass != null && idClass > 0) {
-        NavigatorHelper().toLoginPage(context);
-      } else {
-        Flushbar(
-          flushbarPosition: FlushbarPosition.TOP,
-          title: CommonString.cDataInvalid,
-          message: CommonString.cReEnterLoginForm,
-          duration: Duration(seconds: 10),
-        ).show(context);
-      }
-    };
-    //check tài khoản trên firebase
-    var checkAvailableUser = () async {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: _email, password: _password)
-          .catchError((error) {
-        Flushbar(
-          flushbarPosition: FlushbarPosition.TOP,
-          title: CommonString.cDataInvalid,
-          message: CommonString.cFirebaseSignUpError,
-          duration: Duration(seconds: 10),
-        ).show(context);
-      }).then((userCredential) {
-        user = userCredential.user;
-        saveUserToLocal();
-      });
-    };
 
     var doRegister = () async {
       final form = formKey.currentState;
@@ -145,13 +113,7 @@ class _RegisterState extends State<Register> {
             duration: Duration(seconds: 10),
           ).show(context);
         } else {
-          FirebaseAuth.instance
-              .createUserWithEmailAndPassword(
-                  email: _email, password: _password)
-              .then((userCredential) {
-            user = userCredential.user;
-            saveUserToLocal();
-          });
+
         }
       } else {
         Flushbar(

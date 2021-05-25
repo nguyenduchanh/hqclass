@@ -7,6 +7,7 @@ import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/cString.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
@@ -39,7 +40,9 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
               passwordRandom,
               user.email,
               Platform.isIOS?"IOS":"Android",
-              false);
+              false,
+              RegisterTypeEnum.Google
+          );
           var idClass = await baseDao.addUser(newUser);
           NavigatorHelper().toLoginPage(context);
         }
