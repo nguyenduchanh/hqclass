@@ -1,4 +1,3 @@
-
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -20,7 +19,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   }
 }
 
-
 class SplashScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,36 +30,12 @@ class SplashScreenWidget extends StatelessWidget {
           navigateAfterSeconds: MyApp(),
           loaderColor: Colors.transparent,
         ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/img/blackboard.png"),
-                        fit: BoxFit.contain
-                    )
-                ),
-              ),
-            ),
-            Center(
-              child: Container(
-                width: 200,
-                height: 200,
-                child: FlareActor(
-                  "assets/loading.flr",
-                  animation: "loading",
-                  fit: BoxFit.contain,
-                ),
-              ),
-            )
-          ],
+         FlareActor(
+           "assets/global.flr",
+           animation: "activated",
+           fit: BoxFit.contain,
         ),
       ],
     );
   }
 }
-

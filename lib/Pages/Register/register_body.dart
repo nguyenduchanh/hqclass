@@ -10,6 +10,7 @@ import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Classes/classes_page.dart';
 import 'package:hqclass/Pages/Register/RegisterWithPhoneNumber/phone_number_auth.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
@@ -113,7 +114,26 @@ class _RegisterState extends State<Register> {
             duration: Duration(seconds: 10),
           ).show(context);
         } else {
-
+          // đăng ký cho tài khoang
+          FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+              email: _email, password: _password)
+              .then((_) async {
+            await baseDao.deleteAllUser();
+            final newUser = new UserModel(0, _username, _email, _password,
+                Platform.isIOS ? "IOS" : "Android", false, RegisterTypeEnum.Email);
+            var idClass = await baseDao.addUser(newUser);
+            if(idClass > 0){
+              NavigatorHelper().toLoginPage(context);
+            }{
+              Flushbar(
+                flushbarPosition: FlushbarPosition.TOP,
+                title: CommonString.cDataInvalid,
+                message: CommonString.cReEnterLoginForm,
+                duration: Duration(seconds: 10),
+              ).show(context);
+            }
+          });
         }
       } else {
         Flushbar(
