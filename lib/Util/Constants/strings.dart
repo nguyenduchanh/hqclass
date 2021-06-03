@@ -92,7 +92,8 @@ class CommonString {
   static const cExportButton = "Xuất dữ liệu";
   static const cImportButton = "Cập nhật dữ liệu mới";
   static const cLoginWithTouchId = "Đăng nhập bằng TouchID";
-  static const cLoginWithTouchIdHint = "Sử dụng TouchId của bản để đăng nhập thay cho mật khẩu";
+  static const cLoginWithTouchIdHint = "Sử dụng TouchId để đăng nhập thay cho mật khẩu";
+  static const cLoginWithFaceIdHint = "Sử dụng FaceID để đăng nhập thay cho mật khẩu";
 
   // form common
   static const cDataInvalid = "Dữ liệu nhập ko chính xác";

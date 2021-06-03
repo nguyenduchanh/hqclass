@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+import 'dart:convert';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Domains/Storage/base_dao.dart';
+import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
 import 'package:hqclass/Util/Constants/strings.dart';
@@ -59,9 +63,10 @@ class Navbar extends StatefulWidget implements PreferredSizeWidget {
 
 class _NavbarState extends State<Navbar> {
   String activeTag;
-
+  BaseDao baseDao = BaseDao();
+  UserModel userModel;
   ItemScrollController _scrollController = ItemScrollController();
-
+  Uint8List bytes;
   void initState() {
     if (widget.tags != null && widget.tags.length != 0) {
       activeTag = widget.tags[0];

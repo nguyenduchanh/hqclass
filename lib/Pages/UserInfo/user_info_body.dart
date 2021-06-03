@@ -29,7 +29,8 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
   UserModel userModel;
   BaseDao baseDao = BaseDao();
-
+  BiometricTypeEnum biometricTypeEnum;
+  List<BiometricType> _availableBiometricTypes = [];
   @override
   void initState() {
     super.initState();
@@ -42,7 +43,15 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
 
   _loadData() async {
     _canCheckBiometric = await _localAuthentication.canCheckBiometrics;
-
+    _availableBiometricTypes =
+    await _localAuthentication.getAvailableBiometrics();
+    setState(() {
+      if (_availableBiometricTypes.contains(BiometricType.face)) {
+        biometricTypeEnum = BiometricTypeEnum.FaceID;
+      } else if (_availableBiometricTypes.contains(BiometricType.fingerprint)) {
+        biometricTypeEnum = BiometricTypeEnum.TouchID;
+      }
+    });
   }
 
   @override
@@ -120,8 +129,8 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
                 padding: const EdgeInsets.only(
                     left: 0, right: 10, top: 10, bottom: 10),
                 child: ListTile(
-                  title: Text(CommonString.cLoginWithTouchId),
-                  subtitle: Text(CommonString.cLoginWithTouchIdHint),
+                  title: (biometricTypeEnum == BiometricTypeEnum.FaceID) ?Text(CommonString.cLoginWithFaceIdButton) :Text(CommonString.cLoginWithTouchId),
+                  subtitle:(biometricTypeEnum == BiometricTypeEnum.FaceID)?Text(CommonString.cLoginWithFaceIdHint): Text(CommonString.cLoginWithTouchIdHint),
                 ),
               ),
             ),

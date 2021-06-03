@@ -42,7 +42,7 @@ class _FirebaseEmailPasswordButtonState
             .then((_) async {
           await baseDao.deleteAllUser();
           final newUser = new UserModel(0, widget.userName, widget.userPassword, widget.userPassword,
-              Platform.isIOS ? "IOS" : "Android", false, RegisterTypeEnum.Email);
+              Platform.isIOS ? "IOS" : "Android", false, RegisterTypeEnum.Email,"");
           var idClass = await baseDao.addUser(newUser);
           if(idClass > 0){
             NavigatorHelper().toLoginPage(context);

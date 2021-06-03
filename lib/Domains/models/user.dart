@@ -1,7 +1,5 @@
-import 'dart:convert';
 
 import 'package:hqclass/Util/Constants/cEnum.dart';
-
 class UserModel {
   int id;
   String userName;
@@ -10,6 +8,7 @@ class UserModel {
   String deviceLogin;
   bool isBiometricAvailable;
   RegisterTypeEnum registerType;
+  String displayImage;
 
   UserModel(
     this.id,
@@ -19,6 +18,7 @@ class UserModel {
     this.deviceLogin,
     this.isBiometricAvailable,
     this.registerType,
+    this.displayImage,
   );
 
   Map<String, dynamic> toMap() {
@@ -29,7 +29,8 @@ class UserModel {
       'email': email,
       'devicelogin': deviceLogin,
       'isbiometricavailable': isBiometricAvailable ? 1 : 0,
-      'registertype':registerType.toString(),
+      'registertype': registerType.toString(),
+      'displayimage': displayImage,
     };
     return map;
   }
@@ -40,8 +41,11 @@ class UserModel {
     password = map['password'];
     email = map['email'];
     deviceLogin = map['devicelogin'];
+    displayImage = map['displayimage'];
     isBiometricAvailable = map['isbiometricavailable'] == 1 ? true : false;
-    registerType = map['registerType']==RegisterTypeEnum.Email.toString()?RegisterTypeEnum.Email:RegisterTypeEnum.Google;
+    registerType = map['registerType'] == RegisterTypeEnum.Email.toString()
+        ? RegisterTypeEnum.Email
+        : RegisterTypeEnum.Google;
   }
 
   @override

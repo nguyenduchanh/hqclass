@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:http/http.dart' as http;
 class CString{
   String generatePassword(bool _isWithLetters, bool _isWithUppercase,
       bool _isWithNumbers, bool _isWithSpecial, double _numberCharPassword) {
@@ -32,5 +34,14 @@ class CString{
     }
 
     return _result;
+  }
+  Future<String> networkImageToBase64(String imageUrl) async {
+    try{
+      http.Response response = await http.get(Uri.parse(imageUrl));
+      final bytes = response?.bodyBytes;
+      return (bytes != null ? base64Encode(bytes) : null);
+    }catch(e){
+      return "";
+    }
   }
 }

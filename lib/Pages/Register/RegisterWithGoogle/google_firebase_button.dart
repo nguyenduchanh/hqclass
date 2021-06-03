@@ -35,13 +35,15 @@ class _GoogleFirebaseButtonState extends State<GoogleFirebaseButton> {
           String passwordRandom =
               CString().generatePassword(true, true, true, true, 12);
           await baseDao.deleteAllUser();
+          String imageBase64 = await CString().networkImageToBase64(user.photoURL);
           final newUser = new UserModel(0,
               user.displayName,
               passwordRandom,
               user.email,
               Platform.isIOS?"IOS":"Android",
               false,
-              RegisterTypeEnum.Google
+              RegisterTypeEnum.Google,
+              imageBase64
           );
           var idClass = await baseDao.addUser(newUser);
           NavigatorHelper().toLoginPage(context);
