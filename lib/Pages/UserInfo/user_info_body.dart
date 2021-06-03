@@ -48,10 +48,12 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
   Widget build(BuildContext context) {
     final switchButton = Container(
       child: Switch(
-        value: userModel!=null?userModel.isBiometricAvailable:false,
+        value: _isUseBiometric,
         onChanged: (value) {
           setState(() {
-            userModel.isBiometricAvailable = (value!=null)?true:false;
+            userModel = Global.userModel;
+            userModel.isBiometricAvailable = !_isUseBiometric;
+            value = !_isUseBiometric;
             baseDao.updateUser(userModel);
           });
         },

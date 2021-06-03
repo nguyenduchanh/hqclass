@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
         await _localAuthentication.getAvailableBiometrics();
 
     userModel = await baseDao.getUser();
+    Global.userModel = userModel;
     setState(() {
       if (_availableBiometricTypes.contains(BiometricType.face)) {
         biometricTypeEnum = BiometricTypeEnum.FaceID;
