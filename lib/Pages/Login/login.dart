@@ -32,7 +32,6 @@ class _LoginState extends State<Login> {
   bool _canCheckBiometric = false;
   List<BiometricType> _availableBiometricTypes = [];
   List<String> userFirebaseLst;
-  TextEditingController _userNameController;
   TextEditingController _userEmailController;
   TextEditingController _passwordController;
   BaseDao baseDao = BaseDao();
@@ -43,9 +42,8 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    startTime();
-
     _loadData();
+
   }
 
   startTime() async {
@@ -54,7 +52,7 @@ class _LoginState extends State<Login> {
   }
 
   openBiometricAuth() {
-    if (user!= null && userModel != null &&
+    if (userModel != null &&
         userModel.isBiometricAvailable &&
         _canCheckBiometric) {
       biometricAuth();
@@ -69,6 +67,7 @@ class _LoginState extends State<Login> {
 
     userModel = await baseDao.getUser();
     Global.userModel = userModel;
+    startTime();
     setState(() {
       if (_availableBiometricTypes.contains(BiometricType.face)) {
         biometricTypeEnum = BiometricTypeEnum.FaceID;

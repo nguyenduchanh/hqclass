@@ -4,6 +4,7 @@ import 'package:hqclass/Domains/Storage/base_dao.dart';
 import 'package:hqclass/Domains/models/user.dart';
 import 'package:hqclass/Domains/preferences/user_shared_preference.dart';
 import 'package:hqclass/Pages/Register/RegisterWithGoogle/service/authentication.dart';
+import 'package:hqclass/Util/Constants/cEnum.dart';
 import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:hqclass/Util/Constants/globals.dart';
 import 'package:hqclass/Util/Constants/navigator_helper.dart';
