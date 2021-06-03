@@ -52,8 +52,8 @@ class _UserInfoPageBodyState extends State<UserInfoPageBody> {
         onChanged: (value) {
           setState(() {
             userModel = Global.userModel;
-            userModel.isBiometricAvailable = !_isUseBiometric;
-            value = !_isUseBiometric;
+            userModel.isBiometricAvailable = value;
+            _isUseBiometric = value;
             baseDao.updateUser(userModel);
           });
         },
