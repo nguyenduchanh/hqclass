@@ -76,8 +76,16 @@ flutter:
     - assets/img/chat2.png
     - assets/img/blackboard.png
     - assets/loading.flr
-#    activated
+    #    activated
     - assets/global.flr
+    #    Bicicleta
+    - assets/bicicleta.flr
+    #    Untitled
+    - assets/Van.flr
+    #  Drive
+    - assets/car.flr
+#    loading idle
+    - assets/biker.flr
     - assets/line.png
     - assets/drive-steering-wheel.jpg
     - assets/img/faceID.png

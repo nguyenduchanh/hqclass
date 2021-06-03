@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:hqclass/Util/Constants/common_colors.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 import '../main.dart';
@@ -31,8 +32,8 @@ class SplashScreenWidget extends StatelessWidget {
           loaderColor: Colors.transparent,
         ),
          FlareActor(
-           "assets/global.flr",
-           animation: "activated",
+           "assets/biker.flr",
+           animation: "loading idle",
            fit: BoxFit.contain,
         ),
       ],
